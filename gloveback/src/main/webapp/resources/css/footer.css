@@ -1,0 +1,38 @@
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 140px;
+    padding-left: 80px;
+    padding-right: 80px;
+    border-top: #87ff4f 1px solid;
+    margin-top: 30px;
+}
+
+.footerItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    border-top: #d9d9d9 1px solid;
+    height: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.end{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    font-size: 12px;
+
+}

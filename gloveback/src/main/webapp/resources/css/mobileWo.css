@@ -1,0 +1,100 @@
+.userPart{
+    display: block;
+}
+.logoWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 30%;
+    border-radius: 4px;
+    background-color: #00BB3B;
+    color: #FFFFFF;
+}
+.loginReg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.userPhoto{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /*border-bottom:solid 1px red ;*/
+}
+.helpcommon{
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+}
+.publishWrapper{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    padding-left: 10px;
+    background-color: #FFFFFF;
+    margin: 10px;
+    border-radius: 4px;
+
+}
+.IpublishWrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+    border-top:solid 1px #E1E5E7;
+    height: 40px;
+}
+.zizhu{
+    display: flex;
+    flex-direction: row;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    background-color: #FFFFFF;
+    margin-left: 10px ;
+    margin-right: 10px ;
+    margin-top: -9px;
+    border-radius: 4px;
+
+}
+.donate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border-right: solid 1px red;
+}
+.donatelove{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+.aboutus{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    padding-left: 10px;
+    background-color: #FFFFFF;
+    margin: 10px;
+    border-radius: 4px;
+}
+a{
+    text-decoration: none;
+}

@@ -1,0 +1,193 @@
+
+.bodyMain{
+    display: flex;
+    flex-direction: row;
+    padding-left: 80px;
+    padding-right: 80px;
+    background-color: #F7F9FA;
+
+}
+h2{
+    width: 100%;
+}
+.bodyLeft{
+    width: 70%;
+    border: solid 1px #d9d9d9;
+
+}
+.bodyRight{
+    width: 30%;
+    border: solid 1px #d9d9d9;
+    height: 1210px;
+}
+.detailShare{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: solid 1px #d9d9d9;
+    height: 70px;
+}
+.detail{
+    width: 140px;
+    border-right: solid 1px #d9d9d9;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+}
+.mainTile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    font-size: larger;
+    font-family: "黑体 STHeiti";
+    font-weight: 600;
+}
+.viceTitle{
+    margin: 16px 26px 16px  26px;
+    color: #6f7a7e;
+}
+.imgDetail{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.backUp{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+.backupProfile{
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    align-items: center;
+
+}
+.money{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.moneyNeed{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 60px;
+    font-size: larger;
+    font-family: "STHeiti";
+    font-weight: 700;
+    color: #47AE47
+}
+.yuan{
+    font-size: 14px;
+    color: #47AE47;
+}
+.target{
+    font-size: 16px;
+    color:#6f7a7e ;
+    font-family: "Microsoft YaHei";
+}
+.wechatPay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100px;
+    line-height: 100px;
+    margin-top: 30px;
+    background: #fff;
+    height: 160px;
+}
+.itemStarter{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    height: 140px;
+    background-color: #ffffff;
+    margin-top: 10px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    padding-left: 20px;
+}
+.userProfile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.express{
+    display: flex;
+    flex-direction: row;
+}
+.productFeedBack{
+    margin-top: 15px;
+    margin-left: 20px;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: STHeiti;
+    color: #6f7a7e;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+.feedback{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 15px;
+}
+.feedbackDesp{
+    font-size: 14px;
+    color: #333;
+    margin-left: 12px;
+}
+.feed{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+    border-bottom: #87ff4f 1px solid;
+    padding-left: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+.photo{
+
+    display:table;
+    height:34px;
+    width: 100%;
+}
+.photoLeft{
+    display:table-cell;
+    float:left;
+    text-align:center;
+    vertical-align:middle;
+    width:50%;
+    height:34px;
+}
+.photoRight{
+    display:table-cell;
+    float:right;
+    width:50%;
+    height:34px;
+}

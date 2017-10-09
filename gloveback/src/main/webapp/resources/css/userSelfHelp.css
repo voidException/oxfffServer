@@ -1,0 +1,61 @@
+.noData{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+}
+
+.userSelfHelp{
+    display: none;
+    margin-top: 5px;
+    background-color: #ffffff;
+}
+
+.photoName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.userName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-start;
+    color: #666;
+    font-size: 15px;
+}
+
+.title{
+    margin: 5px;
+    margin-bottom: 15px;
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    color: #333;
+    font-weight: 800;
+}
+.userHelpMain{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: #B8B8B8 solid 1px;
+}
+.imageArray{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.cityFrom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 13px;
+    margin-top: 3px;
+    margin-left: 5px;
+    color: #AAA;
+}

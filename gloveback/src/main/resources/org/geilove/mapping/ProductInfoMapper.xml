@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.ProductInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.ProductInfo" >
+    <id column="productiD" property="productid" jdbcType="BIGINT" />
+    <result column="productUUID" property="productuuid" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="useriD" property="userid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="photoUrl" property="photourl" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="checkProgress" property="checkprogress" jdbcType="VARCHAR" />
+    <result column="checkerUUID" property="checkeruuid" jdbcType="VARCHAR" />
+    <result column="checkDate" property="checkdate" jdbcType="TIMESTAMP" />
+    <result column="targetMoney" property="targetmoney" jdbcType="INTEGER" />
+    <result column="handyMoney" property="handymoney" jdbcType="INTEGER" />
+    <result column="backupTimes" property="backuptimes" jdbcType="INTEGER" />
+    <result column="reportTimes" property="reporttimes" jdbcType="INTEGER" />
+    <result column="productType" property="producttype" jdbcType="VARCHAR" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="chixuTime" property="chixutime" jdbcType="INTEGER" />
+    <result column="endTag" property="endtag" jdbcType="INTEGER" />
+    <result column="trafficMoney" property="trafficmoney" jdbcType="VARCHAR" />
+    <result column="trafficDate" property="trafficdate" jdbcType="VARCHAR" />
+    <result column="PaySampleOne" property="paysampleone" jdbcType="INTEGER" />
+    <result column="SampleOneDsp" property="sampleonedsp" jdbcType="VARCHAR" />
+    <result column="PaySampleTwo" property="paysampletwo" jdbcType="INTEGER" />
+    <result column="SampleTwoDsp" property="sampletwodsp" jdbcType="VARCHAR" />
+    <result column="PaySampleThree" property="paysamplethree" jdbcType="INTEGER" />
+    <result column="SampleThreeDsp" property="samplethreedsp" jdbcType="VARCHAR" />
+    <result column="PaySampleFour" property="paysamplefour" jdbcType="INTEGER" />
+    <result column="SampleFourDsp" property="samplefourdsp" jdbcType="VARCHAR" />
+    <result column="PaySampleFive" property="paysamplefive" jdbcType="INTEGER" />
+    <result column="SampleFiveDsp" property="samplefivedsp" jdbcType="VARCHAR" />
+    <result column="Aftermarket" property="aftermarket" jdbcType="VARCHAR" />
+    <result column="mainTitleOne" property="maintitleone" jdbcType="VARCHAR" />
+    <result column="viceTitleOne" property="vicetitleone" jdbcType="VARCHAR" />
+    <result column="imgOne" property="imgone" jdbcType="VARCHAR" />
+    <result column="mainTitleTwo" property="maintitletwo" jdbcType="VARCHAR" />
+    <result column="viceTitleTwo" property="vicetitletwo" jdbcType="VARCHAR" />
+    <result column="imgTwo" property="imgtwo" jdbcType="VARCHAR" />
+    <result column="mainTitleThree" property="maintitlethree" jdbcType="VARCHAR" />
+    <result column="viceTitleThree" property="vicetitlethree" jdbcType="VARCHAR" />
+    <result column="imgThree" property="imgthree" jdbcType="VARCHAR" />
+    <result column="mainTitleFour" property="maintitlefour" jdbcType="VARCHAR" />
+    <result column="viceTitleFour" property="vicetitlefour" jdbcType="VARCHAR" />
+    <result column="imgFour" property="imgfour" jdbcType="VARCHAR" />
+    <result column="mainTitleFive" property="maintitlefive" jdbcType="VARCHAR" />
+    <result column="viceTitleFive" property="vicetitlefive" jdbcType="VARCHAR" />
+    <result column="imgFive" property="imgfive" jdbcType="VARCHAR" />
+    <result column="mainTitleSix" property="maintitlesix" jdbcType="VARCHAR" />
+    <result column="viceTitleSix" property="vicetitlesix" jdbcType="VARCHAR" />
+    <result column="imgSix" property="imgsix" jdbcType="VARCHAR" />
+    <result column="mainTitleSeven" property="maintitleseven" jdbcType="VARCHAR" />
+    <result column="viceTitleSeven" property="vicetitleseven" jdbcType="VARCHAR" />
+    <result column="imgSeven" property="imgseven" jdbcType="VARCHAR" />
+    <result column="mainTitleEight" property="maintitleeight" jdbcType="VARCHAR" />
+    <result column="viceTitleEight" property="vicetitleeight" jdbcType="VARCHAR" />
+    <result column="imgEight" property="imgeight" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    productiD, productUUID, nickname, useriD, userUUID, photoUrl, wechat, phone, checkProgress, 
+    checkerUUID, checkDate, targetMoney, handyMoney, backupTimes, reportTimes, productType, 
+    startTime, endTime, chixuTime, endTag, trafficMoney, trafficDate, PaySampleOne, SampleOneDsp, 
+    PaySampleTwo, SampleTwoDsp, PaySampleThree, SampleThreeDsp, PaySampleFour, SampleFourDsp, 
+    PaySampleFive, SampleFiveDsp, Aftermarket, mainTitleOne, viceTitleOne, imgOne, mainTitleTwo, 
+    viceTitleTwo, imgTwo, mainTitleThree, viceTitleThree, imgThree, mainTitleFour, viceTitleFour, 
+    imgFour, mainTitleFive, viceTitleFive, imgFive, mainTitleSix, viceTitleSix, imgSix, 
+    mainTitleSeven, viceTitleSeven, imgSeven, mainTitleEight, viceTitleEight, imgEight
+  </sql>
+
+  <!--  自定义，获取"众筹商品" 列表-->
+  <select id="getProductInfoList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    productInfo
+    where
+    1=1
+    order by
+    startTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
+ <!--根据uuid获取众筹商品-->
+  <select id="selectByProductUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from productInfo
+    where productUUID = #{productUUID,jdbcType=VARCHAR}
+  </select>
+  <!--自定义结束-->
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from productInfo
+    where productiD = #{productid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from productInfo
+    where productiD = #{productid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.ProductInfo" >
+    insert into productInfo (productiD, productUUID, nickname, 
+      useriD, userUUID, photoUrl, 
+      wechat, phone, checkProgress, 
+      checkerUUID, checkDate, targetMoney, 
+      handyMoney, backupTimes, reportTimes, 
+      productType, startTime, endTime, 
+      chixuTime, endTag, trafficMoney, 
+      trafficDate, PaySampleOne, SampleOneDsp, 
+      PaySampleTwo, SampleTwoDsp, PaySampleThree, 
+      SampleThreeDsp, PaySampleFour, SampleFourDsp, 
+      PaySampleFive, SampleFiveDsp, Aftermarket, 
+      mainTitleOne, viceTitleOne, imgOne, 
+      mainTitleTwo, viceTitleTwo, imgTwo, 
+      mainTitleThree, viceTitleThree, imgThree, 
+      mainTitleFour, viceTitleFour, imgFour, 
+      mainTitleFive, viceTitleFive, imgFive, 
+      mainTitleSix, viceTitleSix, imgSix, 
+      mainTitleSeven, viceTitleSeven, imgSeven, 
+      mainTitleEight, viceTitleEight, imgEight
+      )
+    values (#{productid,jdbcType=BIGINT}, #{productuuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{photourl,jdbcType=VARCHAR}, 
+      #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{checkprogress,jdbcType=VARCHAR}, 
+      #{checkeruuid,jdbcType=VARCHAR}, #{checkdate,jdbcType=TIMESTAMP}, #{targetmoney,jdbcType=INTEGER}, 
+      #{handymoney,jdbcType=INTEGER}, #{backuptimes,jdbcType=INTEGER}, #{reporttimes,jdbcType=INTEGER}, 
+      #{producttype,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{chixutime,jdbcType=INTEGER}, #{endtag,jdbcType=INTEGER}, #{trafficmoney,jdbcType=VARCHAR}, 
+      #{trafficdate,jdbcType=VARCHAR}, #{paysampleone,jdbcType=INTEGER}, #{sampleonedsp,jdbcType=VARCHAR}, 
+      #{paysampletwo,jdbcType=INTEGER}, #{sampletwodsp,jdbcType=VARCHAR}, #{paysamplethree,jdbcType=INTEGER}, 
+      #{samplethreedsp,jdbcType=VARCHAR}, #{paysamplefour,jdbcType=INTEGER}, #{samplefourdsp,jdbcType=VARCHAR}, 
+      #{paysamplefive,jdbcType=INTEGER}, #{samplefivedsp,jdbcType=VARCHAR}, #{aftermarket,jdbcType=VARCHAR}, 
+      #{maintitleone,jdbcType=VARCHAR}, #{vicetitleone,jdbcType=VARCHAR}, #{imgone,jdbcType=VARCHAR}, 
+      #{maintitletwo,jdbcType=VARCHAR}, #{vicetitletwo,jdbcType=VARCHAR}, #{imgtwo,jdbcType=VARCHAR}, 
+      #{maintitlethree,jdbcType=VARCHAR}, #{vicetitlethree,jdbcType=VARCHAR}, #{imgthree,jdbcType=VARCHAR}, 
+      #{maintitlefour,jdbcType=VARCHAR}, #{vicetitlefour,jdbcType=VARCHAR}, #{imgfour,jdbcType=VARCHAR}, 
+      #{maintitlefive,jdbcType=VARCHAR}, #{vicetitlefive,jdbcType=VARCHAR}, #{imgfive,jdbcType=VARCHAR}, 
+      #{maintitlesix,jdbcType=VARCHAR}, #{vicetitlesix,jdbcType=VARCHAR}, #{imgsix,jdbcType=VARCHAR}, 
+      #{maintitleseven,jdbcType=VARCHAR}, #{vicetitleseven,jdbcType=VARCHAR}, #{imgseven,jdbcType=VARCHAR}, 
+      #{maintitleeight,jdbcType=VARCHAR}, #{vicetitleeight,jdbcType=VARCHAR}, #{imgeight,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.ProductInfo" >
+    insert into productInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productid != null" >
+        productiD,
+      </if>
+      <if test="productuuid != null" >
+        productUUID,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="userid != null" >
+        useriD,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="photourl != null" >
+        photoUrl,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="checkprogress != null" >
+        checkProgress,
+      </if>
+      <if test="checkeruuid != null" >
+        checkerUUID,
+      </if>
+      <if test="checkdate != null" >
+        checkDate,
+      </if>
+      <if test="targetmoney != null" >
+        targetMoney,
+      </if>
+      <if test="handymoney != null" >
+        handyMoney,
+      </if>
+      <if test="backuptimes != null" >
+        backupTimes,
+      </if>
+      <if test="reporttimes != null" >
+        reportTimes,
+      </if>
+      <if test="producttype != null" >
+        productType,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="chixutime != null" >
+        chixuTime,
+      </if>
+      <if test="endtag != null" >
+        endTag,
+      </if>
+      <if test="trafficmoney != null" >
+        trafficMoney,
+      </if>
+      <if test="trafficdate != null" >
+        trafficDate,
+      </if>
+      <if test="paysampleone != null" >
+        PaySampleOne,
+      </if>
+      <if test="sampleonedsp != null" >
+        SampleOneDsp,
+      </if>
+      <if test="paysampletwo != null" >
+        PaySampleTwo,
+      </if>
+      <if test="sampletwodsp != null" >
+        SampleTwoDsp,
+      </if>
+      <if test="paysamplethree != null" >
+        PaySampleThree,
+      </if>
+      <if test="samplethreedsp != null" >
+        SampleThreeDsp,
+      </if>
+      <if test="paysamplefour != null" >
+        PaySampleFour,
+      </if>
+      <if test="samplefourdsp != null" >
+        SampleFourDsp,
+      </if>
+      <if test="paysamplefive != null" >
+        PaySampleFive,
+      </if>
+      <if test="samplefivedsp != null" >
+        SampleFiveDsp,
+      </if>
+      <if test="aftermarket != null" >
+        Aftermarket,
+      </if>
+      <if test="maintitleone != null" >
+        mainTitleOne,
+      </if>
+      <if test="vicetitleone != null" >
+        viceTitleOne,
+      </if>
+      <if test="imgone != null" >
+        imgOne,
+      </if>
+      <if test="maintitletwo != null" >
+        mainTitleTwo,
+      </if>
+      <if test="vicetitletwo != null" >
+        viceTitleTwo,
+      </if>
+      <if test="imgtwo != null" >
+        imgTwo,
+      </if>
+      <if test="maintitlethree != null" >
+        mainTitleThree,
+      </if>
+      <if test="vicetitlethree != null" >
+        viceTitleThree,
+      </if>
+      <if test="imgthree != null" >
+        imgThree,
+      </if>
+      <if test="maintitlefour != null" >
+        mainTitleFour,
+      </if>
+      <if test="vicetitlefour != null" >
+        viceTitleFour,
+      </if>
+      <if test="imgfour != null" >
+        imgFour,
+      </if>
+      <if test="maintitlefive != null" >
+        mainTitleFive,
+      </if>
+      <if test="vicetitlefive != null" >
+        viceTitleFive,
+      </if>
+      <if test="imgfive != null" >
+        imgFive,
+      </if>
+      <if test="maintitlesix != null" >
+        mainTitleSix,
+      </if>
+      <if test="vicetitlesix != null" >
+        viceTitleSix,
+      </if>
+      <if test="imgsix != null" >
+        imgSix,
+      </if>
+      <if test="maintitleseven != null" >
+        mainTitleSeven,
+      </if>
+      <if test="vicetitleseven != null" >
+        viceTitleSeven,
+      </if>
+      <if test="imgseven != null" >
+        imgSeven,
+      </if>
+      <if test="maintitleeight != null" >
+        mainTitleEight,
+      </if>
+      <if test="vicetitleeight != null" >
+        viceTitleEight,
+      </if>
+      <if test="imgeight != null" >
+        imgEight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productid != null" >
+        #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="productuuid != null" >
+        #{productuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null" >
+        #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="checkprogress != null" >
+        #{checkprogress,jdbcType=VARCHAR},
+      </if>
+      <if test="checkeruuid != null" >
+        #{checkeruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetmoney != null" >
+        #{targetmoney,jdbcType=INTEGER},
+      </if>
+      <if test="handymoney != null" >
+        #{handymoney,jdbcType=INTEGER},
+      </if>
+      <if test="backuptimes != null" >
+        #{backuptimes,jdbcType=INTEGER},
+      </if>
+      <if test="reporttimes != null" >
+        #{reporttimes,jdbcType=INTEGER},
+      </if>
+      <if test="producttype != null" >
+        #{producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chixutime != null" >
+        #{chixutime,jdbcType=INTEGER},
+      </if>
+      <if test="endtag != null" >
+        #{endtag,jdbcType=INTEGER},
+      </if>
+      <if test="trafficmoney != null" >
+        #{trafficmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficdate != null" >
+        #{trafficdate,jdbcType=VARCHAR},
+      </if>
+      <if test="paysampleone != null" >
+        #{paysampleone,jdbcType=INTEGER},
+      </if>
+      <if test="sampleonedsp != null" >
+        #{sampleonedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysampletwo != null" >
+        #{paysampletwo,jdbcType=INTEGER},
+      </if>
+      <if test="sampletwodsp != null" >
+        #{sampletwodsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplethree != null" >
+        #{paysamplethree,jdbcType=INTEGER},
+      </if>
+      <if test="samplethreedsp != null" >
+        #{samplethreedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplefour != null" >
+        #{paysamplefour,jdbcType=INTEGER},
+      </if>
+      <if test="samplefourdsp != null" >
+        #{samplefourdsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplefive != null" >
+        #{paysamplefive,jdbcType=INTEGER},
+      </if>
+      <if test="samplefivedsp != null" >
+        #{samplefivedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="aftermarket != null" >
+        #{aftermarket,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleone != null" >
+        #{maintitleone,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleone != null" >
+        #{vicetitleone,jdbcType=VARCHAR},
+      </if>
+      <if test="imgone != null" >
+        #{imgone,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitletwo != null" >
+        #{maintitletwo,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitletwo != null" >
+        #{vicetitletwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgtwo != null" >
+        #{imgtwo,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlethree != null" >
+        #{maintitlethree,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlethree != null" >
+        #{vicetitlethree,jdbcType=VARCHAR},
+      </if>
+      <if test="imgthree != null" >
+        #{imgthree,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlefour != null" >
+        #{maintitlefour,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlefour != null" >
+        #{vicetitlefour,jdbcType=VARCHAR},
+      </if>
+      <if test="imgfour != null" >
+        #{imgfour,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlefive != null" >
+        #{maintitlefive,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlefive != null" >
+        #{vicetitlefive,jdbcType=VARCHAR},
+      </if>
+      <if test="imgfive != null" >
+        #{imgfive,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlesix != null" >
+        #{maintitlesix,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlesix != null" >
+        #{vicetitlesix,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsix != null" >
+        #{imgsix,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleseven != null" >
+        #{maintitleseven,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleseven != null" >
+        #{vicetitleseven,jdbcType=VARCHAR},
+      </if>
+      <if test="imgseven != null" >
+        #{imgseven,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleeight != null" >
+        #{maintitleeight,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleeight != null" >
+        #{vicetitleeight,jdbcType=VARCHAR},
+      </if>
+      <if test="imgeight != null" >
+        #{imgeight,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.ProductInfo" >
+    update productInfo
+    <set >
+      <if test="productuuid != null" >
+        productUUID = #{productuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        useriD = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null" >
+        photoUrl = #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="checkprogress != null" >
+        checkProgress = #{checkprogress,jdbcType=VARCHAR},
+      </if>
+      <if test="checkeruuid != null" >
+        checkerUUID = #{checkeruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        checkDate = #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetmoney != null" >
+        targetMoney = #{targetmoney,jdbcType=INTEGER},
+      </if>
+      <if test="handymoney != null" >
+        handyMoney = #{handymoney,jdbcType=INTEGER},
+      </if>
+      <if test="backuptimes != null" >
+        backupTimes = #{backuptimes,jdbcType=INTEGER},
+      </if>
+      <if test="reporttimes != null" >
+        reportTimes = #{reporttimes,jdbcType=INTEGER},
+      </if>
+      <if test="producttype != null" >
+        productType = #{producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chixutime != null" >
+        chixuTime = #{chixutime,jdbcType=INTEGER},
+      </if>
+      <if test="endtag != null" >
+        endTag = #{endtag,jdbcType=INTEGER},
+      </if>
+      <if test="trafficmoney != null" >
+        trafficMoney = #{trafficmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficdate != null" >
+        trafficDate = #{trafficdate,jdbcType=VARCHAR},
+      </if>
+      <if test="paysampleone != null" >
+        PaySampleOne = #{paysampleone,jdbcType=INTEGER},
+      </if>
+      <if test="sampleonedsp != null" >
+        SampleOneDsp = #{sampleonedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysampletwo != null" >
+        PaySampleTwo = #{paysampletwo,jdbcType=INTEGER},
+      </if>
+      <if test="sampletwodsp != null" >
+        SampleTwoDsp = #{sampletwodsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplethree != null" >
+        PaySampleThree = #{paysamplethree,jdbcType=INTEGER},
+      </if>
+      <if test="samplethreedsp != null" >
+        SampleThreeDsp = #{samplethreedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplefour != null" >
+        PaySampleFour = #{paysamplefour,jdbcType=INTEGER},
+      </if>
+      <if test="samplefourdsp != null" >
+        SampleFourDsp = #{samplefourdsp,jdbcType=VARCHAR},
+      </if>
+      <if test="paysamplefive != null" >
+        PaySampleFive = #{paysamplefive,jdbcType=INTEGER},
+      </if>
+      <if test="samplefivedsp != null" >
+        SampleFiveDsp = #{samplefivedsp,jdbcType=VARCHAR},
+      </if>
+      <if test="aftermarket != null" >
+        Aftermarket = #{aftermarket,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleone != null" >
+        mainTitleOne = #{maintitleone,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleone != null" >
+        viceTitleOne = #{vicetitleone,jdbcType=VARCHAR},
+      </if>
+      <if test="imgone != null" >
+        imgOne = #{imgone,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitletwo != null" >
+        mainTitleTwo = #{maintitletwo,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitletwo != null" >
+        viceTitleTwo = #{vicetitletwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgtwo != null" >
+        imgTwo = #{imgtwo,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlethree != null" >
+        mainTitleThree = #{maintitlethree,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlethree != null" >
+        viceTitleThree = #{vicetitlethree,jdbcType=VARCHAR},
+      </if>
+      <if test="imgthree != null" >
+        imgThree = #{imgthree,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlefour != null" >
+        mainTitleFour = #{maintitlefour,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlefour != null" >
+        viceTitleFour = #{vicetitlefour,jdbcType=VARCHAR},
+      </if>
+      <if test="imgfour != null" >
+        imgFour = #{imgfour,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlefive != null" >
+        mainTitleFive = #{maintitlefive,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlefive != null" >
+        viceTitleFive = #{vicetitlefive,jdbcType=VARCHAR},
+      </if>
+      <if test="imgfive != null" >
+        imgFive = #{imgfive,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitlesix != null" >
+        mainTitleSix = #{maintitlesix,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitlesix != null" >
+        viceTitleSix = #{vicetitlesix,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsix != null" >
+        imgSix = #{imgsix,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleseven != null" >
+        mainTitleSeven = #{maintitleseven,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleseven != null" >
+        viceTitleSeven = #{vicetitleseven,jdbcType=VARCHAR},
+      </if>
+      <if test="imgseven != null" >
+        imgSeven = #{imgseven,jdbcType=VARCHAR},
+      </if>
+      <if test="maintitleeight != null" >
+        mainTitleEight = #{maintitleeight,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitleeight != null" >
+        viceTitleEight = #{vicetitleeight,jdbcType=VARCHAR},
+      </if>
+      <if test="imgeight != null" >
+        imgEight = #{imgeight,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where productiD = #{productid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.ProductInfo" >
+    update productInfo
+    set productUUID = #{productuuid,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      useriD = #{userid,jdbcType=BIGINT},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      photoUrl = #{photourl,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      checkProgress = #{checkprogress,jdbcType=VARCHAR},
+      checkerUUID = #{checkeruuid,jdbcType=VARCHAR},
+      checkDate = #{checkdate,jdbcType=TIMESTAMP},
+      targetMoney = #{targetmoney,jdbcType=INTEGER},
+      handyMoney = #{handymoney,jdbcType=INTEGER},
+      backupTimes = #{backuptimes,jdbcType=INTEGER},
+      reportTimes = #{reporttimes,jdbcType=INTEGER},
+      productType = #{producttype,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      chixuTime = #{chixutime,jdbcType=INTEGER},
+      endTag = #{endtag,jdbcType=INTEGER},
+      trafficMoney = #{trafficmoney,jdbcType=VARCHAR},
+      trafficDate = #{trafficdate,jdbcType=VARCHAR},
+      PaySampleOne = #{paysampleone,jdbcType=INTEGER},
+      SampleOneDsp = #{sampleonedsp,jdbcType=VARCHAR},
+      PaySampleTwo = #{paysampletwo,jdbcType=INTEGER},
+      SampleTwoDsp = #{sampletwodsp,jdbcType=VARCHAR},
+      PaySampleThree = #{paysamplethree,jdbcType=INTEGER},
+      SampleThreeDsp = #{samplethreedsp,jdbcType=VARCHAR},
+      PaySampleFour = #{paysamplefour,jdbcType=INTEGER},
+      SampleFourDsp = #{samplefourdsp,jdbcType=VARCHAR},
+      PaySampleFive = #{paysamplefive,jdbcType=INTEGER},
+      SampleFiveDsp = #{samplefivedsp,jdbcType=VARCHAR},
+      Aftermarket = #{aftermarket,jdbcType=VARCHAR},
+      mainTitleOne = #{maintitleone,jdbcType=VARCHAR},
+      viceTitleOne = #{vicetitleone,jdbcType=VARCHAR},
+      imgOne = #{imgone,jdbcType=VARCHAR},
+      mainTitleTwo = #{maintitletwo,jdbcType=VARCHAR},
+      viceTitleTwo = #{vicetitletwo,jdbcType=VARCHAR},
+      imgTwo = #{imgtwo,jdbcType=VARCHAR},
+      mainTitleThree = #{maintitlethree,jdbcType=VARCHAR},
+      viceTitleThree = #{vicetitlethree,jdbcType=VARCHAR},
+      imgThree = #{imgthree,jdbcType=VARCHAR},
+      mainTitleFour = #{maintitlefour,jdbcType=VARCHAR},
+      viceTitleFour = #{vicetitlefour,jdbcType=VARCHAR},
+      imgFour = #{imgfour,jdbcType=VARCHAR},
+      mainTitleFive = #{maintitlefive,jdbcType=VARCHAR},
+      viceTitleFive = #{vicetitlefive,jdbcType=VARCHAR},
+      imgFive = #{imgfive,jdbcType=VARCHAR},
+      mainTitleSix = #{maintitlesix,jdbcType=VARCHAR},
+      viceTitleSix = #{vicetitlesix,jdbcType=VARCHAR},
+      imgSix = #{imgsix,jdbcType=VARCHAR},
+      mainTitleSeven = #{maintitleseven,jdbcType=VARCHAR},
+      viceTitleSeven = #{vicetitleseven,jdbcType=VARCHAR},
+      imgSeven = #{imgseven,jdbcType=VARCHAR},
+      mainTitleEight = #{maintitleeight,jdbcType=VARCHAR},
+      viceTitleEight = #{vicetitleeight,jdbcType=VARCHAR},
+      imgEight = #{imgeight,jdbcType=VARCHAR}
+    where productiD = #{productid,jdbcType=BIGINT}
+  </update>
+</mapper>

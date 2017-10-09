@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.StatisticsMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Statistics" >
+    <id column="statisticsID" property="statisticsid" jdbcType="INTEGER" />
+    <result column="statisticsUUID" property="statisticsuuid" jdbcType="VARCHAR" />
+    <result column="companytotal" property="companytotal" jdbcType="INTEGER" />
+    <result column="employeetotal" property="employeetotal" jdbcType="INTEGER" />
+    <result column="employeeDabingMoney" property="employeedabingmoney" jdbcType="INTEGER" />
+    <result column="employeeDabingTotal" property="employeedabingtotal" jdbcType="INTEGER" />
+    <result column="employeeYiwaiMoney" property="employeeyiwaimoney" jdbcType="INTEGER" />
+    <result column="employeeYiwaiTotal" property="employeeyiwaitotal" jdbcType="INTEGER" />
+    <result column="childrenTotal" property="childrentotal" jdbcType="INTEGER" />
+    <result column="childrenMoney" property="childrenmoney" jdbcType="INTEGER" />
+    <result column="youngTotal" property="youngtotal" jdbcType="INTEGER" />
+    <result column="youngMoney" property="youngmoney" jdbcType="INTEGER" />
+    <result column="oldTotal" property="oldtotal" jdbcType="INTEGER" />
+    <result column="oldMoney" property="oldmoney" jdbcType="INTEGER" />
+    <result column="zongHeyiwaiTotal" property="zongheyiwaitotal" jdbcType="INTEGER" />
+    <result column="zongHeyiwaiMoney" property="zongheyiwaimoney" jdbcType="INTEGER" />
+    <result column="peopletotal" property="peopletotal" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    statisticsID, statisticsUUID, companytotal, employeetotal, employeeDabingMoney, employeeDabingTotal, 
+    employeeYiwaiMoney, employeeYiwaiTotal, childrenTotal, childrenMoney, youngTotal, 
+    youngMoney, oldTotal, oldMoney, zongHeyiwaiTotal, zongHeyiwaiMoney, peopletotal
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from statistics
+    where statisticsID = #{statisticsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from statistics
+    where statisticsID = #{statisticsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Statistics" >
+    insert into statistics (statisticsID, statisticsUUID, companytotal, 
+      employeetotal, employeeDabingMoney, employeeDabingTotal, 
+      employeeYiwaiMoney, employeeYiwaiTotal, 
+      childrenTotal, childrenMoney, youngTotal, 
+      youngMoney, oldTotal, oldMoney, 
+      zongHeyiwaiTotal, zongHeyiwaiMoney, peopletotal
+      )
+    values (#{statisticsid,jdbcType=INTEGER}, #{statisticsuuid,jdbcType=VARCHAR}, #{companytotal,jdbcType=INTEGER}, 
+      #{employeetotal,jdbcType=INTEGER}, #{employeedabingmoney,jdbcType=INTEGER}, #{employeedabingtotal,jdbcType=INTEGER}, 
+      #{employeeyiwaimoney,jdbcType=INTEGER}, #{employeeyiwaitotal,jdbcType=INTEGER}, 
+      #{childrentotal,jdbcType=INTEGER}, #{childrenmoney,jdbcType=INTEGER}, #{youngtotal,jdbcType=INTEGER}, 
+      #{youngmoney,jdbcType=INTEGER}, #{oldtotal,jdbcType=INTEGER}, #{oldmoney,jdbcType=INTEGER}, 
+      #{zongheyiwaitotal,jdbcType=INTEGER}, #{zongheyiwaimoney,jdbcType=INTEGER}, #{peopletotal,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Statistics" >
+    insert into statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="statisticsid != null" >
+        statisticsID,
+      </if>
+      <if test="statisticsuuid != null" >
+        statisticsUUID,
+      </if>
+      <if test="companytotal != null" >
+        companytotal,
+      </if>
+      <if test="employeetotal != null" >
+        employeetotal,
+      </if>
+      <if test="employeedabingmoney != null" >
+        employeeDabingMoney,
+      </if>
+      <if test="employeedabingtotal != null" >
+        employeeDabingTotal,
+      </if>
+      <if test="employeeyiwaimoney != null" >
+        employeeYiwaiMoney,
+      </if>
+      <if test="employeeyiwaitotal != null" >
+        employeeYiwaiTotal,
+      </if>
+      <if test="childrentotal != null" >
+        childrenTotal,
+      </if>
+      <if test="childrenmoney != null" >
+        childrenMoney,
+      </if>
+      <if test="youngtotal != null" >
+        youngTotal,
+      </if>
+      <if test="youngmoney != null" >
+        youngMoney,
+      </if>
+      <if test="oldtotal != null" >
+        oldTotal,
+      </if>
+      <if test="oldmoney != null" >
+        oldMoney,
+      </if>
+      <if test="zongheyiwaitotal != null" >
+        zongHeyiwaiTotal,
+      </if>
+      <if test="zongheyiwaimoney != null" >
+        zongHeyiwaiMoney,
+      </if>
+      <if test="peopletotal != null" >
+        peopletotal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="statisticsid != null" >
+        #{statisticsid,jdbcType=INTEGER},
+      </if>
+      <if test="statisticsuuid != null" >
+        #{statisticsuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="companytotal != null" >
+        #{companytotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeetotal != null" >
+        #{employeetotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeedabingmoney != null" >
+        #{employeedabingmoney,jdbcType=INTEGER},
+      </if>
+      <if test="employeedabingtotal != null" >
+        #{employeedabingtotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeeyiwaimoney != null" >
+        #{employeeyiwaimoney,jdbcType=INTEGER},
+      </if>
+      <if test="employeeyiwaitotal != null" >
+        #{employeeyiwaitotal,jdbcType=INTEGER},
+      </if>
+      <if test="childrentotal != null" >
+        #{childrentotal,jdbcType=INTEGER},
+      </if>
+      <if test="childrenmoney != null" >
+        #{childrenmoney,jdbcType=INTEGER},
+      </if>
+      <if test="youngtotal != null" >
+        #{youngtotal,jdbcType=INTEGER},
+      </if>
+      <if test="youngmoney != null" >
+        #{youngmoney,jdbcType=INTEGER},
+      </if>
+      <if test="oldtotal != null" >
+        #{oldtotal,jdbcType=INTEGER},
+      </if>
+      <if test="oldmoney != null" >
+        #{oldmoney,jdbcType=INTEGER},
+      </if>
+      <if test="zongheyiwaitotal != null" >
+        #{zongheyiwaitotal,jdbcType=INTEGER},
+      </if>
+      <if test="zongheyiwaimoney != null" >
+        #{zongheyiwaimoney,jdbcType=INTEGER},
+      </if>
+      <if test="peopletotal != null" >
+        #{peopletotal,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Statistics" >
+    update statistics
+    <set >
+      <if test="statisticsuuid != null" >
+        statisticsUUID = #{statisticsuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="companytotal != null" >
+        companytotal = #{companytotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeetotal != null" >
+        employeetotal = #{employeetotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeedabingmoney != null" >
+        employeeDabingMoney = #{employeedabingmoney,jdbcType=INTEGER},
+      </if>
+      <if test="employeedabingtotal != null" >
+        employeeDabingTotal = #{employeedabingtotal,jdbcType=INTEGER},
+      </if>
+      <if test="employeeyiwaimoney != null" >
+        employeeYiwaiMoney = #{employeeyiwaimoney,jdbcType=INTEGER},
+      </if>
+      <if test="employeeyiwaitotal != null" >
+        employeeYiwaiTotal = #{employeeyiwaitotal,jdbcType=INTEGER},
+      </if>
+      <if test="childrentotal != null" >
+        childrenTotal = #{childrentotal,jdbcType=INTEGER},
+      </if>
+      <if test="childrenmoney != null" >
+        childrenMoney = #{childrenmoney,jdbcType=INTEGER},
+      </if>
+      <if test="youngtotal != null" >
+        youngTotal = #{youngtotal,jdbcType=INTEGER},
+      </if>
+      <if test="youngmoney != null" >
+        youngMoney = #{youngmoney,jdbcType=INTEGER},
+      </if>
+      <if test="oldtotal != null" >
+        oldTotal = #{oldtotal,jdbcType=INTEGER},
+      </if>
+      <if test="oldmoney != null" >
+        oldMoney = #{oldmoney,jdbcType=INTEGER},
+      </if>
+      <if test="zongheyiwaitotal != null" >
+        zongHeyiwaiTotal = #{zongheyiwaitotal,jdbcType=INTEGER},
+      </if>
+      <if test="zongheyiwaimoney != null" >
+        zongHeyiwaiMoney = #{zongheyiwaimoney,jdbcType=INTEGER},
+      </if>
+      <if test="peopletotal != null" >
+        peopletotal = #{peopletotal,jdbcType=INTEGER},
+      </if>
+    </set>
+    where statisticsID = #{statisticsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Statistics" >
+    update statistics
+    set statisticsUUID = #{statisticsuuid,jdbcType=VARCHAR},
+      companytotal = #{companytotal,jdbcType=INTEGER},
+      employeetotal = #{employeetotal,jdbcType=INTEGER},
+      employeeDabingMoney = #{employeedabingmoney,jdbcType=INTEGER},
+      employeeDabingTotal = #{employeedabingtotal,jdbcType=INTEGER},
+      employeeYiwaiMoney = #{employeeyiwaimoney,jdbcType=INTEGER},
+      employeeYiwaiTotal = #{employeeyiwaitotal,jdbcType=INTEGER},
+      childrenTotal = #{childrentotal,jdbcType=INTEGER},
+      childrenMoney = #{childrenmoney,jdbcType=INTEGER},
+      youngTotal = #{youngtotal,jdbcType=INTEGER},
+      youngMoney = #{youngmoney,jdbcType=INTEGER},
+      oldTotal = #{oldtotal,jdbcType=INTEGER},
+      oldMoney = #{oldmoney,jdbcType=INTEGER},
+      zongHeyiwaiTotal = #{zongheyiwaitotal,jdbcType=INTEGER},
+      zongHeyiwaiMoney = #{zongheyiwaimoney,jdbcType=INTEGER},
+      peopletotal = #{peopletotal,jdbcType=INTEGER}
+    where statisticsID = #{statisticsid,jdbcType=INTEGER}
+  </update>
+</mapper>

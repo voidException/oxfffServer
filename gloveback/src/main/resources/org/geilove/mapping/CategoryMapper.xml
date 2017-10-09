@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Category" >
+    <id column="categoryID" property="categoryid" jdbcType="INTEGER" />
+    <result column="categoryUUID" property="categoryuuid" jdbcType="VARCHAR" />
+    <result column="categoryType" property="categorytype" jdbcType="VARCHAR" />
+    <result column="joinTotal" property="jointotal" jdbcType="INTEGER" />
+    <result column="historyTotalFee" property="historytotalfee" jdbcType="DECIMAL" />
+    <result column="nowFee" property="nowfee" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    categoryID, categoryUUID, categoryType, joinTotal, historyTotalFee, nowFee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where categoryID = #{categoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from category
+    where categoryID = #{categoryid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Category" >
+    insert into category (categoryID, categoryUUID, categoryType, 
+      joinTotal, historyTotalFee, nowFee
+      )
+    values (#{categoryid,jdbcType=INTEGER}, #{categoryuuid,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, 
+      #{jointotal,jdbcType=INTEGER}, #{historytotalfee,jdbcType=DECIMAL}, #{nowfee,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Category" >
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryid != null" >
+        categoryID,
+      </if>
+      <if test="categoryuuid != null" >
+        categoryUUID,
+      </if>
+      <if test="categorytype != null" >
+        categoryType,
+      </if>
+      <if test="jointotal != null" >
+        joinTotal,
+      </if>
+      <if test="historytotalfee != null" >
+        historyTotalFee,
+      </if>
+      <if test="nowfee != null" >
+        nowFee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="categoryuuid != null" >
+        #{categoryuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="jointotal != null" >
+        #{jointotal,jdbcType=INTEGER},
+      </if>
+      <if test="historytotalfee != null" >
+        #{historytotalfee,jdbcType=DECIMAL},
+      </if>
+      <if test="nowfee != null" >
+        #{nowfee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Category" >
+    update category
+    <set >
+      <if test="categoryuuid != null" >
+        categoryUUID = #{categoryuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        categoryType = #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="jointotal != null" >
+        joinTotal = #{jointotal,jdbcType=INTEGER},
+      </if>
+      <if test="historytotalfee != null" >
+        historyTotalFee = #{historytotalfee,jdbcType=DECIMAL},
+      </if>
+      <if test="nowfee != null" >
+        nowFee = #{nowfee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where categoryID = #{categoryid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Category" >
+    update category
+    set categoryUUID = #{categoryuuid,jdbcType=VARCHAR},
+      categoryType = #{categorytype,jdbcType=VARCHAR},
+      joinTotal = #{jointotal,jdbcType=INTEGER},
+      historyTotalFee = #{historytotalfee,jdbcType=DECIMAL},
+      nowFee = #{nowfee,jdbcType=DECIMAL}
+    where categoryID = #{categoryid,jdbcType=INTEGER}
+  </update>
+</mapper>

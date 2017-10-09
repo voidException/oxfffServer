@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.CashMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Cash" >
+    <id column="cashID" property="cashid" jdbcType="BIGINT" />
+    <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
+    <result column="userIDCash" property="useridcash" jdbcType="BIGINT" />
+    <result column="beHelpUserID" property="behelpuserid" jdbcType="BIGINT" />
+    <result column="beHelpUserNickName" property="behelpusernickname" jdbcType="VARCHAR" />
+    <result column="beHelpUserName" property="behelpusername" jdbcType="VARCHAR" />
+    <result column="dutyUserID" property="dutyuserid" jdbcType="BIGINT" />
+    <result column="dutyUserNickName" property="dutyusernickname" jdbcType="VARCHAR" />
+    <result column="dutyUserName" property="dutyusername" jdbcType="VARCHAR" />
+    <result column="supUserID" property="supuserid" jdbcType="BIGINT" />
+    <result column="superUserNickName" property="superusernickname" jdbcType="VARCHAR" />
+    <result column="superUserName" property="superusername" jdbcType="VARCHAR" />
+    <result column="userIDCircle" property="useridcircle" jdbcType="INTEGER" />
+    <result column="circleUserName" property="circleusername" jdbcType="VARCHAR" />
+    <result column="circleUserNickName" property="circleusernickname" jdbcType="VARCHAR" />
+    <result column="promiseType" property="promisetype" jdbcType="INTEGER" />
+    <result column="chengnuoType" property="chengnuotype" jdbcType="VARCHAR" />
+    <result column="promiseMiaoshu" property="promisemiaoshu" jdbcType="VARCHAR" />
+    <result column="proveOne" property="proveone" jdbcType="INTEGER" />
+    <result column="proveTwo" property="provetwo" jdbcType="INTEGER" />
+    <result column="proveThree" property="provethree" jdbcType="INTEGER" />
+    <result column="proveFour" property="provefour" jdbcType="INTEGER" />
+    <result column="proveFive" property="provefive" jdbcType="INTEGER" />
+    <result column="countState" property="countstate" jdbcType="TINYINT" />
+    <result column="TargetCash" property="targetcash" jdbcType="INTEGER" />
+    <result column="realCash" property="realcash" jdbcType="INTEGER" />
+    <result column="openTime" property="opentime" jdbcType="TIMESTAMP" />
+    <result column="closeTime" property="closetime" jdbcType="TIMESTAMP" />
+    <result column="getMoneyTag" property="getmoneytag" jdbcType="TINYINT" />
+    <result column="cashOK" property="cashok" jdbcType="TINYINT" />
+    <result column="spendMoney" property="spendmoney" jdbcType="INTEGER" />
+    <result column="sumaffirm" property="sumaffirm" jdbcType="INTEGER" />
+    <result column="sumZhuanfa" property="sumzhuanfa" jdbcType="INTEGER" />
+    <result column="sumAttention" property="sumattention" jdbcType="INTEGER" />
+    <result column="sumBackup" property="sumbackup" jdbcType="INTEGER" />
+    <result column="sumManBackup" property="summanbackup" jdbcType="INTEGER" />
+    <result column="sumDays" property="sumdays" jdbcType="INTEGER" />
+    <result column="progressState" property="progressstate" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="offlinePassDate" property="offlinepassdate" jdbcType="TIMESTAMP" />
+    <result column="moneyUseUpDate" property="moneyuseupdate" jdbcType="TIMESTAMP" />
+    <result column="lastend" property="lastend" jdbcType="TIMESTAMP" />
+    <result column="acceptMoneyMan" property="acceptmoneyman" jdbcType="VARCHAR" />
+    <result column="acceptMoneyManiD" property="acceptmoneymanid" jdbcType="VARCHAR" />
+    <result column="checkUseriD" property="checkuserid" jdbcType="BIGINT" />
+    <result column="checkUserUUID" property="checkuseruuid" jdbcType="VARCHAR" />
+    <result column="checkUserNickname" property="checkusernickname" jdbcType="VARCHAR" />
+    <result column="backupOne" property="backupone" jdbcType="VARCHAR" />
+    <result column="backupTwo" property="backuptwo" jdbcType="VARCHAR" />
+    <result column="backupThree" property="backupthree" jdbcType="VARCHAR" />
+    <result column="backupFour" property="backupfour" jdbcType="VARCHAR" />
+    <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
+    <result column="backupSix" property="backupsix" jdbcType="INTEGER" />
+    <result column="promiseDsp" property="promisedsp" jdbcType="INTEGER" />
+    <result column="cashTweetiD" property="cashtweetid" jdbcType="BIGINT" />
+    <result column="cashTweetUUID" property="cashtweetuuid" jdbcType="VARCHAR" />
+    <result column="cashCityName" property="cashcityname" jdbcType="VARCHAR" />
+    <result column="cashCityCode" property="cashcitycode" jdbcType="VARCHAR" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cashID, cashUUID, userIDCash, beHelpUserID, beHelpUserNickName, beHelpUserName, dutyUserID, 
+    dutyUserNickName, dutyUserName, supUserID, superUserNickName, superUserName, userIDCircle, 
+    circleUserName, circleUserNickName, promiseType, chengnuoType, promiseMiaoshu, proveOne, 
+    proveTwo, proveThree, proveFour, proveFive, countState, TargetCash, realCash, openTime, 
+    closeTime, getMoneyTag, cashOK, spendMoney, sumaffirm, sumZhuanfa, sumAttention, 
+    sumBackup, sumManBackup, sumDays, progressState, createDate, offlinePassDate, moneyUseUpDate, 
+    lastend, acceptMoneyMan, acceptMoneyManiD, checkUseriD, checkUserUUID, checkUserNickname, 
+    backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix, promiseDsp, 
+    cashTweetiD, cashTweetUUID, cashCityName, cashCityCode, userUUID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cash
+    where cashID = #{cashid,jdbcType=BIGINT}
+  </select>
+<!--自定义-->
+  <select id="selectByCashUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from cash
+    where cashUUID = #{cashuuid,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cash
+    where cashID = #{cashid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Cash" >
+    insert into cash (cashID, cashUUID, userIDCash, 
+      beHelpUserID, beHelpUserNickName, beHelpUserName, 
+      dutyUserID, dutyUserNickName, dutyUserName, 
+      supUserID, superUserNickName, superUserName, 
+      userIDCircle, circleUserName, circleUserNickName, 
+      promiseType, chengnuoType, promiseMiaoshu, 
+      proveOne, proveTwo, proveThree, 
+      proveFour, proveFive, countState, 
+      TargetCash, realCash, openTime, 
+      closeTime, getMoneyTag, cashOK, 
+      spendMoney, sumaffirm, sumZhuanfa, 
+      sumAttention, sumBackup, sumManBackup, 
+      sumDays, progressState, createDate, 
+      offlinePassDate, moneyUseUpDate, lastend, 
+      acceptMoneyMan, acceptMoneyManiD, checkUseriD, 
+      checkUserUUID, checkUserNickname, backupOne, 
+      backupTwo, backupThree, backupFour, 
+      backupFive, backupSix, promiseDsp, 
+      cashTweetiD, cashTweetUUID, cashCityName, 
+      cashCityCode, userUUID)
+    values (#{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR}, #{useridcash,jdbcType=BIGINT}, 
+      #{behelpuserid,jdbcType=BIGINT}, #{behelpusernickname,jdbcType=VARCHAR}, #{behelpusername,jdbcType=VARCHAR}, 
+      #{dutyuserid,jdbcType=BIGINT}, #{dutyusernickname,jdbcType=VARCHAR}, #{dutyusername,jdbcType=VARCHAR}, 
+      #{supuserid,jdbcType=BIGINT}, #{superusernickname,jdbcType=VARCHAR}, #{superusername,jdbcType=VARCHAR}, 
+      #{useridcircle,jdbcType=INTEGER}, #{circleusername,jdbcType=VARCHAR}, #{circleusernickname,jdbcType=VARCHAR}, 
+      #{promisetype,jdbcType=INTEGER}, #{chengnuotype,jdbcType=VARCHAR}, #{promisemiaoshu,jdbcType=VARCHAR}, 
+      #{proveone,jdbcType=INTEGER}, #{provetwo,jdbcType=INTEGER}, #{provethree,jdbcType=INTEGER}, 
+      #{provefour,jdbcType=INTEGER}, #{provefive,jdbcType=INTEGER}, #{countstate,jdbcType=TINYINT}, 
+      #{targetcash,jdbcType=INTEGER}, #{realcash,jdbcType=INTEGER}, #{opentime,jdbcType=TIMESTAMP}, 
+      #{closetime,jdbcType=TIMESTAMP}, #{getmoneytag,jdbcType=TINYINT}, #{cashok,jdbcType=TINYINT}, 
+      #{spendmoney,jdbcType=INTEGER}, #{sumaffirm,jdbcType=INTEGER}, #{sumzhuanfa,jdbcType=INTEGER}, 
+      #{sumattention,jdbcType=INTEGER}, #{sumbackup,jdbcType=INTEGER}, #{summanbackup,jdbcType=INTEGER}, 
+      #{sumdays,jdbcType=INTEGER}, #{progressstate,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{offlinepassdate,jdbcType=TIMESTAMP}, #{moneyuseupdate,jdbcType=TIMESTAMP}, #{lastend,jdbcType=TIMESTAMP}, 
+      #{acceptmoneyman,jdbcType=VARCHAR}, #{acceptmoneymanid,jdbcType=VARCHAR}, #{checkuserid,jdbcType=BIGINT}, 
+      #{checkuseruuid,jdbcType=VARCHAR}, #{checkusernickname,jdbcType=VARCHAR}, #{backupone,jdbcType=VARCHAR}, 
+      #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
+      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{promisedsp,jdbcType=INTEGER}, 
+      #{cashtweetid,jdbcType=BIGINT}, #{cashtweetuuid,jdbcType=VARCHAR}, #{cashcityname,jdbcType=VARCHAR}, 
+      #{cashcitycode,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Cash" >
+    insert into cash
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cashid != null" >
+        cashID,
+      </if>
+      <if test="cashuuid != null" >
+        cashUUID,
+      </if>
+      <if test="useridcash != null" >
+        userIDCash,
+      </if>
+      <if test="behelpuserid != null" >
+        beHelpUserID,
+      </if>
+      <if test="behelpusernickname != null" >
+        beHelpUserNickName,
+      </if>
+      <if test="behelpusername != null" >
+        beHelpUserName,
+      </if>
+      <if test="dutyuserid != null" >
+        dutyUserID,
+      </if>
+      <if test="dutyusernickname != null" >
+        dutyUserNickName,
+      </if>
+      <if test="dutyusername != null" >
+        dutyUserName,
+      </if>
+      <if test="supuserid != null" >
+        supUserID,
+      </if>
+      <if test="superusernickname != null" >
+        superUserNickName,
+      </if>
+      <if test="superusername != null" >
+        superUserName,
+      </if>
+      <if test="useridcircle != null" >
+        userIDCircle,
+      </if>
+      <if test="circleusername != null" >
+        circleUserName,
+      </if>
+      <if test="circleusernickname != null" >
+        circleUserNickName,
+      </if>
+      <if test="promisetype != null" >
+        promiseType,
+      </if>
+      <if test="chengnuotype != null" >
+        chengnuoType,
+      </if>
+      <if test="promisemiaoshu != null" >
+        promiseMiaoshu,
+      </if>
+      <if test="proveone != null" >
+        proveOne,
+      </if>
+      <if test="provetwo != null" >
+        proveTwo,
+      </if>
+      <if test="provethree != null" >
+        proveThree,
+      </if>
+      <if test="provefour != null" >
+        proveFour,
+      </if>
+      <if test="provefive != null" >
+        proveFive,
+      </if>
+      <if test="countstate != null" >
+        countState,
+      </if>
+      <if test="targetcash != null" >
+        TargetCash,
+      </if>
+      <if test="realcash != null" >
+        realCash,
+      </if>
+      <if test="opentime != null" >
+        openTime,
+      </if>
+      <if test="closetime != null" >
+        closeTime,
+      </if>
+      <if test="getmoneytag != null" >
+        getMoneyTag,
+      </if>
+      <if test="cashok != null" >
+        cashOK,
+      </if>
+      <if test="spendmoney != null" >
+        spendMoney,
+      </if>
+      <if test="sumaffirm != null" >
+        sumaffirm,
+      </if>
+      <if test="sumzhuanfa != null" >
+        sumZhuanfa,
+      </if>
+      <if test="sumattention != null" >
+        sumAttention,
+      </if>
+      <if test="sumbackup != null" >
+        sumBackup,
+      </if>
+      <if test="summanbackup != null" >
+        sumManBackup,
+      </if>
+      <if test="sumdays != null" >
+        sumDays,
+      </if>
+      <if test="progressstate != null" >
+        progressState,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="offlinepassdate != null" >
+        offlinePassDate,
+      </if>
+      <if test="moneyuseupdate != null" >
+        moneyUseUpDate,
+      </if>
+      <if test="lastend != null" >
+        lastend,
+      </if>
+      <if test="acceptmoneyman != null" >
+        acceptMoneyMan,
+      </if>
+      <if test="acceptmoneymanid != null" >
+        acceptMoneyManiD,
+      </if>
+      <if test="checkuserid != null" >
+        checkUseriD,
+      </if>
+      <if test="checkuseruuid != null" >
+        checkUserUUID,
+      </if>
+      <if test="checkusernickname != null" >
+        checkUserNickname,
+      </if>
+      <if test="backupone != null" >
+        backupOne,
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo,
+      </if>
+      <if test="backupthree != null" >
+        backupThree,
+      </if>
+      <if test="backupfour != null" >
+        backupFour,
+      </if>
+      <if test="backupfive != null" >
+        backupFive,
+      </if>
+      <if test="backupsix != null" >
+        backupSix,
+      </if>
+      <if test="promisedsp != null" >
+        promiseDsp,
+      </if>
+      <if test="cashtweetid != null" >
+        cashTweetiD,
+      </if>
+      <if test="cashtweetuuid != null" >
+        cashTweetUUID,
+      </if>
+      <if test="cashcityname != null" >
+        cashCityName,
+      </if>
+      <if test="cashcitycode != null" >
+        cashCityCode,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cashid != null" >
+        #{cashid,jdbcType=BIGINT},
+      </if>
+      <if test="cashuuid != null" >
+        #{cashuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useridcash != null" >
+        #{useridcash,jdbcType=BIGINT},
+      </if>
+      <if test="behelpuserid != null" >
+        #{behelpuserid,jdbcType=BIGINT},
+      </if>
+      <if test="behelpusernickname != null" >
+        #{behelpusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="behelpusername != null" >
+        #{behelpusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyuserid != null" >
+        #{dutyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="dutyusernickname != null" >
+        #{dutyusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyusername != null" >
+        #{dutyusername,jdbcType=VARCHAR},
+      </if>
+      <if test="supuserid != null" >
+        #{supuserid,jdbcType=BIGINT},
+      </if>
+      <if test="superusernickname != null" >
+        #{superusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="superusername != null" >
+        #{superusername,jdbcType=VARCHAR},
+      </if>
+      <if test="useridcircle != null" >
+        #{useridcircle,jdbcType=INTEGER},
+      </if>
+      <if test="circleusername != null" >
+        #{circleusername,jdbcType=VARCHAR},
+      </if>
+      <if test="circleusernickname != null" >
+        #{circleusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="promisetype != null" >
+        #{promisetype,jdbcType=INTEGER},
+      </if>
+      <if test="chengnuotype != null" >
+        #{chengnuotype,jdbcType=VARCHAR},
+      </if>
+      <if test="promisemiaoshu != null" >
+        #{promisemiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="proveone != null" >
+        #{proveone,jdbcType=INTEGER},
+      </if>
+      <if test="provetwo != null" >
+        #{provetwo,jdbcType=INTEGER},
+      </if>
+      <if test="provethree != null" >
+        #{provethree,jdbcType=INTEGER},
+      </if>
+      <if test="provefour != null" >
+        #{provefour,jdbcType=INTEGER},
+      </if>
+      <if test="provefive != null" >
+        #{provefive,jdbcType=INTEGER},
+      </if>
+      <if test="countstate != null" >
+        #{countstate,jdbcType=TINYINT},
+      </if>
+      <if test="targetcash != null" >
+        #{targetcash,jdbcType=INTEGER},
+      </if>
+      <if test="realcash != null" >
+        #{realcash,jdbcType=INTEGER},
+      </if>
+      <if test="opentime != null" >
+        #{opentime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closetime != null" >
+        #{closetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getmoneytag != null" >
+        #{getmoneytag,jdbcType=TINYINT},
+      </if>
+      <if test="cashok != null" >
+        #{cashok,jdbcType=TINYINT},
+      </if>
+      <if test="spendmoney != null" >
+        #{spendmoney,jdbcType=INTEGER},
+      </if>
+      <if test="sumaffirm != null" >
+        #{sumaffirm,jdbcType=INTEGER},
+      </if>
+      <if test="sumzhuanfa != null" >
+        #{sumzhuanfa,jdbcType=INTEGER},
+      </if>
+      <if test="sumattention != null" >
+        #{sumattention,jdbcType=INTEGER},
+      </if>
+      <if test="sumbackup != null" >
+        #{sumbackup,jdbcType=INTEGER},
+      </if>
+      <if test="summanbackup != null" >
+        #{summanbackup,jdbcType=INTEGER},
+      </if>
+      <if test="sumdays != null" >
+        #{sumdays,jdbcType=INTEGER},
+      </if>
+      <if test="progressstate != null" >
+        #{progressstate,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offlinepassdate != null" >
+        #{offlinepassdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moneyuseupdate != null" >
+        #{moneyuseupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastend != null" >
+        #{lastend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptmoneyman != null" >
+        #{acceptmoneyman,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptmoneymanid != null" >
+        #{acceptmoneymanid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkuserid != null" >
+        #{checkuserid,jdbcType=BIGINT},
+      </if>
+      <if test="checkuseruuid != null" >
+        #{checkuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkusernickname != null" >
+        #{checkusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="backupone != null" >
+        #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        #{backupsix,jdbcType=INTEGER},
+      </if>
+      <if test="promisedsp != null" >
+        #{promisedsp,jdbcType=INTEGER},
+      </if>
+      <if test="cashtweetid != null" >
+        #{cashtweetid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtweetuuid != null" >
+        #{cashtweetuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcityname != null" >
+        #{cashcityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcitycode != null" >
+        #{cashcitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Cash" >
+    update cash
+    <set >
+      <if test="cashuuid != null" >
+        cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useridcash != null" >
+        userIDCash = #{useridcash,jdbcType=BIGINT},
+      </if>
+      <if test="behelpuserid != null" >
+        beHelpUserID = #{behelpuserid,jdbcType=BIGINT},
+      </if>
+      <if test="behelpusernickname != null" >
+        beHelpUserNickName = #{behelpusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="behelpusername != null" >
+        beHelpUserName = #{behelpusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyuserid != null" >
+        dutyUserID = #{dutyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="dutyusernickname != null" >
+        dutyUserNickName = #{dutyusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyusername != null" >
+        dutyUserName = #{dutyusername,jdbcType=VARCHAR},
+      </if>
+      <if test="supuserid != null" >
+        supUserID = #{supuserid,jdbcType=BIGINT},
+      </if>
+      <if test="superusernickname != null" >
+        superUserNickName = #{superusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="superusername != null" >
+        superUserName = #{superusername,jdbcType=VARCHAR},
+      </if>
+      <if test="useridcircle != null" >
+        userIDCircle = #{useridcircle,jdbcType=INTEGER},
+      </if>
+      <if test="circleusername != null" >
+        circleUserName = #{circleusername,jdbcType=VARCHAR},
+      </if>
+      <if test="circleusernickname != null" >
+        circleUserNickName = #{circleusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="promisetype != null" >
+        promiseType = #{promisetype,jdbcType=INTEGER},
+      </if>
+      <if test="chengnuotype != null" >
+        chengnuoType = #{chengnuotype,jdbcType=VARCHAR},
+      </if>
+      <if test="promisemiaoshu != null" >
+        promiseMiaoshu = #{promisemiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="proveone != null" >
+        proveOne = #{proveone,jdbcType=INTEGER},
+      </if>
+      <if test="provetwo != null" >
+        proveTwo = #{provetwo,jdbcType=INTEGER},
+      </if>
+      <if test="provethree != null" >
+        proveThree = #{provethree,jdbcType=INTEGER},
+      </if>
+      <if test="provefour != null" >
+        proveFour = #{provefour,jdbcType=INTEGER},
+      </if>
+      <if test="provefive != null" >
+        proveFive = #{provefive,jdbcType=INTEGER},
+      </if>
+      <if test="countstate != null" >
+        countState = #{countstate,jdbcType=TINYINT},
+      </if>
+      <if test="targetcash != null" >
+        TargetCash = #{targetcash,jdbcType=INTEGER},
+      </if>
+      <if test="realcash != null" >
+        realCash = #{realcash,jdbcType=INTEGER},
+      </if>
+      <if test="opentime != null" >
+        openTime = #{opentime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closetime != null" >
+        closeTime = #{closetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getmoneytag != null" >
+        getMoneyTag = #{getmoneytag,jdbcType=TINYINT},
+      </if>
+      <if test="cashok != null" >
+        cashOK = #{cashok,jdbcType=TINYINT},
+      </if>
+      <if test="spendmoney != null" >
+        spendMoney = #{spendmoney,jdbcType=INTEGER},
+      </if>
+      <if test="sumaffirm != null" >
+        sumaffirm = #{sumaffirm,jdbcType=INTEGER},
+      </if>
+      <if test="sumzhuanfa != null" >
+        sumZhuanfa = #{sumzhuanfa,jdbcType=INTEGER},
+      </if>
+      <if test="sumattention != null" >
+        sumAttention = #{sumattention,jdbcType=INTEGER},
+      </if>
+      <if test="sumbackup != null" >
+        sumBackup = #{sumbackup,jdbcType=INTEGER},
+      </if>
+      <if test="summanbackup != null" >
+        sumManBackup = #{summanbackup,jdbcType=INTEGER},
+      </if>
+      <if test="sumdays != null" >
+        sumDays = #{sumdays,jdbcType=INTEGER},
+      </if>
+      <if test="progressstate != null" >
+        progressState = #{progressstate,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offlinepassdate != null" >
+        offlinePassDate = #{offlinepassdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moneyuseupdate != null" >
+        moneyUseUpDate = #{moneyuseupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastend != null" >
+        lastend = #{lastend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptmoneyman != null" >
+        acceptMoneyMan = #{acceptmoneyman,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptmoneymanid != null" >
+        acceptMoneyManiD = #{acceptmoneymanid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkuserid != null" >
+        checkUseriD = #{checkuserid,jdbcType=BIGINT},
+      </if>
+      <if test="checkuseruuid != null" >
+        checkUserUUID = #{checkuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkusernickname != null" >
+        checkUserNickname = #{checkusernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="backupone != null" >
+        backupOne = #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo = #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        backupThree = #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        backupFour = #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        backupFive = #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        backupSix = #{backupsix,jdbcType=INTEGER},
+      </if>
+      <if test="promisedsp != null" >
+        promiseDsp = #{promisedsp,jdbcType=INTEGER},
+      </if>
+      <if test="cashtweetid != null" >
+        cashTweetiD = #{cashtweetid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtweetuuid != null" >
+        cashTweetUUID = #{cashtweetuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcityname != null" >
+        cashCityName = #{cashcityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcitycode != null" >
+        cashCityCode = #{cashcitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cashID = #{cashid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Cash" >
+    update cash
+    set cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      userIDCash = #{useridcash,jdbcType=BIGINT},
+      beHelpUserID = #{behelpuserid,jdbcType=BIGINT},
+      beHelpUserNickName = #{behelpusernickname,jdbcType=VARCHAR},
+      beHelpUserName = #{behelpusername,jdbcType=VARCHAR},
+      dutyUserID = #{dutyuserid,jdbcType=BIGINT},
+      dutyUserNickName = #{dutyusernickname,jdbcType=VARCHAR},
+      dutyUserName = #{dutyusername,jdbcType=VARCHAR},
+      supUserID = #{supuserid,jdbcType=BIGINT},
+      superUserNickName = #{superusernickname,jdbcType=VARCHAR},
+      superUserName = #{superusername,jdbcType=VARCHAR},
+      userIDCircle = #{useridcircle,jdbcType=INTEGER},
+      circleUserName = #{circleusername,jdbcType=VARCHAR},
+      circleUserNickName = #{circleusernickname,jdbcType=VARCHAR},
+      promiseType = #{promisetype,jdbcType=INTEGER},
+      chengnuoType = #{chengnuotype,jdbcType=VARCHAR},
+      promiseMiaoshu = #{promisemiaoshu,jdbcType=VARCHAR},
+      proveOne = #{proveone,jdbcType=INTEGER},
+      proveTwo = #{provetwo,jdbcType=INTEGER},
+      proveThree = #{provethree,jdbcType=INTEGER},
+      proveFour = #{provefour,jdbcType=INTEGER},
+      proveFive = #{provefive,jdbcType=INTEGER},
+      countState = #{countstate,jdbcType=TINYINT},
+      TargetCash = #{targetcash,jdbcType=INTEGER},
+      realCash = #{realcash,jdbcType=INTEGER},
+      openTime = #{opentime,jdbcType=TIMESTAMP},
+      closeTime = #{closetime,jdbcType=TIMESTAMP},
+      getMoneyTag = #{getmoneytag,jdbcType=TINYINT},
+      cashOK = #{cashok,jdbcType=TINYINT},
+      spendMoney = #{spendmoney,jdbcType=INTEGER},
+      sumaffirm = #{sumaffirm,jdbcType=INTEGER},
+      sumZhuanfa = #{sumzhuanfa,jdbcType=INTEGER},
+      sumAttention = #{sumattention,jdbcType=INTEGER},
+      sumBackup = #{sumbackup,jdbcType=INTEGER},
+      sumManBackup = #{summanbackup,jdbcType=INTEGER},
+      sumDays = #{sumdays,jdbcType=INTEGER},
+      progressState = #{progressstate,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      offlinePassDate = #{offlinepassdate,jdbcType=TIMESTAMP},
+      moneyUseUpDate = #{moneyuseupdate,jdbcType=TIMESTAMP},
+      lastend = #{lastend,jdbcType=TIMESTAMP},
+      acceptMoneyMan = #{acceptmoneyman,jdbcType=VARCHAR},
+      acceptMoneyManiD = #{acceptmoneymanid,jdbcType=VARCHAR},
+      checkUseriD = #{checkuserid,jdbcType=BIGINT},
+      checkUserUUID = #{checkuseruuid,jdbcType=VARCHAR},
+      checkUserNickname = #{checkusernickname,jdbcType=VARCHAR},
+      backupOne = #{backupone,jdbcType=VARCHAR},
+      backupTwo = #{backuptwo,jdbcType=VARCHAR},
+      backupThree = #{backupthree,jdbcType=VARCHAR},
+      backupFour = #{backupfour,jdbcType=VARCHAR},
+      backupFive = #{backupfive,jdbcType=INTEGER},
+      backupSix = #{backupsix,jdbcType=INTEGER},
+      promiseDsp = #{promisedsp,jdbcType=INTEGER},
+      cashTweetiD = #{cashtweetid,jdbcType=BIGINT},
+      cashTweetUUID = #{cashtweetuuid,jdbcType=VARCHAR},
+      cashCityName = #{cashcityname,jdbcType=VARCHAR},
+      cashCityCode = #{cashcitycode,jdbcType=VARCHAR},
+      userUUID = #{useruuid,jdbcType=VARCHAR}
+    where cashID = #{cashid,jdbcType=BIGINT}
+  </update>
+</mapper>

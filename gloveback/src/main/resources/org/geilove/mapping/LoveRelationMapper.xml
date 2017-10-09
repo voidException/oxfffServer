@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.LoveRelationMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.LoveRelation" >
+    <id column="loveRelationiD" property="loverelationid" jdbcType="BIGINT" />
+    <result column="loveRelationUUID" property="loverelationuuid" jdbcType="VARCHAR" />
+    <result column="useriD" property="userid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="loveUseriD" property="loveuserid" jdbcType="BIGINT" />
+    <result column="loveUserUUID" property="loveuseruuid" jdbcType="VARCHAR" />
+    <result column="joinDate" property="joindate" jdbcType="TIMESTAMP" />
+    <result column="cityLocation" property="citylocation" jdbcType="VARCHAR" />
+    <result column="cityLocationCode" property="citylocationcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    loveRelationiD, loveRelationUUID, useriD, userUUID, loveUseriD, loveUserUUID, joinDate, 
+    cityLocation, cityLocationCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loveRelation
+    where loveRelationiD = #{loverelationid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loveRelation
+    where loveRelationiD = #{loverelationid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.LoveRelation" >
+    insert into loveRelation (loveRelationiD, loveRelationUUID, 
+      useriD, userUUID, loveUseriD, 
+      loveUserUUID, joinDate, cityLocation, 
+      cityLocationCode)
+    values (#{loverelationid,jdbcType=BIGINT}, #{loverelationuuid,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{loveuserid,jdbcType=BIGINT}, 
+      #{loveuseruuid,jdbcType=VARCHAR}, #{joindate,jdbcType=TIMESTAMP}, #{citylocation,jdbcType=VARCHAR}, 
+      #{citylocationcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.LoveRelation" >
+    insert into loveRelation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loverelationid != null" >
+        loveRelationiD,
+      </if>
+      <if test="loverelationuuid != null" >
+        loveRelationUUID,
+      </if>
+      <if test="userid != null" >
+        useriD,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="loveuserid != null" >
+        loveUseriD,
+      </if>
+      <if test="loveuseruuid != null" >
+        loveUserUUID,
+      </if>
+      <if test="joindate != null" >
+        joinDate,
+      </if>
+      <if test="citylocation != null" >
+        cityLocation,
+      </if>
+      <if test="citylocationcode != null" >
+        cityLocationCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loverelationid != null" >
+        #{loverelationid,jdbcType=BIGINT},
+      </if>
+      <if test="loverelationuuid != null" >
+        #{loverelationuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="loveuserid != null" >
+        #{loveuserid,jdbcType=BIGINT},
+      </if>
+      <if test="loveuseruuid != null" >
+        #{loveuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="citylocation != null" >
+        #{citylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="citylocationcode != null" >
+        #{citylocationcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.LoveRelation" >
+    update loveRelation
+    <set >
+      <if test="loverelationuuid != null" >
+        loveRelationUUID = #{loverelationuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        useriD = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="loveuserid != null" >
+        loveUseriD = #{loveuserid,jdbcType=BIGINT},
+      </if>
+      <if test="loveuseruuid != null" >
+        loveUserUUID = #{loveuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        joinDate = #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="citylocation != null" >
+        cityLocation = #{citylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="citylocationcode != null" >
+        cityLocationCode = #{citylocationcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where loveRelationiD = #{loverelationid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.LoveRelation" >
+    update loveRelation
+    set loveRelationUUID = #{loverelationuuid,jdbcType=VARCHAR},
+      useriD = #{userid,jdbcType=BIGINT},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      loveUseriD = #{loveuserid,jdbcType=BIGINT},
+      loveUserUUID = #{loveuseruuid,jdbcType=VARCHAR},
+      joinDate = #{joindate,jdbcType=TIMESTAMP},
+      cityLocation = #{citylocation,jdbcType=VARCHAR},
+      cityLocationCode = #{citylocationcode,jdbcType=VARCHAR}
+    where loveRelationiD = #{loverelationid,jdbcType=BIGINT}
+  </update>
+</mapper>

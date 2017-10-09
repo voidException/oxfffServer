@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Account" >
+    <id column="accountID" property="accountid" jdbcType="BIGINT" />
+    <result column="accountUUID" property="accountuuid" jdbcType="VARCHAR" />
+    <result column="userIdentity" property="useridentity" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="ifHelp" property="ifhelp" jdbcType="VARCHAR" />
+    <result column="accountDate" property="accountdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    accountID, accountUUID, userIdentity, userName, ifHelp, accountDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where accountID = #{accountid,jdbcType=BIGINT}
+  </select>
+ <!--自定义，根据用户的身份证号获取-->
+  <select id="selectByuserIdentity" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from account
+    where userIdentity = #{userIdentity,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account
+    where accountID = #{accountid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Account" >
+    insert into account (accountID, accountUUID, userIdentity, 
+      userName, ifHelp, accountDate
+      )
+    values (#{accountid,jdbcType=BIGINT}, #{accountuuid,jdbcType=VARCHAR}, #{useridentity,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{ifhelp,jdbcType=VARCHAR}, #{accountdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Account" >
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountid != null" >
+        accountID,
+      </if>
+      <if test="accountuuid != null" >
+        accountUUID,
+      </if>
+      <if test="useridentity != null" >
+        userIdentity,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="ifhelp != null" >
+        ifHelp,
+      </if>
+      <if test="accountdate != null" >
+        accountDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountid != null" >
+        #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="accountuuid != null" >
+        #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ifhelp != null" >
+        #{ifhelp,jdbcType=VARCHAR},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Account" >
+    update account
+    <set >
+      <if test="accountuuid != null" >
+        accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        userIdentity = #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ifhelp != null" >
+        ifHelp = #{ifhelp,jdbcType=VARCHAR},
+      </if>
+      <if test="accountdate != null" >
+        accountDate = #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where accountID = #{accountid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Account" >
+    update account
+    set accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      userIdentity = #{useridentity,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      ifHelp = #{ifhelp,jdbcType=VARCHAR},
+      accountDate = #{accountdate,jdbcType=TIMESTAMP}
+    where accountID = #{accountid,jdbcType=BIGINT}
+  </update>
+</mapper>

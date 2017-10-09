@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.TweetMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Tweet" >
+    <id column="tweetID" property="tweetid" jdbcType="BIGINT" />
+    <result column="userIDTweet" property="useridtweet" jdbcType="BIGINT" />
+    <result column="sourceMsgID" property="sourcemsgid" jdbcType="BIGINT" />
+    <result column="tagID" property="tagid" jdbcType="TINYINT" />
+    <result column="msgContent" property="msgcontent" jdbcType="VARCHAR" />
+    <result column="topic" property="topic" jdbcType="BIGINT" />
+    <result column="commentTimes" property="commenttimes" jdbcType="INTEGER" />
+    <result column="ok" property="ok" jdbcType="INTEGER" />
+    <result column="boxTimes" property="boxtimes" jdbcType="INTEGER" />
+    <result column="publishTime" property="publishtime" jdbcType="TIMESTAMP" />
+    <result column="reportedTimes" property="reportedtimes" jdbcType="INTEGER" />
+    <result column="publicSee" property="publicsee" jdbcType="TINYINT" />
+    <result column="deleteTag" property="deletetag" jdbcType="TINYINT" />
+    <result column="videoAddress" property="videoaddress" jdbcType="VARCHAR" />
+    <result column="tweetbackUpOne" property="tweetbackupone" jdbcType="VARCHAR" />
+    <result column="tweetbackUpTwo" property="tweetbackuptwo" jdbcType="VARCHAR" />
+    <result column="tweetbackUpThree" property="tweetbackupthree" jdbcType="VARCHAR" />
+    <result column="tweetbackupFour" property="tweetbackupfour" jdbcType="INTEGER" />
+    <result column="tweetbackupFive" property="tweetbackupfive" jdbcType="BIGINT" />
+    <result column="tweetbackupSix" property="tweetbackupsix" jdbcType="INTEGER" />
+    <result column="promise" jdbcType="VARCHAR" property="promise" />
+    <result column="tweetbackupSeven" jdbcType="VARCHAR" property="tweetbackupseven" />
+    <result column="backupeight" property="backupeight" jdbcType="VARCHAR" />
+    <result column="backupneight" property="backupneight" jdbcType="VARCHAR" />
+    <result column="backupnine" property="backupnine" jdbcType="VARCHAR" />
+    <result column="backupten" property="backupten" jdbcType="VARCHAR" />
+    <result column="backupeleven" property="backupeleven" jdbcType="VARCHAR" />
+    <result column="backuptwelve" property="backuptwelve" jdbcType="VARCHAR" />
+    <result column="tobeuseone" property="tobeuseone" jdbcType="INTEGER" />
+    <result column="tobeusetwo" property="tobeusetwo" jdbcType="INTEGER" />
+    <result column="tobeusethree" property="tobeusethree" jdbcType="INTEGER" />
+    <result column="cityCode" property="citycode" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityname" jdbcType="VARCHAR" />
+    <result column="cashiD" property="cashid" jdbcType="BIGINT" />
+    <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
+    <result column="userUUIDTweet" property="useruuidtweet" jdbcType="VARCHAR" />
+    <result column="helpif" property="helpif" jdbcType="VARCHAR" />
+    <result column="helpType" property="helptype" jdbcType="VARCHAR" />
+    <result column="imageUrlOne" property="imageurlone" jdbcType="VARCHAR" />
+    <result column="imageUrlTwo" property="imageurltwo" jdbcType="VARCHAR" />
+    <result column="imageUrlThree" property="imageurlthree" jdbcType="VARCHAR" />
+    <result column="zhiboUrl" property="zhibourl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    tweetID, userIDTweet, sourceMsgID, tagID, msgContent, topic, commentTimes, ok, boxTimes, 
+    publishTime, reportedTimes, publicSee, deleteTag, videoAddress, tweetbackUpOne, tweetbackUpTwo, 
+    tweetbackUpThree, tweetbackupFour, tweetbackupFive, tweetbackupSix,promise, tweetbackupSeven,
+    backupeight, backupneight, backupnine, backupten, backupeleven, backuptwelve, tobeuseone, 
+    tobeusetwo, tobeusethree, cityCode, cityName,cashiD, cashUUID,userUUIDTweet, helpif,
+    helpType, imageUrlOne, imageUrlTwo, imageUrlThree, zhiboUrl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tweet
+    where tweetID = #{tweetid,jdbcType=BIGINT}
+  </select>
+
+  <!--查看自己发布的要救助的tweet,-->
+  <select id="getUserSelfHelpTweets" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where userUUIDTweet = #{userUUIDTweet} AND helpif=#{helpif}
+    order by publishTime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+  <!--查看需要救助的人的推文,这里都选择出来了，实际上可以选择出部分出来-->
+  <select id="getHelpTweetList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where helpif= #{helpif} AND publishTime &lt; #{lastUpdate} AND helpType=#{helpType}
+    order by publishTime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+<!--根据tweet的uuid获取一条推文，也就是backupneight，这个是推文的uuid-->
+  <select id="selectByTweetUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where backupneight = #{tweetuuid,jdbcType=BIGINT}
+  </select>
+
+
+  <!--  以下是自定义，根据用户的id获取一组推文,加载更多 适合查看自己发布的推文-->
+  <select id="selectByMainKeyLoadMore" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+       select
+       <include refid="Base_Column_List" />
+       from 
+           tweet     
+       where  
+           userIDTweet= #{userID,jdbcType=INTEGER} AND  publishTime &lt; #{lastItemstart}
+      order by publishTime  desc
+      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--  自定义select结束 -->
+
+  <!--  以下是自定义，根据用户的id获取一组推文,加载更多 适合查看别人发布的推文-->
+  <select id="selectByMainKeyLoadMoreSHe" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+       select
+       <include refid="Base_Column_List" />
+       from 
+           tweet     
+       where  
+           userIDTweet= #{userID,jdbcType=INTEGER} AND  publishTime &lt; #{lastItemstart} AND publicSee!=2 
+      order by publishTime  desc
+      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--  自定义select结束 -->
+  
+  <!--  以下是自定义，根据一条推文的id获取它转发的微博-->
+  <select id="selectBySourceMsgIDKey" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+       select
+       <include refid="Base_Column_List" />
+       from 
+           tweet     
+       where  
+           sourceMsgID= #{tweetid,jdbcType=INTEGER}  AND publicSee!=2 
+      order by publishTime  desc
+      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--  自定义select结束 -->
+  <!-- 自定义开始 ，根据一组ids获取被转发的微博-->
+  <select id="findByIdsMap" resultType="org.geilove.pojo.Tweet">
+       Select
+       <include refid="Base_Column_List" />
+       from tweet where tweetID in
+          <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                  #{item}
+          </foreach>
+  </select> 
+  <!-- 自定义结束 -->
+
+  <!-- 自定义开始 适合查看用户关注的人的微博，加载更多-->
+  <select id="findByUserIdsLoadMore" resultType="org.geilove.pojo.Tweet" parameterType="java.util.HashMap">
+       Select
+       <include refid="Base_Column_List" />
+       from tweet
+       <where>
+          <if test="list!=null">
+          	 AND userIDTweet in
+	          <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+	               #{item}
+	          </foreach>
+          </if>
+          <if test="lastItemstart!=null">
+          	 AND  publishTime &lt; #{lastItemstart} AND publicSee!=2 
+          </if>
+       </where> 
+       order by publishTime desc
+       limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select> 
+  <!-- 自定义结束 -->    
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tweet
+    where tweetID = #{tweetid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Tweet">
+    insert into tweet (tweetID, userIDTweet, sourceMsgID, 
+      tagID, msgContent, topic, 
+      commentTimes, ok, boxTimes, 
+      publishTime, reportedTimes, publicSee, 
+      deleteTag, videoAddress, tweetbackUpOne, 
+      tweetbackUpTwo, tweetbackUpThree, tweetbackupFour, 
+      tweetbackupFive, tweetbackupSix, promise, 
+      tweetbackupSeven, backupeight, backupneight, 
+      backupnine, backupten, backupeleven, 
+      backuptwelve, tobeuseone, tobeusetwo, 
+      tobeusethree, cityCode, cityName,
+      cashiD, cashUUID, userUUIDTweet,
+      helpif, helpType, imageUrlOne,
+      imageUrlTwo, imageUrlThree, zhiboUrl)
+    values (#{tweetid,jdbcType=BIGINT}, #{useridtweet,jdbcType=BIGINT}, #{sourcemsgid,jdbcType=BIGINT}, 
+      #{tagid,jdbcType=TINYINT}, #{msgcontent,jdbcType=VARCHAR}, #{topic,jdbcType=BIGINT}, 
+      #{commenttimes,jdbcType=INTEGER}, #{ok,jdbcType=INTEGER}, #{boxtimes,jdbcType=INTEGER}, 
+      #{publishtime,jdbcType=TIMESTAMP}, #{reportedtimes,jdbcType=INTEGER}, #{publicsee,jdbcType=TINYINT}, 
+      #{deletetag,jdbcType=TINYINT}, #{videoaddress,jdbcType=VARCHAR}, #{tweetbackupone,jdbcType=VARCHAR}, 
+      #{tweetbackuptwo,jdbcType=VARCHAR}, #{tweetbackupthree,jdbcType=VARCHAR}, #{tweetbackupfour,jdbcType=INTEGER}, 
+      #{tweetbackupfive,jdbcType=BIGINT}, #{tweetbackupsix,jdbcType=INTEGER}, #{promise,jdbcType=VARCHAR},
+      #{tweetbackupseven,jdbcType=VARCHAR}, #{backupeight,jdbcType=VARCHAR}, #{backupneight,jdbcType=VARCHAR}, 
+      #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, #{backupeleven,jdbcType=VARCHAR}, 
+      #{backuptwelve,jdbcType=VARCHAR}, #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, 
+      #{tobeusethree,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR},
+      #{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR},#{useruuidtweet,jdbcType=VARCHAR},
+      #{helpif,jdbcType=VARCHAR}, #{helptype,jdbcType=VARCHAR}, #{imageurlone,jdbcType=VARCHAR},
+      #{imageurltwo,jdbcType=VARCHAR}, #{imageurlthree,jdbcType=VARCHAR}, #{zhibourl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Tweet" >
+    insert into tweet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tweetid != null" >
+        tweetID,
+      </if>
+      <if test="useridtweet != null" >
+        userIDTweet,
+      </if>
+      <if test="sourcemsgid != null" >
+        sourceMsgID,
+      </if>
+      <if test="tagid != null" >
+        tagID,
+      </if>
+      <if test="msgcontent != null" >
+        msgContent,
+      </if>
+      <if test="topic != null" >
+        topic,
+      </if>
+      <if test="commenttimes != null" >
+        commentTimes,
+      </if>
+      <if test="ok != null" >
+        ok,
+      </if>
+      <if test="boxtimes != null" >
+        boxTimes,
+      </if>
+      <if test="publishtime != null" >
+        publishTime,
+      </if>
+      <if test="reportedtimes != null" >
+        reportedTimes,
+      </if>
+      <if test="publicsee != null" >
+        publicSee,
+      </if>
+      <if test="deletetag != null" >
+        deleteTag,
+      </if>
+      <if test="videoaddress != null" >
+        videoAddress,
+      </if>
+      <if test="tweetbackupone != null" >
+        tweetbackUpOne,
+      </if>
+      <if test="tweetbackuptwo != null" >
+        tweetbackUpTwo,
+      </if>
+      <if test="tweetbackupthree != null" >
+        tweetbackUpThree,
+      </if>
+      <if test="tweetbackupfour != null" >
+        tweetbackupFour,
+      </if>
+      <if test="tweetbackupfive != null" >
+        tweetbackupFive,
+      </if>
+      <if test="tweetbackupsix != null" >
+        tweetbackupSix,
+      </if>
+       <if test="promise != null">
+        promise,
+      </if>
+      <if test="tweetbackupseven != null">
+        tweetbackupSeven,
+      </if>
+      <if test="backupeight != null" >
+        backupeight,
+      </if>
+      <if test="backupneight != null" >
+        backupneight,
+      </if>
+      <if test="backupnine != null" >
+        backupnine,
+      </if>
+      <if test="backupten != null" >
+        backupten,
+      </if>
+      <if test="backupeleven != null" >
+        backupeleven,
+      </if>
+      <if test="backuptwelve != null" >
+        backuptwelve,
+      </if>
+      <if test="tobeuseone != null" >
+        tobeuseone,
+      </if>
+      <if test="tobeusetwo != null" >
+        tobeusetwo,
+      </if>
+      <if test="tobeusethree != null" >
+        tobeusethree,
+      </if>
+      <if test="citycode != null" >
+        cityCode,
+      </if>
+      <if test="cityname != null" >
+        cityName,
+      </if>
+      <if test="cashid != null" >
+        cashiD,
+      </if>
+      <if test="cashuuid != null" >
+        cashUUID,
+      </if>
+      <if test="useruuidtweet != null" >
+        userUUIDTweet,
+      </if>
+      <if test="helpif != null" >
+        helpif,
+      </if>
+      <if test="helptype != null" >
+        helpType,
+      </if>
+      <if test="imageurlone != null" >
+        imageUrlOne,
+      </if>
+      <if test="imageurltwo != null" >
+        imageUrlTwo,
+      </if>
+      <if test="imageurlthree != null" >
+        imageUrlThree,
+      </if>
+      <if test="zhibourl != null" >
+        zhiboUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tweetid != null" >
+        #{tweetid,jdbcType=BIGINT},
+      </if>
+      <if test="useridtweet != null" >
+        #{useridtweet,jdbcType=BIGINT},
+      </if>
+      <if test="sourcemsgid != null" >
+        #{sourcemsgid,jdbcType=BIGINT},
+      </if>
+      <if test="tagid != null" >
+        #{tagid,jdbcType=TINYINT},
+      </if>
+      <if test="msgcontent != null" >
+        #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        #{topic,jdbcType=BIGINT},
+      </if>
+      <if test="commenttimes != null" >
+        #{commenttimes,jdbcType=INTEGER},
+      </if>
+      <if test="ok != null" >
+        #{ok,jdbcType=INTEGER},
+      </if>
+      <if test="boxtimes != null" >
+        #{boxtimes,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportedtimes != null" >
+        #{reportedtimes,jdbcType=INTEGER},
+      </if>
+      <if test="publicsee != null" >
+        #{publicsee,jdbcType=TINYINT},
+      </if>
+      <if test="deletetag != null" >
+        #{deletetag,jdbcType=TINYINT},
+      </if>
+      <if test="videoaddress != null" >
+        #{videoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupone != null" >
+        #{tweetbackupone,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackuptwo != null" >
+        #{tweetbackuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupthree != null" >
+        #{tweetbackupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupfour != null" >
+        #{tweetbackupfour,jdbcType=INTEGER},
+      </if>
+      <if test="tweetbackupfive != null" >
+        #{tweetbackupfive,jdbcType=BIGINT},
+      </if>
+      <if test="tweetbackupsix != null" >
+        #{tweetbackupsix,jdbcType=INTEGER},
+      </if>
+      <if test="promise != null">
+        #{promise,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupseven != null">
+        #{tweetbackupseven,jdbcType=VARCHAR},
+      </if>
+      <if test="backupeight != null" >
+        #{backupeight,jdbcType=VARCHAR},
+      </if>
+      <if test="backupneight != null" >
+        #{backupneight,jdbcType=VARCHAR},
+      </if>
+      <if test="backupnine != null" >
+        #{backupnine,jdbcType=VARCHAR},
+      </if>
+      <if test="backupten != null" >
+        #{backupten,jdbcType=VARCHAR},
+      </if>
+      <if test="backupeleven != null" >
+        #{backupeleven,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwelve != null" >
+        #{backuptwelve,jdbcType=VARCHAR},
+      </if>
+      <if test="tobeuseone != null" >
+        #{tobeuseone,jdbcType=INTEGER},
+      </if>
+      <if test="tobeusetwo != null" >
+        #{tobeusetwo,jdbcType=INTEGER},
+      </if>
+      <if test="tobeusethree != null" >
+        #{tobeusethree,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null" >
+        #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashid != null" >
+        #{cashid,jdbcType=BIGINT},
+      </if>
+      <if test="cashuuid != null" >
+        #{cashuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuidtweet != null" >
+        #{useruuidtweet,jdbcType=VARCHAR},
+      </if>
+      <if test="helpif != null" >
+        #{helpif,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlone != null" >
+        #{imageurlone,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurltwo != null" >
+        #{imageurltwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlthree != null" >
+        #{imageurlthree,jdbcType=VARCHAR},
+      </if>
+      <if test="zhibourl != null" >
+        #{zhibourl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Tweet" >
+    update tweet
+    <set >
+      <if test="useridtweet != null" >
+        userIDTweet = #{useridtweet,jdbcType=BIGINT},
+      </if>
+      <if test="sourcemsgid != null" >
+        sourceMsgID = #{sourcemsgid,jdbcType=BIGINT},
+      </if>
+      <if test="tagid != null" >
+        tagID = #{tagid,jdbcType=TINYINT},
+      </if>
+      <if test="msgcontent != null" >
+        msgContent = #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        topic = #{topic,jdbcType=BIGINT},
+      </if>
+      <if test="commenttimes != null" >
+        commentTimes = #{commenttimes,jdbcType=INTEGER},
+      </if>
+      <if test="ok != null" >
+        ok = #{ok,jdbcType=INTEGER},
+      </if>
+      <if test="boxtimes != null" >
+        boxTimes = #{boxtimes,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportedtimes != null" >
+        reportedTimes = #{reportedtimes,jdbcType=INTEGER},
+      </if>
+      <if test="publicsee != null" >
+        publicSee = #{publicsee,jdbcType=TINYINT},
+      </if>
+      <if test="deletetag != null" >
+        deleteTag = #{deletetag,jdbcType=TINYINT},
+      </if>
+      <if test="videoaddress != null" >
+        videoAddress = #{videoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupone != null" >
+        tweetbackUpOne = #{tweetbackupone,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackuptwo != null" >
+        tweetbackUpTwo = #{tweetbackuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupthree != null" >
+        tweetbackUpThree = #{tweetbackupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupfour != null" >
+        tweetbackupFour = #{tweetbackupfour,jdbcType=INTEGER},
+      </if>
+      <if test="tweetbackupfive != null" >
+        tweetbackupFive = #{tweetbackupfive,jdbcType=BIGINT},
+      </if>
+      <if test="tweetbackupsix != null" >
+        tweetbackupSix = #{tweetbackupsix,jdbcType=INTEGER},
+      </if>
+      <if test="promise != null">
+        promise = #{promise,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetbackupseven != null">
+        tweetbackupSeven = #{tweetbackupseven,jdbcType=VARCHAR},
+      </if>
+       <if test="backupeight != null" >
+        backupeight = #{backupeight,jdbcType=VARCHAR},
+      </if>
+      <if test="backupneight != null" >
+        backupneight = #{backupneight,jdbcType=VARCHAR},
+      </if>
+      <if test="backupnine != null" >
+        backupnine = #{backupnine,jdbcType=VARCHAR},
+      </if>
+      <if test="backupten != null" >
+        backupten = #{backupten,jdbcType=VARCHAR},
+      </if>
+      <if test="backupeleven != null" >
+        backupeleven = #{backupeleven,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwelve != null" >
+        backuptwelve = #{backuptwelve,jdbcType=VARCHAR},
+      </if>
+      <if test="tobeuseone != null" >
+        tobeuseone = #{tobeuseone,jdbcType=INTEGER},
+      </if>
+      <if test="tobeusetwo != null" >
+        tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
+      </if>
+      <if test="tobeusethree != null" >
+        tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null" >
+        cityCode = #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashid != null" >
+        cashiD = #{cashid,jdbcType=BIGINT},
+      </if>
+      <if test="cashuuid != null" >
+        cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuidtweet != null" >
+        userUUIDTweet = #{useruuidtweet,jdbcType=VARCHAR},
+      </if>
+      <if test="helpif != null" >
+        helpif = #{helpif,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        helpType = #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlone != null" >
+        imageUrlOne = #{imageurlone,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurltwo != null" >
+        imageUrlTwo = #{imageurltwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlthree != null" >
+        imageUrlThree = #{imageurlthree,jdbcType=VARCHAR},
+      </if>
+      <if test="zhibourl != null" >
+        zhiboUrl = #{zhibourl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tweetID = #{tweetid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Tweet" >
+    update tweet
+    set userIDTweet = #{useridtweet,jdbcType=BIGINT},
+      sourceMsgID = #{sourcemsgid,jdbcType=BIGINT},
+      tagID = #{tagid,jdbcType=TINYINT},
+      msgContent = #{msgcontent,jdbcType=VARCHAR},
+      topic = #{topic,jdbcType=BIGINT},
+      commentTimes = #{commenttimes,jdbcType=INTEGER},
+      ok = #{ok,jdbcType=INTEGER},
+      boxTimes = #{boxtimes,jdbcType=INTEGER},
+      publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      reportedTimes = #{reportedtimes,jdbcType=INTEGER},
+      publicSee = #{publicsee,jdbcType=TINYINT},
+      deleteTag = #{deletetag,jdbcType=TINYINT},
+      videoAddress = #{videoaddress,jdbcType=VARCHAR},
+      tweetbackUpOne = #{tweetbackupone,jdbcType=VARCHAR},
+      tweetbackUpTwo = #{tweetbackuptwo,jdbcType=VARCHAR},
+      tweetbackUpThree = #{tweetbackupthree,jdbcType=VARCHAR},
+      tweetbackupFour = #{tweetbackupfour,jdbcType=INTEGER},
+      tweetbackupFive = #{tweetbackupfive,jdbcType=BIGINT},
+      tweetbackupSix = #{tweetbackupsix,jdbcType=INTEGER},
+      promise = #{promise,jdbcType=VARCHAR},
+      tweetbackupSeven = #{tweetbackupseven,jdbcType=VARCHAR}
+      backupeight = #{backupeight,jdbcType=VARCHAR},
+      backupneight = #{backupneight,jdbcType=VARCHAR},
+      backupnine = #{backupnine,jdbcType=VARCHAR},
+      backupten = #{backupten,jdbcType=VARCHAR},
+      backupeleven = #{backupeleven,jdbcType=VARCHAR},
+      backuptwelve = #{backuptwelve,jdbcType=VARCHAR},
+      tobeuseone = #{tobeuseone,jdbcType=INTEGER},
+      tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
+      tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+      cityCode = #{citycode,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      cashiD = #{cashid,jdbcType=BIGINT},
+      cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      userUUIDTweet = #{useruuidtweet,jdbcType=VARCHAR},
+      helpif = #{helpif,jdbcType=VARCHAR},
+      helpType = #{helptype,jdbcType=VARCHAR},
+      imageUrlOne = #{imageurlone,jdbcType=VARCHAR},
+      imageUrlTwo = #{imageurltwo,jdbcType=VARCHAR},
+      imageUrlThree = #{imageurlthree,jdbcType=VARCHAR},
+      zhiboUrl = #{zhibourl,jdbcType=VARCHAR}
+    where tweetID = #{tweetid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.PublicMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Public" >
+    <id column="publicID" property="publicid" jdbcType="BIGINT" />
+    <result column="publicUUID" property="publicuuid" jdbcType="VARCHAR" />
+    <result column="joinDate" property="joindate" jdbcType="TIMESTAMP" />
+    <result column="effectDate" property="effectdate" jdbcType="TIMESTAMP" />
+    <result column="peopleTotal" property="peopletotal" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="userIdentity" property="useridentity" jdbcType="VARCHAR" />
+    <result column="categoryType" property="categorytype" jdbcType="VARCHAR" />
+    <result column="needMoney" property="needmoney" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="diaoChaProcess1" property="diaochaprocess1" jdbcType="VARCHAR" />
+    <result column="diaoChaProcess2" property="diaochaprocess2" jdbcType="VARCHAR" />
+    <result column="diaoChaProcess3" property="diaochaprocess3" jdbcType="VARCHAR" />
+    <result column="diaoChaProcess4" property="diaochaprocess4" jdbcType="VARCHAR" />
+    <result column="helpDetailOne" property="helpdetailone" jdbcType="VARCHAR" />
+    <result column="helpDetailTwo" property="helpdetailtwo" jdbcType="VARCHAR" />
+    <result column="img1" property="img1" jdbcType="VARCHAR" />
+    <result column="img2" property="img2" jdbcType="VARCHAR" />
+    <result column="img3" property="img3" jdbcType="VARCHAR" />
+    <result column="img4" property="img4" jdbcType="VARCHAR" />
+    <result column="img5" property="img5" jdbcType="VARCHAR" />
+    <result column="img6" property="img6" jdbcType="VARCHAR" />
+    <result column="img7" property="img7" jdbcType="VARCHAR" />
+    <result column="img8" property="img8" jdbcType="VARCHAR" />
+    <result column="img9" property="img9" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    publicID, publicUUID, joinDate, effectDate, peopleTotal, userName, userIdentity, 
+    categoryType, needMoney, description, diaoChaProcess1, diaoChaProcess2, diaoChaProcess3, 
+    diaoChaProcess4, helpDetailOne, helpDetailTwo, img1, img2, img3, img4, img5, img6, 
+    img7, img8, img9
+  </sql>
+  <!--自定义，选出公示表-->
+    <select id="getPublicList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from public
+        where
+        1=1
+        order by
+        joinDate  desc
+        limit
+        #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from public
+    where publicID = #{publicid,jdbcType=BIGINT}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from public
+    where publicID = #{publicid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Public" >
+    insert into public (publicID, publicUUID, joinDate, 
+      effectDate, peopleTotal, userName, 
+      userIdentity, categoryType, needMoney, 
+      description, diaoChaProcess1, diaoChaProcess2, 
+      diaoChaProcess3, diaoChaProcess4, helpDetailOne, 
+      helpDetailTwo, img1, img2, 
+      img3, img4, img5, img6, 
+      img7, img8, img9)
+    values (#{publicid,jdbcType=BIGINT}, #{publicuuid,jdbcType=VARCHAR}, #{joindate,jdbcType=TIMESTAMP}, 
+      #{effectdate,jdbcType=TIMESTAMP}, #{peopletotal,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{useridentity,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{needmoney,jdbcType=DECIMAL}, 
+      #{description,jdbcType=VARCHAR}, #{diaochaprocess1,jdbcType=VARCHAR}, #{diaochaprocess2,jdbcType=VARCHAR}, 
+      #{diaochaprocess3,jdbcType=VARCHAR}, #{diaochaprocess4,jdbcType=VARCHAR}, #{helpdetailone,jdbcType=VARCHAR}, 
+      #{helpdetailtwo,jdbcType=VARCHAR}, #{img1,jdbcType=VARCHAR}, #{img2,jdbcType=VARCHAR}, 
+      #{img3,jdbcType=VARCHAR}, #{img4,jdbcType=VARCHAR}, #{img5,jdbcType=VARCHAR}, #{img6,jdbcType=VARCHAR}, 
+      #{img7,jdbcType=VARCHAR}, #{img8,jdbcType=VARCHAR}, #{img9,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Public" >
+    insert into public
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="publicid != null" >
+        publicID,
+      </if>
+      <if test="publicuuid != null" >
+        publicUUID,
+      </if>
+      <if test="joindate != null" >
+        joinDate,
+      </if>
+      <if test="effectdate != null" >
+        effectDate,
+      </if>
+      <if test="peopletotal != null" >
+        peopleTotal,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="useridentity != null" >
+        userIdentity,
+      </if>
+      <if test="categorytype != null" >
+        categoryType,
+      </if>
+      <if test="needmoney != null" >
+        needMoney,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="diaochaprocess1 != null" >
+        diaoChaProcess1,
+      </if>
+      <if test="diaochaprocess2 != null" >
+        diaoChaProcess2,
+      </if>
+      <if test="diaochaprocess3 != null" >
+        diaoChaProcess3,
+      </if>
+      <if test="diaochaprocess4 != null" >
+        diaoChaProcess4,
+      </if>
+      <if test="helpdetailone != null" >
+        helpDetailOne,
+      </if>
+      <if test="helpdetailtwo != null" >
+        helpDetailTwo,
+      </if>
+      <if test="img1 != null" >
+        img1,
+      </if>
+      <if test="img2 != null" >
+        img2,
+      </if>
+      <if test="img3 != null" >
+        img3,
+      </if>
+      <if test="img4 != null" >
+        img4,
+      </if>
+      <if test="img5 != null" >
+        img5,
+      </if>
+      <if test="img6 != null" >
+        img6,
+      </if>
+      <if test="img7 != null" >
+        img7,
+      </if>
+      <if test="img8 != null" >
+        img8,
+      </if>
+      <if test="img9 != null" >
+        img9,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="publicid != null" >
+        #{publicid,jdbcType=BIGINT},
+      </if>
+      <if test="publicuuid != null" >
+        #{publicuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectdate != null" >
+        #{effectdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="peopletotal != null" >
+        #{peopletotal,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="needmoney != null" >
+        #{needmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess1 != null" >
+        #{diaochaprocess1,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess2 != null" >
+        #{diaochaprocess2,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess3 != null" >
+        #{diaochaprocess3,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess4 != null" >
+        #{diaochaprocess4,jdbcType=VARCHAR},
+      </if>
+      <if test="helpdetailone != null" >
+        #{helpdetailone,jdbcType=VARCHAR},
+      </if>
+      <if test="helpdetailtwo != null" >
+        #{helpdetailtwo,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="img5 != null" >
+        #{img5,jdbcType=VARCHAR},
+      </if>
+      <if test="img6 != null" >
+        #{img6,jdbcType=VARCHAR},
+      </if>
+      <if test="img7 != null" >
+        #{img7,jdbcType=VARCHAR},
+      </if>
+      <if test="img8 != null" >
+        #{img8,jdbcType=VARCHAR},
+      </if>
+      <if test="img9 != null" >
+        #{img9,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Public" >
+    update public
+    <set >
+      <if test="publicuuid != null" >
+        publicUUID = #{publicuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        joinDate = #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectdate != null" >
+        effectDate = #{effectdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="peopletotal != null" >
+        peopleTotal = #{peopletotal,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        userIdentity = #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        categoryType = #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="needmoney != null" >
+        needMoney = #{needmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess1 != null" >
+        diaoChaProcess1 = #{diaochaprocess1,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess2 != null" >
+        diaoChaProcess2 = #{diaochaprocess2,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess3 != null" >
+        diaoChaProcess3 = #{diaochaprocess3,jdbcType=VARCHAR},
+      </if>
+      <if test="diaochaprocess4 != null" >
+        diaoChaProcess4 = #{diaochaprocess4,jdbcType=VARCHAR},
+      </if>
+      <if test="helpdetailone != null" >
+        helpDetailOne = #{helpdetailone,jdbcType=VARCHAR},
+      </if>
+      <if test="helpdetailtwo != null" >
+        helpDetailTwo = #{helpdetailtwo,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        img1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        img2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        img3 = #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        img4 = #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="img5 != null" >
+        img5 = #{img5,jdbcType=VARCHAR},
+      </if>
+      <if test="img6 != null" >
+        img6 = #{img6,jdbcType=VARCHAR},
+      </if>
+      <if test="img7 != null" >
+        img7 = #{img7,jdbcType=VARCHAR},
+      </if>
+      <if test="img8 != null" >
+        img8 = #{img8,jdbcType=VARCHAR},
+      </if>
+      <if test="img9 != null" >
+        img9 = #{img9,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where publicID = #{publicid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Public" >
+    update public
+    set publicUUID = #{publicuuid,jdbcType=VARCHAR},
+      joinDate = #{joindate,jdbcType=TIMESTAMP},
+      effectDate = #{effectdate,jdbcType=TIMESTAMP},
+      peopleTotal = #{peopletotal,jdbcType=INTEGER},
+      userName = #{username,jdbcType=VARCHAR},
+      userIdentity = #{useridentity,jdbcType=VARCHAR},
+      categoryType = #{categorytype,jdbcType=VARCHAR},
+      needMoney = #{needmoney,jdbcType=DECIMAL},
+      description = #{description,jdbcType=VARCHAR},
+      diaoChaProcess1 = #{diaochaprocess1,jdbcType=VARCHAR},
+      diaoChaProcess2 = #{diaochaprocess2,jdbcType=VARCHAR},
+      diaoChaProcess3 = #{diaochaprocess3,jdbcType=VARCHAR},
+      diaoChaProcess4 = #{diaochaprocess4,jdbcType=VARCHAR},
+      helpDetailOne = #{helpdetailone,jdbcType=VARCHAR},
+      helpDetailTwo = #{helpdetailtwo,jdbcType=VARCHAR},
+      img1 = #{img1,jdbcType=VARCHAR},
+      img2 = #{img2,jdbcType=VARCHAR},
+      img3 = #{img3,jdbcType=VARCHAR},
+      img4 = #{img4,jdbcType=VARCHAR},
+      img5 = #{img5,jdbcType=VARCHAR},
+      img6 = #{img6,jdbcType=VARCHAR},
+      img7 = #{img7,jdbcType=VARCHAR},
+      img8 = #{img8,jdbcType=VARCHAR},
+      img9 = #{img9,jdbcType=VARCHAR}
+    where publicID = #{publicid,jdbcType=BIGINT}
+  </update>
+</mapper>

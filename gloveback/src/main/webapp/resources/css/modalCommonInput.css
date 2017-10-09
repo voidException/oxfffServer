@@ -1,0 +1,60 @@
+.contain{
+    /*height:100%;*/
+    width: 100%;
+}
+.clickWo{
+    background-color: white;
+    height: 60px;
+    width: 300px;
+    font-size: 30px;
+}
+.modal{
+    display: none;
+    /*display: block;*/
+    /*background-color:gray;*/
+    /*opacity: 0.6;*/
+    background-color: rgba(0,0,0,0.4);
+    filter:Alpha(Opacity=50);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width: 100%;
+    /*z-index: 50;*/
+}
+
+.tips{
+    /*display: block;*/
+    /*display: none;*/
+    margin-top: 100px;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-radius:5px ;
+    /*z-index: 55;*/
+    background-color: #F1F1F1;
+}
+.doComment{
+    margin-left: 15px;
+    margin-bottom: 12px;
+}
+.commentText{
+    width: 100%;
+
+}
+.cancelReplay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top: solid #E2E2E2 2px;
+    margin-top: 15px;
+}
+.cancel{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border-right: solid #E2E2E2 2px;
+}

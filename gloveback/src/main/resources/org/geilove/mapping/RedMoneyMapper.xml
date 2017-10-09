@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.RedMoneyMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.RedMoney" >
+    <id column="redMoneyID" property="redmoneyid" jdbcType="BIGINT" />
+    <result column="redMoneyUUID" property="redmoneyuuid" jdbcType="VARCHAR" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="redMoney" property="redmoney" jdbcType="DECIMAL" />
+    <result column="redMoneyDate" property="redmoneydate" jdbcType="TIMESTAMP" />
+    <result column="userUUIDClick" property="useruuidclick" jdbcType="VARCHAR" />
+    <result column="redMoneyState" property="redmoneystate" jdbcType="VARCHAR" />
+    <result column="loseFuncDate" property="losefuncdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    redMoneyID, redMoneyUUID, userUUID, redMoney, redMoneyDate, userUUIDClick, redMoneyState, 
+    loseFuncDate
+  </sql>
+
+  <select id="selectAllUserRedMoney" resultMap="BaseResultMap" parameterType="Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    from redMoney
+    WHERE userUUID=#{useruuid} and <![CDATA[redMoneyDate< #{redMoneyDate}]]>
+    order by redMoneyDate desc limit 0,7
+  </select>
+
+  <select id="selectUserRedMoneyByID" parameterType="Map" resultMap="BaseResultMap">
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from redMoney
+    where redMoneyID = #{redmoneyid,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserUUIDClick" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from redMoney
+    where userUUIDClick = #{userUUIDClick,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from redMoney
+    where redMoneyID = #{redmoneyid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.RedMoney" >
+    insert into redMoney (redMoneyID, redMoneyUUID, userUUID, 
+      redMoney, redMoneyDate, userUUIDClick, 
+      redMoneyState, loseFuncDate)
+    values (#{redmoneyid,jdbcType=BIGINT}, #{redmoneyuuid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}, 
+      #{redmoney,jdbcType=DECIMAL}, #{redmoneydate,jdbcType=TIMESTAMP}, #{useruuidclick,jdbcType=VARCHAR}, 
+      #{redmoneystate,jdbcType=VARCHAR}, #{losefuncdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.RedMoney" >
+    insert into redMoney
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="redmoneyid != null" >
+        redMoneyID,
+      </if>
+      <if test="redmoneyuuid != null" >
+        redMoneyUUID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="redmoney != null" >
+        redMoney,
+      </if>
+      <if test="redmoneydate != null" >
+        redMoneyDate,
+      </if>
+      <if test="useruuidclick != null" >
+        userUUIDClick,
+      </if>
+      <if test="redmoneystate != null" >
+        redMoneyState,
+      </if>
+      <if test="losefuncdate != null" >
+        loseFuncDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="redmoneyid != null" >
+        #{redmoneyid,jdbcType=BIGINT},
+      </if>
+      <if test="redmoneyuuid != null" >
+        #{redmoneyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="redmoney != null" >
+        #{redmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="redmoneydate != null" >
+        #{redmoneydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useruuidclick != null" >
+        #{useruuidclick,jdbcType=VARCHAR},
+      </if>
+      <if test="redmoneystate != null" >
+        #{redmoneystate,jdbcType=VARCHAR},
+      </if>
+      <if test="losefuncdate != null" >
+        #{losefuncdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.RedMoney" >
+    update redMoney
+    <set >
+      <if test="redmoneyuuid != null" >
+        redMoneyUUID = #{redmoneyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="redmoney != null" >
+        redMoney = #{redmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="redmoneydate != null" >
+        redMoneyDate = #{redmoneydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useruuidclick != null" >
+        userUUIDClick = #{useruuidclick,jdbcType=VARCHAR},
+      </if>
+      <if test="redmoneystate != null" >
+        redMoneyState = #{redmoneystate,jdbcType=VARCHAR},
+      </if>
+      <if test="losefuncdate != null" >
+        loseFuncDate = #{losefuncdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where redMoneyID = #{redmoneyid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.RedMoney" >
+    update redMoney
+    set redMoneyUUID = #{redmoneyuuid,jdbcType=VARCHAR},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      redMoney = #{redmoney,jdbcType=DECIMAL},
+      redMoneyDate = #{redmoneydate,jdbcType=TIMESTAMP},
+      userUUIDClick = #{useruuidclick,jdbcType=VARCHAR},
+      redMoneyState = #{redmoneystate,jdbcType=VARCHAR},
+      loseFuncDate = #{losefuncdate,jdbcType=TIMESTAMP}
+    where redMoneyID = #{redmoneyid,jdbcType=BIGINT}
+  </update>
+</mapper>

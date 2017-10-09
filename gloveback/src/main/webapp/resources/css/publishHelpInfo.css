@@ -1,0 +1,117 @@
+.proveHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    line-height: 20px;
+    background-color: #75ffba;
+    margin: 0px;
+}
+
+.checkTeam{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 44px;
+    width: 100%;
+    border-bottom: 1px solid #E1E5E7;
+}
+.checkTeamTxt{
+    padding-left: 10px;
+}
+ .checkTeamInput{
+     height: 34px;
+     width: 180px;
+     border-radius: 4px;
+     border:0px solid #FFFFFF ;
+     font-size: 13px;
+     margin-left: 10px;
+ }
+.ShiFo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 34px;
+    border-bottom: 1px solid #E1E5E7;
+}
+.ShiFoTxt{
+    padding-left: 10px;
+}
+.ShiFoInput{
+    margin-right: 20px;
+    color: #75ffba;
+}
+.promiseBody{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.ChengNuoItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.PromiseTxT{
+
+}
+.promiseTextarea{
+    border: 1px  solid red;
+    width: 90%;
+    margin-left: 10px;
+}
+.donateDate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+
+}
+.selectImg{
+    padding-left: 10px;
+    height: 36px;
+    line-height: 20px;
+    margin-bottom: 5px;:
+}
+
+.button{
+    width: 96%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    font-size: 16px; -webkit-appearance: none;
+    background-color: #2FAC4C;
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

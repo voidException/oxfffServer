@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.MoneySourceMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.MoneySource" >
+    <id column="moneySourceID" property="moneysourceid" jdbcType="BIGINT" />
+    <result column="moneySourceUUID" property="moneysourceuuid" jdbcType="VARCHAR" />
+    <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
+    <result column="userUUIDBehelped" property="useruuidbehelped" jdbcType="VARCHAR" />
+    <result column="userIDBehelped" property="useridbehelped" jdbcType="BIGINT" />
+    <result column="userUUIDgoodguy" property="useruuidgoodguy" jdbcType="VARCHAR" />
+    <result column="userIDgoodguy" property="useridgoodguy" jdbcType="BIGINT" />
+    <result column="moneyNum" property="moneynum" jdbcType="INTEGER" />
+    <result column="helpTime" property="helptime" jdbcType="TIMESTAMP" />
+    <result column="helpManUserName" property="helpmanusername" jdbcType="VARCHAR" />
+    <result column="helpManPhotoUrl" property="helpmanphotourl" jdbcType="VARCHAR" />
+    <result column="backupThree" property="backupthree" jdbcType="VARCHAR" />
+    <result column="backupFour" property="backupfour" jdbcType="VARCHAR" />
+    <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
+    <result column="backupSix" property="backupsix" jdbcType="BIGINT" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
+    <result column="nonce_str" property="nonceStr" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
+    <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="is_subscribe" property="isSubscribe" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="bank_type" property="bankType" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
+    <result column="fee_type" property="feeType" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="time_end" property="timeEnd" jdbcType="VARCHAR" />
+    <result column="paypalOwechat" property="paypalowechat" jdbcType="VARCHAR" />
+    <result column="papalOpenID" property="papalopenid" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+  <!--  自定义，获取"支持了" 列表-->
+  <select id="getMoneySourceList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    moneysource
+    where
+    cashUUID= #{cashUUID} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+  <!--  待完成支付通知后继续开发-->
+  <select id="getMoneySourceListByCashUUID" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    moneysource
+    where
+    backupFour= #{useruuid,jdbcType=BIGINT} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
+  <!--  自定义，获取帮助我的人的ids，加载更多-->
+  <select id="selectMenHelpMeloadMore" resultType="org.geilove.sqlpojo.PartHelpPojo" >
+    select
+    userIDBehelped, userIDgoodguy,moneyNum, helpTime
+    from
+    moneysource
+    where
+    userIDBehelped= #{userid,jdbcType=INTEGER} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
+  <!--  自定义，获取我帮助的人的ids,loadMore-->
+  <select id="selectIhelploadMore" resultType="org.geilove.sqlpojo.PartHelpPojo" >
+    select
+    userIDBehelped, userIDgoodguy,moneyNum, helpTime
+    from
+    moneysource
+    where
+    userIDgoodguy= #{userid,jdbcType=INTEGER} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义-->
+  <select id="selectByCashUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from moneysource
+    where cashUUID = #{cashUUID}
+  </select>
+
+  <!--自定义-->
+  <select id="selectByMoneySourceUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from moneysource
+    where moneySourceUUID = #{moneySourceUUID}
+  </select>
+  <!--<sql id="Base_Column_List" >-->
+    <!--moneySourceID, userIDBehelped, userIDgoodguy, moneyNum, helpTime, backupOne, backupTwo,-->
+    <!--backupThree, backupFour, backupFive, backupSix-->
+  <!--</sql>-->
+
+  <sql id="Base_Column_List" >
+    moneySourceID, moneySourceUUID, cashUUID, userUUIDBehelped, userIDBehelped, userUUIDgoodguy,
+    userIDgoodguy, moneyNum, helpTime, helpManUserName, helpManPhotoUrl, backupThree,
+    backupFour, backupFive, backupSix, appid, mch_id, device_info, nonce_str, sign, sign_type,
+    result_code, err_code, err_code_des, openid, is_subscribe, trade_type, bank_type,
+    total_fee, fee_type, transaction_id, out_trade_no, attach, time_end, paypalOwechat,
+    papalOpenID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from moneysource
+    where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from moneysource
+    where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.MoneySource" >
+    insert into moneysource (moneySourceID, userIDBehelped, userIDgoodguy,
+    moneyNum, helpTime, backupOne,
+    backupTwo, backupThree, backupFour,
+    backupFive, backupSix)
+    values (#{moneysourceid,jdbcType=BIGINT}, #{useridbehelped,jdbcType=BIGINT}, #{useridgoodguy,jdbcType=BIGINT},
+    #{moneynum,jdbcType=INTEGER}, #{helptime,jdbcType=TIMESTAMP}, #{backupone,jdbcType=VARCHAR},
+    #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR},
+    #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.MoneySource" >
+    insert into moneysource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moneysourceid != null" >
+        moneySourceID,
+      </if>
+      <if test="useridbehelped != null" >
+        userIDBehelped,
+      </if>
+      <if test="useridgoodguy != null" >
+        userIDgoodguy,
+      </if>
+      <if test="moneynum != null" >
+        moneyNum,
+      </if>
+      <if test="helptime != null" >
+        helpTime,
+      </if>
+      <if test="backupone != null" >
+        backupOne,
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo,
+      </if>
+      <if test="backupthree != null" >
+        backupThree,
+      </if>
+      <if test="backupfour != null" >
+        backupFour,
+      </if>
+      <if test="backupfive != null" >
+        backupFive,
+      </if>
+      <if test="backupsix != null" >
+        backupSix,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moneysourceid != null" >
+        #{moneysourceid,jdbcType=BIGINT},
+      </if>
+      <if test="useridbehelped != null" >
+        #{useridbehelped,jdbcType=BIGINT},
+      </if>
+      <if test="useridgoodguy != null" >
+        #{useridgoodguy,jdbcType=BIGINT},
+      </if>
+      <if test="moneynum != null" >
+        #{moneynum,jdbcType=INTEGER},
+      </if>
+      <if test="helptime != null" >
+        #{helptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupone != null" >
+        #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        #{backupsix,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.MoneySource" >
+    update moneysource
+    <set >
+      <if test="useridbehelped != null" >
+        userIDBehelped = #{useridbehelped,jdbcType=BIGINT},
+      </if>
+      <if test="useridgoodguy != null" >
+        userIDgoodguy = #{useridgoodguy,jdbcType=BIGINT},
+      </if>
+      <if test="moneynum != null" >
+        moneyNum = #{moneynum,jdbcType=INTEGER},
+      </if>
+      <if test="helptime != null" >
+        helpTime = #{helptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupone != null" >
+        backupOne = #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo = #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        backupThree = #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        backupFour = #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        backupFive = #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        backupSix = #{backupsix,jdbcType=BIGINT},
+      </if>
+    </set>
+    where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.MoneySource" >
+    update moneysource
+    set userIDBehelped = #{useridbehelped,jdbcType=BIGINT},
+    userIDgoodguy = #{useridgoodguy,jdbcType=BIGINT},
+    moneyNum = #{moneynum,jdbcType=INTEGER},
+    helpTime = #{helptime,jdbcType=TIMESTAMP},
+    backupOne = #{backupone,jdbcType=VARCHAR},
+    backupTwo = #{backuptwo,jdbcType=VARCHAR},
+    backupThree = #{backupthree,jdbcType=VARCHAR},
+    backupFour = #{backupfour,jdbcType=VARCHAR},
+    backupFive = #{backupfive,jdbcType=INTEGER},
+    backupSix = #{backupsix,jdbcType=BIGINT}
+    where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
+  </update>
+</mapper>

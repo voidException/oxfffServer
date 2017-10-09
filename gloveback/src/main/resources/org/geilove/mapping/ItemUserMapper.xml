@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.ItemUserMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.ItemUser" >
+    <id column="itemUserID" property="itemuserid" jdbcType="BIGINT" />
+    <result column="userID" property="userid" jdbcType="BIGINT" />
+    <result column="itemID" property="itemid" jdbcType="BIGINT" />
+    <result column="relationTag" property="relationtag" jdbcType="INTEGER" />
+    <result column="relationTime" property="relationtime" jdbcType="TIMESTAMP" />
+    <result column="backupOne" property="backupone" jdbcType="VARCHAR" />
+    <result column="backupTwo" property="backuptwo" jdbcType="VARCHAR" />
+    <result column="backupThree" property="backupthree" jdbcType="VARCHAR" />
+    <result column="backupFour" property="backupfour" jdbcType="VARCHAR" />
+    <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
+    <result column="backupSix" property="backupsix" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    itemUserID, userID, itemID, relationTag, relationTime, backupOne, backupTwo, backupThree, 
+    backupFour, backupFive, backupSix
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from itemuser
+    where itemUserID = #{itemuserid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from itemuser
+    where itemUserID = #{itemuserid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.ItemUser" >
+    insert into itemuser (itemUserID, userID, itemID, 
+      relationTag, relationTime, backupOne, 
+      backupTwo, backupThree, backupFour, 
+      backupFive, backupSix)
+    values (#{itemuserid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{itemid,jdbcType=BIGINT}, 
+      #{relationtag,jdbcType=INTEGER}, #{relationtime,jdbcType=TIMESTAMP}, #{backupone,jdbcType=VARCHAR}, 
+      #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
+      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.ItemUser" >
+    insert into itemuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemuserid != null" >
+        itemUserID,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="itemid != null" >
+        itemID,
+      </if>
+      <if test="relationtag != null" >
+        relationTag,
+      </if>
+      <if test="relationtime != null" >
+        relationTime,
+      </if>
+      <if test="backupone != null" >
+        backupOne,
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo,
+      </if>
+      <if test="backupthree != null" >
+        backupThree,
+      </if>
+      <if test="backupfour != null" >
+        backupFour,
+      </if>
+      <if test="backupfive != null" >
+        backupFive,
+      </if>
+      <if test="backupsix != null" >
+        backupSix,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemuserid != null" >
+        #{itemuserid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="itemid != null" >
+        #{itemid,jdbcType=BIGINT},
+      </if>
+      <if test="relationtag != null" >
+        #{relationtag,jdbcType=INTEGER},
+      </if>
+      <if test="relationtime != null" >
+        #{relationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupone != null" >
+        #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        #{backupsix,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.ItemUser" >
+    update itemuser
+    <set >
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="itemid != null" >
+        itemID = #{itemid,jdbcType=BIGINT},
+      </if>
+      <if test="relationtag != null" >
+        relationTag = #{relationtag,jdbcType=INTEGER},
+      </if>
+      <if test="relationtime != null" >
+        relationTime = #{relationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupone != null" >
+        backupOne = #{backupone,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptwo != null" >
+        backupTwo = #{backuptwo,jdbcType=VARCHAR},
+      </if>
+      <if test="backupthree != null" >
+        backupThree = #{backupthree,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfour != null" >
+        backupFour = #{backupfour,jdbcType=VARCHAR},
+      </if>
+      <if test="backupfive != null" >
+        backupFive = #{backupfive,jdbcType=INTEGER},
+      </if>
+      <if test="backupsix != null" >
+        backupSix = #{backupsix,jdbcType=INTEGER},
+      </if>
+    </set>
+    where itemUserID = #{itemuserid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.ItemUser" >
+    update itemuser
+    set userID = #{userid,jdbcType=BIGINT},
+      itemID = #{itemid,jdbcType=BIGINT},
+      relationTag = #{relationtag,jdbcType=INTEGER},
+      relationTime = #{relationtime,jdbcType=TIMESTAMP},
+      backupOne = #{backupone,jdbcType=VARCHAR},
+      backupTwo = #{backuptwo,jdbcType=VARCHAR},
+      backupThree = #{backupthree,jdbcType=VARCHAR},
+      backupFour = #{backupfour,jdbcType=VARCHAR},
+      backupFive = #{backupfive,jdbcType=INTEGER},
+      backupSix = #{backupsix,jdbcType=INTEGER}
+    where itemUserID = #{itemuserid,jdbcType=BIGINT}
+  </update>
+</mapper>

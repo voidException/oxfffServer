@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.ShareUserMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.ShareUser" >
+    <id column="shareID" property="shareid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="shareUserUUID" property="shareuseruuid" jdbcType="VARCHAR" />
+    <result column="hasPay" property="haspay" jdbcType="INTEGER" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shareID, userUUID, shareUserUUID, hasPay, createdDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from shareUser
+    where shareID = #{shareid,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from shareUser
+    where userUUID=#{userUUID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shareUser
+    where shareID = #{shareid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.ShareUser" >
+    insert into shareUser (shareID, userUUID, shareUserUUID, 
+      hasPay, createdDate)
+    values (#{shareid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{shareuseruuid,jdbcType=VARCHAR}, 
+      #{haspay,jdbcType=INTEGER}, #{createddate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.ShareUser" >
+    insert into shareUser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shareid != null" >
+        shareID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="shareuseruuid != null" >
+        shareUserUUID,
+      </if>
+      <if test="haspay != null" >
+        hasPay,
+      </if>
+      <if test="createddate != null" >
+        createdDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shareid != null" >
+        #{shareid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shareuseruuid != null" >
+        #{shareuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="haspay != null" >
+        #{haspay,jdbcType=INTEGER},
+      </if>
+      <if test="createddate != null" >
+        #{createddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.ShareUser" >
+    update shareUser
+    <set >
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shareuseruuid != null" >
+        shareUserUUID = #{shareuseruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="haspay != null" >
+        hasPay = #{haspay,jdbcType=INTEGER},
+      </if>
+      <if test="createddate != null" >
+        createdDate = #{createddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shareID = #{shareid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.ShareUser" >
+    update shareUser
+    set userUUID = #{useruuid,jdbcType=VARCHAR},
+      shareUserUUID = #{shareuseruuid,jdbcType=VARCHAR},
+      hasPay = #{haspay,jdbcType=INTEGER},
+      createdDate = #{createddate,jdbcType=TIMESTAMP}
+    where shareID = #{shareid,jdbcType=BIGINT}
+  </update>
+</mapper>

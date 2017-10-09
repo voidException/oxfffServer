@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.GeneralInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.GeneralInfo" >
+    <id column="generalInfoID" property="generalinfoid" jdbcType="BIGINT" />
+    <result column="generalUUID" property="generaluuid" jdbcType="VARCHAR" />
+    <result column="msgPubCount" property="msgpubcount" jdbcType="INTEGER" />
+    <result column="msgBoxCount" property="msgboxcount" jdbcType="INTEGER" />
+    <result column="msgOkCount" property="msgokcount" jdbcType="INTEGER" />
+    <result column="fansCount" property="fanscount" jdbcType="INTEGER" />
+    <result column="followCount" property="followcount" jdbcType="INTEGER" />
+    <result column="notsay" property="notsay" jdbcType="INTEGER" />
+    <result column="notSayTime" property="notsaytime" jdbcType="TIMESTAMP" />
+    <result column="canSayTime" property="cansaytime" jdbcType="TIMESTAMP" />
+    <result column="notSayReason" property="notsayreason" jdbcType="VARCHAR" />
+    <result column="totalNotSay" property="totalnotsay" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    generalInfoID, generalUUID, msgPubCount, msgBoxCount, msgOkCount, fansCount, followCount, 
+    notsay, notSayTime, canSayTime, notSayReason, totalNotSay
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from generalInfo
+    where generalInfoID = #{generalinfoid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from generalInfo
+    where generalInfoID = #{generalinfoid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.GeneralInfo" >
+    insert into generalInfo (generalInfoID, generalUUID, msgPubCount, 
+      msgBoxCount, msgOkCount, fansCount, 
+      followCount, notsay, notSayTime, 
+      canSayTime, notSayReason, totalNotSay
+      )
+    values (#{generalinfoid,jdbcType=BIGINT}, #{generaluuid,jdbcType=VARCHAR}, #{msgpubcount,jdbcType=INTEGER}, 
+      #{msgboxcount,jdbcType=INTEGER}, #{msgokcount,jdbcType=INTEGER}, #{fanscount,jdbcType=INTEGER}, 
+      #{followcount,jdbcType=INTEGER}, #{notsay,jdbcType=INTEGER}, #{notsaytime,jdbcType=TIMESTAMP}, 
+      #{cansaytime,jdbcType=TIMESTAMP}, #{notsayreason,jdbcType=VARCHAR}, #{totalnotsay,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.GeneralInfo" >
+    insert into generalInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="generalinfoid != null" >
+        generalInfoID,
+      </if>
+      <if test="generaluuid != null" >
+        generalUUID,
+      </if>
+      <if test="msgpubcount != null" >
+        msgPubCount,
+      </if>
+      <if test="msgboxcount != null" >
+        msgBoxCount,
+      </if>
+      <if test="msgokcount != null" >
+        msgOkCount,
+      </if>
+      <if test="fanscount != null" >
+        fansCount,
+      </if>
+      <if test="followcount != null" >
+        followCount,
+      </if>
+      <if test="notsay != null" >
+        notsay,
+      </if>
+      <if test="notsaytime != null" >
+        notSayTime,
+      </if>
+      <if test="cansaytime != null" >
+        canSayTime,
+      </if>
+      <if test="notsayreason != null" >
+        notSayReason,
+      </if>
+      <if test="totalnotsay != null" >
+        totalNotSay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="generalinfoid != null" >
+        #{generalinfoid,jdbcType=BIGINT},
+      </if>
+      <if test="generaluuid != null" >
+        #{generaluuid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgpubcount != null" >
+        #{msgpubcount,jdbcType=INTEGER},
+      </if>
+      <if test="msgboxcount != null" >
+        #{msgboxcount,jdbcType=INTEGER},
+      </if>
+      <if test="msgokcount != null" >
+        #{msgokcount,jdbcType=INTEGER},
+      </if>
+      <if test="fanscount != null" >
+        #{fanscount,jdbcType=INTEGER},
+      </if>
+      <if test="followcount != null" >
+        #{followcount,jdbcType=INTEGER},
+      </if>
+      <if test="notsay != null" >
+        #{notsay,jdbcType=INTEGER},
+      </if>
+      <if test="notsaytime != null" >
+        #{notsaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cansaytime != null" >
+        #{cansaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notsayreason != null" >
+        #{notsayreason,jdbcType=VARCHAR},
+      </if>
+      <if test="totalnotsay != null" >
+        #{totalnotsay,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.GeneralInfo" >
+    update generalInfo
+    <set >
+      <if test="generaluuid != null" >
+        generalUUID = #{generaluuid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgpubcount != null" >
+        msgPubCount = #{msgpubcount,jdbcType=INTEGER},
+      </if>
+      <if test="msgboxcount != null" >
+        msgBoxCount = #{msgboxcount,jdbcType=INTEGER},
+      </if>
+      <if test="msgokcount != null" >
+        msgOkCount = #{msgokcount,jdbcType=INTEGER},
+      </if>
+      <if test="fanscount != null" >
+        fansCount = #{fanscount,jdbcType=INTEGER},
+      </if>
+      <if test="followcount != null" >
+        followCount = #{followcount,jdbcType=INTEGER},
+      </if>
+      <if test="notsay != null" >
+        notsay = #{notsay,jdbcType=INTEGER},
+      </if>
+      <if test="notsaytime != null" >
+        notSayTime = #{notsaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cansaytime != null" >
+        canSayTime = #{cansaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notsayreason != null" >
+        notSayReason = #{notsayreason,jdbcType=VARCHAR},
+      </if>
+      <if test="totalnotsay != null" >
+        totalNotSay = #{totalnotsay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where generalInfoID = #{generalinfoid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.GeneralInfo" >
+    update generalInfo
+    set generalUUID = #{generaluuid,jdbcType=VARCHAR},
+      msgPubCount = #{msgpubcount,jdbcType=INTEGER},
+      msgBoxCount = #{msgboxcount,jdbcType=INTEGER},
+      msgOkCount = #{msgokcount,jdbcType=INTEGER},
+      fansCount = #{fanscount,jdbcType=INTEGER},
+      followCount = #{followcount,jdbcType=INTEGER},
+      notsay = #{notsay,jdbcType=INTEGER},
+      notSayTime = #{notsaytime,jdbcType=TIMESTAMP},
+      canSayTime = #{cansaytime,jdbcType=TIMESTAMP},
+      notSayReason = #{notsayreason,jdbcType=VARCHAR},
+      totalNotSay = #{totalnotsay,jdbcType=INTEGER}
+    where generalInfoID = #{generalinfoid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.RenZhengMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.RenZheng" >
+    <id column="renZhengID" property="renzhengid" jdbcType="BIGINT" />
+    <result column="renZhengUUID" property="renzhenguuid" jdbcType="VARCHAR" />
+    <result column="userID" property="userid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="realManOk" property="realmanok" jdbcType="INTEGER" />
+    <result column="identityCard" property="identitycard" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="loveTeamOk" property="loveteamok" jdbcType="INTEGER" />
+    <result column="loveTeamDesp" property="loveteamdesp" jdbcType="VARCHAR" />
+    <result column="loveTeamDate" property="loveteamdate" jdbcType="TIMESTAMP" />
+    <result column="superviseOk" property="superviseok" jdbcType="INTEGER" />
+    <result column="superviseDesp" property="supervisedesp" jdbcType="VARCHAR" />
+    <result column="superviseDate" property="supervisedate" jdbcType="TIMESTAMP" />
+    <result column="volunteerOk" property="volunteerok" jdbcType="INTEGER" />
+    <result column="volunteerDesp" property="volunteerdesp" jdbcType="VARCHAR" />
+    <result column="volunteerDate" property="volunteerdate" jdbcType="TIMESTAMP" />
+    <result column="welfareOk" property="welfareok" jdbcType="INTEGER" />
+    <result column="welfareDesp" property="welfaredesp" jdbcType="VARCHAR" />
+    <result column="welfareType" property="welfaretype" jdbcType="VARCHAR" />
+    <result column="welfareScale" property="welfarescale" jdbcType="INTEGER" />
+    <result column="welfareConunry" property="welfareconunry" jdbcType="VARCHAR" />
+    <result column="welfareAddress" property="welfareaddress" jdbcType="VARCHAR" />
+    <result column="welfareDate" property="welfaredate" jdbcType="TIMESTAMP" />
+    <result column="img0" property="img0" jdbcType="VARCHAR" />
+    <result column="img1" property="img1" jdbcType="VARCHAR" />
+    <result column="img2" property="img2" jdbcType="VARCHAR" />
+    <result column="img3" property="img3" jdbcType="VARCHAR" />
+    <result column="img4" property="img4" jdbcType="VARCHAR" />
+    <result column="img5" property="img5" jdbcType="VARCHAR" />
+    <result column="img6" property="img6" jdbcType="VARCHAR" />
+    <result column="img7" property="img7" jdbcType="VARCHAR" />
+    <result column="img8" property="img8" jdbcType="VARCHAR" />
+    <result column="img9" property="img9" jdbcType="VARCHAR" />
+    <result column="img10" property="img10" jdbcType="VARCHAR" />
+    <result column="img11" property="img11" jdbcType="VARCHAR" />
+    <result column="img12" property="img12" jdbcType="VARCHAR" />
+    <result column="img13" property="img13" jdbcType="VARCHAR" />
+    <result column="img14" property="img14" jdbcType="VARCHAR" />
+    <result column="img15" property="img15" jdbcType="VARCHAR" />
+    <result column="img16" property="img16" jdbcType="VARCHAR" />
+    <result column="img17" property="img17" jdbcType="VARCHAR" />
+    <result column="img18" property="img18" jdbcType="VARCHAR" />
+    <result column="img19" property="img19" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    renZhengID, renZhengUUID, userID, userUUID, realManOk, identityCard, realName, mobile, 
+    mail, address, loveTeamOk, loveTeamDesp, loveTeamDate, superviseOk, superviseDesp, 
+    superviseDate, volunteerOk, volunteerDesp, volunteerDate, welfareOk, welfareDesp, 
+    welfareType, welfareScale, welfareConunry, welfareAddress, welfareDate, img0, img1, 
+    img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, 
+    img15, img16, img17, img18, img19
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from renZheng
+    where renZhengID = #{renzhengid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUseriD" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from renZheng
+    where userID = #{userid,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from renZheng
+    where renZhengID = #{renzhengid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.RenZheng" >
+    insert into renZheng (renZhengID, renZhengUUID, userID, 
+      userUUID, realManOk, identityCard, 
+      realName, mobile, mail, 
+      address, loveTeamOk, loveTeamDesp, 
+      loveTeamDate, superviseOk, superviseDesp, 
+      superviseDate, volunteerOk, volunteerDesp, 
+      volunteerDate, welfareOk, welfareDesp, 
+      welfareType, welfareScale, welfareConunry, 
+      welfareAddress, welfareDate, img0, 
+      img1, img2, img3, img4, 
+      img5, img6, img7, img8, 
+      img9, img10, img11, 
+      img12, img13, img14, 
+      img15, img16, img17, 
+      img18, img19)
+    values (#{renzhengid,jdbcType=BIGINT}, #{renzhenguuid,jdbcType=VARCHAR}, #{userid,jdbcType=BIGINT}, 
+      #{useruuid,jdbcType=VARCHAR}, #{realmanok,jdbcType=INTEGER}, #{identitycard,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{loveteamok,jdbcType=INTEGER}, #{loveteamdesp,jdbcType=VARCHAR}, 
+      #{loveteamdate,jdbcType=TIMESTAMP}, #{superviseok,jdbcType=INTEGER}, #{supervisedesp,jdbcType=VARCHAR}, 
+      #{supervisedate,jdbcType=TIMESTAMP}, #{volunteerok,jdbcType=INTEGER}, #{volunteerdesp,jdbcType=VARCHAR}, 
+      #{volunteerdate,jdbcType=TIMESTAMP}, #{welfareok,jdbcType=INTEGER}, #{welfaredesp,jdbcType=VARCHAR}, 
+      #{welfaretype,jdbcType=VARCHAR}, #{welfarescale,jdbcType=INTEGER}, #{welfareconunry,jdbcType=VARCHAR}, 
+      #{welfareaddress,jdbcType=VARCHAR}, #{welfaredate,jdbcType=TIMESTAMP}, #{img0,jdbcType=VARCHAR}, 
+      #{img1,jdbcType=VARCHAR}, #{img2,jdbcType=VARCHAR}, #{img3,jdbcType=VARCHAR}, #{img4,jdbcType=VARCHAR}, 
+      #{img5,jdbcType=VARCHAR}, #{img6,jdbcType=VARCHAR}, #{img7,jdbcType=VARCHAR}, #{img8,jdbcType=VARCHAR}, 
+      #{img9,jdbcType=VARCHAR}, #{img10,jdbcType=VARCHAR}, #{img11,jdbcType=VARCHAR}, 
+      #{img12,jdbcType=VARCHAR}, #{img13,jdbcType=VARCHAR}, #{img14,jdbcType=VARCHAR}, 
+      #{img15,jdbcType=VARCHAR}, #{img16,jdbcType=VARCHAR}, #{img17,jdbcType=VARCHAR}, 
+      #{img18,jdbcType=VARCHAR}, #{img19,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.RenZheng" >
+    insert into renZheng
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="renzhengid != null" >
+        renZhengID,
+      </if>
+      <if test="renzhenguuid != null" >
+        renZhengUUID,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="realmanok != null" >
+        realManOk,
+      </if>
+      <if test="identitycard != null" >
+        identityCard,
+      </if>
+      <if test="realname != null" >
+        realName,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="loveteamok != null" >
+        loveTeamOk,
+      </if>
+      <if test="loveteamdesp != null" >
+        loveTeamDesp,
+      </if>
+      <if test="loveteamdate != null" >
+        loveTeamDate,
+      </if>
+      <if test="superviseok != null" >
+        superviseOk,
+      </if>
+      <if test="supervisedesp != null" >
+        superviseDesp,
+      </if>
+      <if test="supervisedate != null" >
+        superviseDate,
+      </if>
+      <if test="volunteerok != null" >
+        volunteerOk,
+      </if>
+      <if test="volunteerdesp != null" >
+        volunteerDesp,
+      </if>
+      <if test="volunteerdate != null" >
+        volunteerDate,
+      </if>
+      <if test="welfareok != null" >
+        welfareOk,
+      </if>
+      <if test="welfaredesp != null" >
+        welfareDesp,
+      </if>
+      <if test="welfaretype != null" >
+        welfareType,
+      </if>
+      <if test="welfarescale != null" >
+        welfareScale,
+      </if>
+      <if test="welfareconunry != null" >
+        welfareConunry,
+      </if>
+      <if test="welfareaddress != null" >
+        welfareAddress,
+      </if>
+      <if test="welfaredate != null" >
+        welfareDate,
+      </if>
+      <if test="img0 != null" >
+        img0,
+      </if>
+      <if test="img1 != null" >
+        img1,
+      </if>
+      <if test="img2 != null" >
+        img2,
+      </if>
+      <if test="img3 != null" >
+        img3,
+      </if>
+      <if test="img4 != null" >
+        img4,
+      </if>
+      <if test="img5 != null" >
+        img5,
+      </if>
+      <if test="img6 != null" >
+        img6,
+      </if>
+      <if test="img7 != null" >
+        img7,
+      </if>
+      <if test="img8 != null" >
+        img8,
+      </if>
+      <if test="img9 != null" >
+        img9,
+      </if>
+      <if test="img10 != null" >
+        img10,
+      </if>
+      <if test="img11 != null" >
+        img11,
+      </if>
+      <if test="img12 != null" >
+        img12,
+      </if>
+      <if test="img13 != null" >
+        img13,
+      </if>
+      <if test="img14 != null" >
+        img14,
+      </if>
+      <if test="img15 != null" >
+        img15,
+      </if>
+      <if test="img16 != null" >
+        img16,
+      </if>
+      <if test="img17 != null" >
+        img17,
+      </if>
+      <if test="img18 != null" >
+        img18,
+      </if>
+      <if test="img19 != null" >
+        img19,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="renzhengid != null" >
+        #{renzhengid,jdbcType=BIGINT},
+      </if>
+      <if test="renzhenguuid != null" >
+        #{renzhenguuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="realmanok != null" >
+        #{realmanok,jdbcType=INTEGER},
+      </if>
+      <if test="identitycard != null" >
+        #{identitycard,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="loveteamok != null" >
+        #{loveteamok,jdbcType=INTEGER},
+      </if>
+      <if test="loveteamdesp != null" >
+        #{loveteamdesp,jdbcType=VARCHAR},
+      </if>
+      <if test="loveteamdate != null" >
+        #{loveteamdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="superviseok != null" >
+        #{superviseok,jdbcType=INTEGER},
+      </if>
+      <if test="supervisedesp != null" >
+        #{supervisedesp,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisedate != null" >
+        #{supervisedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="volunteerok != null" >
+        #{volunteerok,jdbcType=INTEGER},
+      </if>
+      <if test="volunteerdesp != null" >
+        #{volunteerdesp,jdbcType=VARCHAR},
+      </if>
+      <if test="volunteerdate != null" >
+        #{volunteerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="welfareok != null" >
+        #{welfareok,jdbcType=INTEGER},
+      </if>
+      <if test="welfaredesp != null" >
+        #{welfaredesp,jdbcType=VARCHAR},
+      </if>
+      <if test="welfaretype != null" >
+        #{welfaretype,jdbcType=VARCHAR},
+      </if>
+      <if test="welfarescale != null" >
+        #{welfarescale,jdbcType=INTEGER},
+      </if>
+      <if test="welfareconunry != null" >
+        #{welfareconunry,jdbcType=VARCHAR},
+      </if>
+      <if test="welfareaddress != null" >
+        #{welfareaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="welfaredate != null" >
+        #{welfaredate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="img0 != null" >
+        #{img0,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="img5 != null" >
+        #{img5,jdbcType=VARCHAR},
+      </if>
+      <if test="img6 != null" >
+        #{img6,jdbcType=VARCHAR},
+      </if>
+      <if test="img7 != null" >
+        #{img7,jdbcType=VARCHAR},
+      </if>
+      <if test="img8 != null" >
+        #{img8,jdbcType=VARCHAR},
+      </if>
+      <if test="img9 != null" >
+        #{img9,jdbcType=VARCHAR},
+      </if>
+      <if test="img10 != null" >
+        #{img10,jdbcType=VARCHAR},
+      </if>
+      <if test="img11 != null" >
+        #{img11,jdbcType=VARCHAR},
+      </if>
+      <if test="img12 != null" >
+        #{img12,jdbcType=VARCHAR},
+      </if>
+      <if test="img13 != null" >
+        #{img13,jdbcType=VARCHAR},
+      </if>
+      <if test="img14 != null" >
+        #{img14,jdbcType=VARCHAR},
+      </if>
+      <if test="img15 != null" >
+        #{img15,jdbcType=VARCHAR},
+      </if>
+      <if test="img16 != null" >
+        #{img16,jdbcType=VARCHAR},
+      </if>
+      <if test="img17 != null" >
+        #{img17,jdbcType=VARCHAR},
+      </if>
+      <if test="img18 != null" >
+        #{img18,jdbcType=VARCHAR},
+      </if>
+      <if test="img19 != null" >
+        #{img19,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.RenZheng" >
+    update renZheng
+    <set >
+      <if test="renzhenguuid != null" >
+        renZhengUUID = #{renzhenguuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="realmanok != null" >
+        realManOk = #{realmanok,jdbcType=INTEGER},
+      </if>
+      <if test="identitycard != null" >
+        identityCard = #{identitycard,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="loveteamok != null" >
+        loveTeamOk = #{loveteamok,jdbcType=INTEGER},
+      </if>
+      <if test="loveteamdesp != null" >
+        loveTeamDesp = #{loveteamdesp,jdbcType=VARCHAR},
+      </if>
+      <if test="loveteamdate != null" >
+        loveTeamDate = #{loveteamdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="superviseok != null" >
+        superviseOk = #{superviseok,jdbcType=INTEGER},
+      </if>
+      <if test="supervisedesp != null" >
+        superviseDesp = #{supervisedesp,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisedate != null" >
+        superviseDate = #{supervisedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="volunteerok != null" >
+        volunteerOk = #{volunteerok,jdbcType=INTEGER},
+      </if>
+      <if test="volunteerdesp != null" >
+        volunteerDesp = #{volunteerdesp,jdbcType=VARCHAR},
+      </if>
+      <if test="volunteerdate != null" >
+        volunteerDate = #{volunteerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="welfareok != null" >
+        welfareOk = #{welfareok,jdbcType=INTEGER},
+      </if>
+      <if test="welfaredesp != null" >
+        welfareDesp = #{welfaredesp,jdbcType=VARCHAR},
+      </if>
+      <if test="welfaretype != null" >
+        welfareType = #{welfaretype,jdbcType=VARCHAR},
+      </if>
+      <if test="welfarescale != null" >
+        welfareScale = #{welfarescale,jdbcType=INTEGER},
+      </if>
+      <if test="welfareconunry != null" >
+        welfareConunry = #{welfareconunry,jdbcType=VARCHAR},
+      </if>
+      <if test="welfareaddress != null" >
+        welfareAddress = #{welfareaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="welfaredate != null" >
+        welfareDate = #{welfaredate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="img0 != null" >
+        img0 = #{img0,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        img1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        img2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        img3 = #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        img4 = #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="img5 != null" >
+        img5 = #{img5,jdbcType=VARCHAR},
+      </if>
+      <if test="img6 != null" >
+        img6 = #{img6,jdbcType=VARCHAR},
+      </if>
+      <if test="img7 != null" >
+        img7 = #{img7,jdbcType=VARCHAR},
+      </if>
+      <if test="img8 != null" >
+        img8 = #{img8,jdbcType=VARCHAR},
+      </if>
+      <if test="img9 != null" >
+        img9 = #{img9,jdbcType=VARCHAR},
+      </if>
+      <if test="img10 != null" >
+        img10 = #{img10,jdbcType=VARCHAR},
+      </if>
+      <if test="img11 != null" >
+        img11 = #{img11,jdbcType=VARCHAR},
+      </if>
+      <if test="img12 != null" >
+        img12 = #{img12,jdbcType=VARCHAR},
+      </if>
+      <if test="img13 != null" >
+        img13 = #{img13,jdbcType=VARCHAR},
+      </if>
+      <if test="img14 != null" >
+        img14 = #{img14,jdbcType=VARCHAR},
+      </if>
+      <if test="img15 != null" >
+        img15 = #{img15,jdbcType=VARCHAR},
+      </if>
+      <if test="img16 != null" >
+        img16 = #{img16,jdbcType=VARCHAR},
+      </if>
+      <if test="img17 != null" >
+        img17 = #{img17,jdbcType=VARCHAR},
+      </if>
+      <if test="img18 != null" >
+        img18 = #{img18,jdbcType=VARCHAR},
+      </if>
+      <if test="img19 != null" >
+        img19 = #{img19,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where renZhengID = #{renzhengid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.RenZheng" >
+    update renZheng
+    set renZhengUUID = #{renzhenguuid,jdbcType=VARCHAR},
+      userID = #{userid,jdbcType=BIGINT},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      realManOk = #{realmanok,jdbcType=INTEGER},
+      identityCard = #{identitycard,jdbcType=VARCHAR},
+      realName = #{realname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      loveTeamOk = #{loveteamok,jdbcType=INTEGER},
+      loveTeamDesp = #{loveteamdesp,jdbcType=VARCHAR},
+      loveTeamDate = #{loveteamdate,jdbcType=TIMESTAMP},
+      superviseOk = #{superviseok,jdbcType=INTEGER},
+      superviseDesp = #{supervisedesp,jdbcType=VARCHAR},
+      superviseDate = #{supervisedate,jdbcType=TIMESTAMP},
+      volunteerOk = #{volunteerok,jdbcType=INTEGER},
+      volunteerDesp = #{volunteerdesp,jdbcType=VARCHAR},
+      volunteerDate = #{volunteerdate,jdbcType=TIMESTAMP},
+      welfareOk = #{welfareok,jdbcType=INTEGER},
+      welfareDesp = #{welfaredesp,jdbcType=VARCHAR},
+      welfareType = #{welfaretype,jdbcType=VARCHAR},
+      welfareScale = #{welfarescale,jdbcType=INTEGER},
+      welfareConunry = #{welfareconunry,jdbcType=VARCHAR},
+      welfareAddress = #{welfareaddress,jdbcType=VARCHAR},
+      welfareDate = #{welfaredate,jdbcType=TIMESTAMP},
+      img0 = #{img0,jdbcType=VARCHAR},
+      img1 = #{img1,jdbcType=VARCHAR},
+      img2 = #{img2,jdbcType=VARCHAR},
+      img3 = #{img3,jdbcType=VARCHAR},
+      img4 = #{img4,jdbcType=VARCHAR},
+      img5 = #{img5,jdbcType=VARCHAR},
+      img6 = #{img6,jdbcType=VARCHAR},
+      img7 = #{img7,jdbcType=VARCHAR},
+      img8 = #{img8,jdbcType=VARCHAR},
+      img9 = #{img9,jdbcType=VARCHAR},
+      img10 = #{img10,jdbcType=VARCHAR},
+      img11 = #{img11,jdbcType=VARCHAR},
+      img12 = #{img12,jdbcType=VARCHAR},
+      img13 = #{img13,jdbcType=VARCHAR},
+      img14 = #{img14,jdbcType=VARCHAR},
+      img15 = #{img15,jdbcType=VARCHAR},
+      img16 = #{img16,jdbcType=VARCHAR},
+      img17 = #{img17,jdbcType=VARCHAR},
+      img18 = #{img18,jdbcType=VARCHAR},
+      img19 = #{img19,jdbcType=VARCHAR}
+    where renZhengID = #{renzhengid,jdbcType=BIGINT}
+  </update>
+</mapper>

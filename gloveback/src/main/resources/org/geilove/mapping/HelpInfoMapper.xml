@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.HelpInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.HelpInfo" >
+    <id column="helpeachOtherID" property="helpeachotherid" jdbcType="BIGINT" />
+    <result column="helpeachOtherUUID" property="helpeachotheruuid" jdbcType="VARCHAR" />
+    <result column="userID" property="userid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="bankCard" property="bankcard" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bankDate" property="bankdate" jdbcType="TIMESTAMP" />
+    <result column="bankCardName" property="bankcardname" jdbcType="VARCHAR" />
+    <result column="donateIf" property="donateif" jdbcType="INTEGER" />
+    <result column="donateMount" property="donatemount" jdbcType="INTEGER" />
+    <result column="donateTimes" property="donatetimes" jdbcType="INTEGER" />
+    <result column="helpTimes" property="helptimes" jdbcType="INTEGER" />
+    <result column="firstDonateDate" property="firstdonatedate" jdbcType="TIMESTAMP" />
+    <result column="lastDonateDate" property="lastdonatedate" jdbcType="INTEGER" />
+    <result column="acceptHelpIf" property="accepthelpif" jdbcType="INTEGER" />
+    <result column="acceptHelpTimes" property="accepthelptimes" jdbcType="INTEGER" />
+    <result column="helpStatus" property="helpstatus" jdbcType="TIMESTAMP" />
+    <result column="acceptFirstHelpStartDate" property="acceptfirsthelpstartdate" jdbcType="TIMESTAMP" />
+    <result column="acceptFirstHelpEndDate" property="acceptfirsthelpenddate" jdbcType="TIMESTAMP" />
+    <result column="promiseOneType" property="promiseonetype" jdbcType="INTEGER" />
+    <result column="promiseOneDesp" property="promiseonedesp" jdbcType="VARCHAR" />
+    <result column="cashOneID" property="cashoneid" jdbcType="BIGINT" />
+    <result column="cashOneUUID" property="cashoneuuid" jdbcType="VARCHAR" />
+    <result column="tweetOneID" property="tweetoneid" jdbcType="BIGINT" />
+    <result column="tweetOneUUID" property="tweetoneuuid" jdbcType="VARCHAR" />
+    <result column="acceptFirstMoneyMount" property="acceptfirstmoneymount" jdbcType="INTEGER" />
+    <result column="acceptFirstHelpTimes" property="acceptfirsthelptimes" jdbcType="INTEGER" />
+    <result column="acceptFirstHelpMenNumber" property="acceptfirsthelpmennumber" jdbcType="INTEGER" />
+    <result column="confirmOneTimes" property="confirmonetimes" jdbcType="INTEGER" />
+    <result column="doubtOnetimes" property="doubtonetimes" jdbcType="INTEGER" />
+    <result column="dynamicOne" property="dynamicone" jdbcType="INTEGER" />
+    <result column="accept2HelpStartDate" property="accept2helpstartdate" jdbcType="TIMESTAMP" />
+    <result column="accept2HelpEndDate" property="accept2helpenddate" jdbcType="TIMESTAMP" />
+    <result column="promiseTwoType" property="promisetwotype" jdbcType="INTEGER" />
+    <result column="promiseTwoDesp" property="promisetwodesp" jdbcType="VARCHAR" />
+    <result column="cashTwoID" property="cashtwoid" jdbcType="BIGINT" />
+    <result column="cashTwoUUID" property="cashtwouuid" jdbcType="VARCHAR" />
+    <result column="accept2MoneyMount" property="accept2moneymount" jdbcType="INTEGER" />
+    <result column="accept2HelpTimes" property="accept2helptimes" jdbcType="INTEGER" />
+    <result column="accept2HelpMenNumber" property="accept2helpmennumber" jdbcType="INTEGER" />
+    <result column="confirmTwoTimes" property="confirmtwotimes" jdbcType="INTEGER" />
+    <result column="doubtTwotimes" property="doubttwotimes" jdbcType="INTEGER" />
+    <result column="dynamicTwo" property="dynamictwo" jdbcType="INTEGER" />
+    <result column="tweetTwoUUID" property="tweettwouuid" jdbcType="VARCHAR" />
+    <result column="tweetTwoID" property="tweettwoid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    helpeachOtherID, helpeachOtherUUID, userID, userUUID, bankCard, bank, bankDate, bankCardName, 
+    donateIf, donateMount, donateTimes, helpTimes, firstDonateDate, lastDonateDate, acceptHelpIf, 
+    acceptHelpTimes, helpStatus, acceptFirstHelpStartDate, acceptFirstHelpEndDate, promiseOneType, 
+    promiseOneDesp, cashOneID, cashOneUUID, tweetOneID, tweetOneUUID, acceptFirstMoneyMount, 
+    acceptFirstHelpTimes, acceptFirstHelpMenNumber, confirmOneTimes, doubtOnetimes, dynamicOne, 
+    accept2HelpStartDate, accept2HelpEndDate, promiseTwoType, promiseTwoDesp, cashTwoID, 
+    cashTwoUUID, accept2MoneyMount, accept2HelpTimes, accept2HelpMenNumber, confirmTwoTimes, 
+    doubtTwotimes, dynamicTwo, tweetTwoUUID, tweetTwoID
+  </sql>
+
+  <!--自定义selectByUserUUID-->
+  <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from helpInfo
+    where userUUID = #{useruuid}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from helpInfo
+    where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from helpInfo
+    where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.HelpInfo" >
+    insert into helpInfo (helpeachOtherID, helpeachOtherUUID, 
+      userID, userUUID, bankCard, 
+      bank, bankDate, bankCardName, 
+      donateIf, donateMount, donateTimes, 
+      helpTimes, firstDonateDate, lastDonateDate, 
+      acceptHelpIf, acceptHelpTimes, helpStatus, 
+      acceptFirstHelpStartDate, acceptFirstHelpEndDate, 
+      promiseOneType, promiseOneDesp, cashOneID, 
+      cashOneUUID, tweetOneID, tweetOneUUID, 
+      acceptFirstMoneyMount, acceptFirstHelpTimes, 
+      acceptFirstHelpMenNumber, confirmOneTimes, 
+      doubtOnetimes, dynamicOne, accept2HelpStartDate, 
+      accept2HelpEndDate, promiseTwoType, promiseTwoDesp, 
+      cashTwoID, cashTwoUUID, accept2MoneyMount, 
+      accept2HelpTimes, accept2HelpMenNumber, 
+      confirmTwoTimes, doubtTwotimes, dynamicTwo, 
+      tweetTwoUUID, tweetTwoID)
+    values (#{helpeachotherid,jdbcType=BIGINT}, #{helpeachotheruuid,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{bankcard,jdbcType=VARCHAR}, 
+      #{bank,jdbcType=VARCHAR}, #{bankdate,jdbcType=TIMESTAMP}, #{bankcardname,jdbcType=VARCHAR}, 
+      #{donateif,jdbcType=INTEGER}, #{donatemount,jdbcType=INTEGER}, #{donatetimes,jdbcType=INTEGER}, 
+      #{helptimes,jdbcType=INTEGER}, #{firstdonatedate,jdbcType=TIMESTAMP}, #{lastdonatedate,jdbcType=INTEGER}, 
+      #{accepthelpif,jdbcType=INTEGER}, #{accepthelptimes,jdbcType=INTEGER}, #{helpstatus,jdbcType=TIMESTAMP}, 
+      #{acceptfirsthelpstartdate,jdbcType=TIMESTAMP}, #{acceptfirsthelpenddate,jdbcType=TIMESTAMP}, 
+      #{promiseonetype,jdbcType=INTEGER}, #{promiseonedesp,jdbcType=VARCHAR}, #{cashoneid,jdbcType=BIGINT}, 
+      #{cashoneuuid,jdbcType=VARCHAR}, #{tweetoneid,jdbcType=BIGINT}, #{tweetoneuuid,jdbcType=VARCHAR}, 
+      #{acceptfirstmoneymount,jdbcType=INTEGER}, #{acceptfirsthelptimes,jdbcType=INTEGER}, 
+      #{acceptfirsthelpmennumber,jdbcType=INTEGER}, #{confirmonetimes,jdbcType=INTEGER}, 
+      #{doubtonetimes,jdbcType=INTEGER}, #{dynamicone,jdbcType=INTEGER}, #{accept2helpstartdate,jdbcType=TIMESTAMP}, 
+      #{accept2helpenddate,jdbcType=TIMESTAMP}, #{promisetwotype,jdbcType=INTEGER}, #{promisetwodesp,jdbcType=VARCHAR}, 
+      #{cashtwoid,jdbcType=BIGINT}, #{cashtwouuid,jdbcType=VARCHAR}, #{accept2moneymount,jdbcType=INTEGER}, 
+      #{accept2helptimes,jdbcType=INTEGER}, #{accept2helpmennumber,jdbcType=INTEGER}, 
+      #{confirmtwotimes,jdbcType=INTEGER}, #{doubttwotimes,jdbcType=INTEGER}, #{dynamictwo,jdbcType=INTEGER}, 
+      #{tweettwouuid,jdbcType=VARCHAR}, #{tweettwoid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.HelpInfo" >
+    insert into helpInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="helpeachotherid != null" >
+        helpeachOtherID,
+      </if>
+      <if test="helpeachotheruuid != null" >
+        helpeachOtherUUID,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="bankcard != null" >
+        bankCard,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankdate != null" >
+        bankDate,
+      </if>
+      <if test="bankcardname != null" >
+        bankCardName,
+      </if>
+      <if test="donateif != null" >
+        donateIf,
+      </if>
+      <if test="donatemount != null" >
+        donateMount,
+      </if>
+      <if test="donatetimes != null" >
+        donateTimes,
+      </if>
+      <if test="helptimes != null" >
+        helpTimes,
+      </if>
+      <if test="firstdonatedate != null" >
+        firstDonateDate,
+      </if>
+      <if test="lastdonatedate != null" >
+        lastDonateDate,
+      </if>
+      <if test="accepthelpif != null" >
+        acceptHelpIf,
+      </if>
+      <if test="accepthelptimes != null" >
+        acceptHelpTimes,
+      </if>
+      <if test="helpstatus != null" >
+        helpStatus,
+      </if>
+      <if test="acceptfirsthelpstartdate != null" >
+        acceptFirstHelpStartDate,
+      </if>
+      <if test="acceptfirsthelpenddate != null" >
+        acceptFirstHelpEndDate,
+      </if>
+      <if test="promiseonetype != null" >
+        promiseOneType,
+      </if>
+      <if test="promiseonedesp != null" >
+        promiseOneDesp,
+      </if>
+      <if test="cashoneid != null" >
+        cashOneID,
+      </if>
+      <if test="cashoneuuid != null" >
+        cashOneUUID,
+      </if>
+      <if test="tweetoneid != null" >
+        tweetOneID,
+      </if>
+      <if test="tweetoneuuid != null" >
+        tweetOneUUID,
+      </if>
+      <if test="acceptfirstmoneymount != null" >
+        acceptFirstMoneyMount,
+      </if>
+      <if test="acceptfirsthelptimes != null" >
+        acceptFirstHelpTimes,
+      </if>
+      <if test="acceptfirsthelpmennumber != null" >
+        acceptFirstHelpMenNumber,
+      </if>
+      <if test="confirmonetimes != null" >
+        confirmOneTimes,
+      </if>
+      <if test="doubtonetimes != null" >
+        doubtOnetimes,
+      </if>
+      <if test="dynamicone != null" >
+        dynamicOne,
+      </if>
+      <if test="accept2helpstartdate != null" >
+        accept2HelpStartDate,
+      </if>
+      <if test="accept2helpenddate != null" >
+        accept2HelpEndDate,
+      </if>
+      <if test="promisetwotype != null" >
+        promiseTwoType,
+      </if>
+      <if test="promisetwodesp != null" >
+        promiseTwoDesp,
+      </if>
+      <if test="cashtwoid != null" >
+        cashTwoID,
+      </if>
+      <if test="cashtwouuid != null" >
+        cashTwoUUID,
+      </if>
+      <if test="accept2moneymount != null" >
+        accept2MoneyMount,
+      </if>
+      <if test="accept2helptimes != null" >
+        accept2HelpTimes,
+      </if>
+      <if test="accept2helpmennumber != null" >
+        accept2HelpMenNumber,
+      </if>
+      <if test="confirmtwotimes != null" >
+        confirmTwoTimes,
+      </if>
+      <if test="doubttwotimes != null" >
+        doubtTwotimes,
+      </if>
+      <if test="dynamictwo != null" >
+        dynamicTwo,
+      </if>
+      <if test="tweettwouuid != null" >
+        tweetTwoUUID,
+      </if>
+      <if test="tweettwoid != null" >
+        tweetTwoID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="helpeachotherid != null" >
+        #{helpeachotherid,jdbcType=BIGINT},
+      </if>
+      <if test="helpeachotheruuid != null" >
+        #{helpeachotheruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcard != null" >
+        #{bankcard,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankdate != null" >
+        #{bankdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankcardname != null" >
+        #{bankcardname,jdbcType=VARCHAR},
+      </if>
+      <if test="donateif != null" >
+        #{donateif,jdbcType=INTEGER},
+      </if>
+      <if test="donatemount != null" >
+        #{donatemount,jdbcType=INTEGER},
+      </if>
+      <if test="donatetimes != null" >
+        #{donatetimes,jdbcType=INTEGER},
+      </if>
+      <if test="helptimes != null" >
+        #{helptimes,jdbcType=INTEGER},
+      </if>
+      <if test="firstdonatedate != null" >
+        #{firstdonatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastdonatedate != null" >
+        #{lastdonatedate,jdbcType=INTEGER},
+      </if>
+      <if test="accepthelpif != null" >
+        #{accepthelpif,jdbcType=INTEGER},
+      </if>
+      <if test="accepthelptimes != null" >
+        #{accepthelptimes,jdbcType=INTEGER},
+      </if>
+      <if test="helpstatus != null" >
+        #{helpstatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptfirsthelpstartdate != null" >
+        #{acceptfirsthelpstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptfirsthelpenddate != null" >
+        #{acceptfirsthelpenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promiseonetype != null" >
+        #{promiseonetype,jdbcType=INTEGER},
+      </if>
+      <if test="promiseonedesp != null" >
+        #{promiseonedesp,jdbcType=VARCHAR},
+      </if>
+      <if test="cashoneid != null" >
+        #{cashoneid,jdbcType=BIGINT},
+      </if>
+      <if test="cashoneuuid != null" >
+        #{cashoneuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetoneid != null" >
+        #{tweetoneid,jdbcType=BIGINT},
+      </if>
+      <if test="tweetoneuuid != null" >
+        #{tweetoneuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptfirstmoneymount != null" >
+        #{acceptfirstmoneymount,jdbcType=INTEGER},
+      </if>
+      <if test="acceptfirsthelptimes != null" >
+        #{acceptfirsthelptimes,jdbcType=INTEGER},
+      </if>
+      <if test="acceptfirsthelpmennumber != null" >
+        #{acceptfirsthelpmennumber,jdbcType=INTEGER},
+      </if>
+      <if test="confirmonetimes != null" >
+        #{confirmonetimes,jdbcType=INTEGER},
+      </if>
+      <if test="doubtonetimes != null" >
+        #{doubtonetimes,jdbcType=INTEGER},
+      </if>
+      <if test="dynamicone != null" >
+        #{dynamicone,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helpstartdate != null" >
+        #{accept2helpstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accept2helpenddate != null" >
+        #{accept2helpenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promisetwotype != null" >
+        #{promisetwotype,jdbcType=INTEGER},
+      </if>
+      <if test="promisetwodesp != null" >
+        #{promisetwodesp,jdbcType=VARCHAR},
+      </if>
+      <if test="cashtwoid != null" >
+        #{cashtwoid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtwouuid != null" >
+        #{cashtwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accept2moneymount != null" >
+        #{accept2moneymount,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helptimes != null" >
+        #{accept2helptimes,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helpmennumber != null" >
+        #{accept2helpmennumber,jdbcType=INTEGER},
+      </if>
+      <if test="confirmtwotimes != null" >
+        #{confirmtwotimes,jdbcType=INTEGER},
+      </if>
+      <if test="doubttwotimes != null" >
+        #{doubttwotimes,jdbcType=INTEGER},
+      </if>
+      <if test="dynamictwo != null" >
+        #{dynamictwo,jdbcType=INTEGER},
+      </if>
+      <if test="tweettwouuid != null" >
+        #{tweettwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweettwoid != null" >
+        #{tweettwoid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.HelpInfo" >
+    update helpInfo
+    <set >
+      <if test="helpeachotheruuid != null" >
+        helpeachOtherUUID = #{helpeachotheruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcard != null" >
+        bankCard = #{bankcard,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankdate != null" >
+        bankDate = #{bankdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankcardname != null" >
+        bankCardName = #{bankcardname,jdbcType=VARCHAR},
+      </if>
+      <if test="donateif != null" >
+        donateIf = #{donateif,jdbcType=INTEGER},
+      </if>
+      <if test="donatemount != null" >
+        donateMount = #{donatemount,jdbcType=INTEGER},
+      </if>
+      <if test="donatetimes != null" >
+        donateTimes = #{donatetimes,jdbcType=INTEGER},
+      </if>
+      <if test="helptimes != null" >
+        helpTimes = #{helptimes,jdbcType=INTEGER},
+      </if>
+      <if test="firstdonatedate != null" >
+        firstDonateDate = #{firstdonatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastdonatedate != null" >
+        lastDonateDate = #{lastdonatedate,jdbcType=INTEGER},
+      </if>
+      <if test="accepthelpif != null" >
+        acceptHelpIf = #{accepthelpif,jdbcType=INTEGER},
+      </if>
+      <if test="accepthelptimes != null" >
+        acceptHelpTimes = #{accepthelptimes,jdbcType=INTEGER},
+      </if>
+      <if test="helpstatus != null" >
+        helpStatus = #{helpstatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptfirsthelpstartdate != null" >
+        acceptFirstHelpStartDate = #{acceptfirsthelpstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptfirsthelpenddate != null" >
+        acceptFirstHelpEndDate = #{acceptfirsthelpenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promiseonetype != null" >
+        promiseOneType = #{promiseonetype,jdbcType=INTEGER},
+      </if>
+      <if test="promiseonedesp != null" >
+        promiseOneDesp = #{promiseonedesp,jdbcType=VARCHAR},
+      </if>
+      <if test="cashoneid != null" >
+        cashOneID = #{cashoneid,jdbcType=BIGINT},
+      </if>
+      <if test="cashoneuuid != null" >
+        cashOneUUID = #{cashoneuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweetoneid != null" >
+        tweetOneID = #{tweetoneid,jdbcType=BIGINT},
+      </if>
+      <if test="tweetoneuuid != null" >
+        tweetOneUUID = #{tweetoneuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptfirstmoneymount != null" >
+        acceptFirstMoneyMount = #{acceptfirstmoneymount,jdbcType=INTEGER},
+      </if>
+      <if test="acceptfirsthelptimes != null" >
+        acceptFirstHelpTimes = #{acceptfirsthelptimes,jdbcType=INTEGER},
+      </if>
+      <if test="acceptfirsthelpmennumber != null" >
+        acceptFirstHelpMenNumber = #{acceptfirsthelpmennumber,jdbcType=INTEGER},
+      </if>
+      <if test="confirmonetimes != null" >
+        confirmOneTimes = #{confirmonetimes,jdbcType=INTEGER},
+      </if>
+      <if test="doubtonetimes != null" >
+        doubtOnetimes = #{doubtonetimes,jdbcType=INTEGER},
+      </if>
+      <if test="dynamicone != null" >
+        dynamicOne = #{dynamicone,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helpstartdate != null" >
+        accept2HelpStartDate = #{accept2helpstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accept2helpenddate != null" >
+        accept2HelpEndDate = #{accept2helpenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promisetwotype != null" >
+        promiseTwoType = #{promisetwotype,jdbcType=INTEGER},
+      </if>
+      <if test="promisetwodesp != null" >
+        promiseTwoDesp = #{promisetwodesp,jdbcType=VARCHAR},
+      </if>
+      <if test="cashtwoid != null" >
+        cashTwoID = #{cashtwoid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtwouuid != null" >
+        cashTwoUUID = #{cashtwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accept2moneymount != null" >
+        accept2MoneyMount = #{accept2moneymount,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helptimes != null" >
+        accept2HelpTimes = #{accept2helptimes,jdbcType=INTEGER},
+      </if>
+      <if test="accept2helpmennumber != null" >
+        accept2HelpMenNumber = #{accept2helpmennumber,jdbcType=INTEGER},
+      </if>
+      <if test="confirmtwotimes != null" >
+        confirmTwoTimes = #{confirmtwotimes,jdbcType=INTEGER},
+      </if>
+      <if test="doubttwotimes != null" >
+        doubtTwotimes = #{doubttwotimes,jdbcType=INTEGER},
+      </if>
+      <if test="dynamictwo != null" >
+        dynamicTwo = #{dynamictwo,jdbcType=INTEGER},
+      </if>
+      <if test="tweettwouuid != null" >
+        tweetTwoUUID = #{tweettwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweettwoid != null" >
+        tweetTwoID = #{tweettwoid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.HelpInfo" >
+    update helpInfo
+    set helpeachOtherUUID = #{helpeachotheruuid,jdbcType=VARCHAR},
+      userID = #{userid,jdbcType=BIGINT},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      bankCard = #{bankcard,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bankDate = #{bankdate,jdbcType=TIMESTAMP},
+      bankCardName = #{bankcardname,jdbcType=VARCHAR},
+      donateIf = #{donateif,jdbcType=INTEGER},
+      donateMount = #{donatemount,jdbcType=INTEGER},
+      donateTimes = #{donatetimes,jdbcType=INTEGER},
+      helpTimes = #{helptimes,jdbcType=INTEGER},
+      firstDonateDate = #{firstdonatedate,jdbcType=TIMESTAMP},
+      lastDonateDate = #{lastdonatedate,jdbcType=INTEGER},
+      acceptHelpIf = #{accepthelpif,jdbcType=INTEGER},
+      acceptHelpTimes = #{accepthelptimes,jdbcType=INTEGER},
+      helpStatus = #{helpstatus,jdbcType=TIMESTAMP},
+      acceptFirstHelpStartDate = #{acceptfirsthelpstartdate,jdbcType=TIMESTAMP},
+      acceptFirstHelpEndDate = #{acceptfirsthelpenddate,jdbcType=TIMESTAMP},
+      promiseOneType = #{promiseonetype,jdbcType=INTEGER},
+      promiseOneDesp = #{promiseonedesp,jdbcType=VARCHAR},
+      cashOneID = #{cashoneid,jdbcType=BIGINT},
+      cashOneUUID = #{cashoneuuid,jdbcType=VARCHAR},
+      tweetOneID = #{tweetoneid,jdbcType=BIGINT},
+      tweetOneUUID = #{tweetoneuuid,jdbcType=VARCHAR},
+      acceptFirstMoneyMount = #{acceptfirstmoneymount,jdbcType=INTEGER},
+      acceptFirstHelpTimes = #{acceptfirsthelptimes,jdbcType=INTEGER},
+      acceptFirstHelpMenNumber = #{acceptfirsthelpmennumber,jdbcType=INTEGER},
+      confirmOneTimes = #{confirmonetimes,jdbcType=INTEGER},
+      doubtOnetimes = #{doubtonetimes,jdbcType=INTEGER},
+      dynamicOne = #{dynamicone,jdbcType=INTEGER},
+      accept2HelpStartDate = #{accept2helpstartdate,jdbcType=TIMESTAMP},
+      accept2HelpEndDate = #{accept2helpenddate,jdbcType=TIMESTAMP},
+      promiseTwoType = #{promisetwotype,jdbcType=INTEGER},
+      promiseTwoDesp = #{promisetwodesp,jdbcType=VARCHAR},
+      cashTwoID = #{cashtwoid,jdbcType=BIGINT},
+      cashTwoUUID = #{cashtwouuid,jdbcType=VARCHAR},
+      accept2MoneyMount = #{accept2moneymount,jdbcType=INTEGER},
+      accept2HelpTimes = #{accept2helptimes,jdbcType=INTEGER},
+      accept2HelpMenNumber = #{accept2helpmennumber,jdbcType=INTEGER},
+      confirmTwoTimes = #{confirmtwotimes,jdbcType=INTEGER},
+      doubtTwotimes = #{doubttwotimes,jdbcType=INTEGER},
+      dynamicTwo = #{dynamictwo,jdbcType=INTEGER},
+      tweetTwoUUID = #{tweettwouuid,jdbcType=VARCHAR},
+      tweetTwoID = #{tweettwoid,jdbcType=BIGINT}
+    where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
+  </update>
+</mapper>

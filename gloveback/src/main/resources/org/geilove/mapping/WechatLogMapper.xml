@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.WechatLogMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.WechatLog" >
+    <result column="className" property="classname" jdbcType="VARCHAR" />
+    <result column="classID" property="classid" jdbcType="BIGINT" />
+    <result column="methodName" property="methodname" jdbcType="VARCHAR" />
+    <result column="log" property="log" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="TIMESTAMP" />
+    <result column="logDescription" property="logdescription" jdbcType="VARCHAR" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="org.geilove.pojo.WechatLog" >
+    insert into wechatLog (className, classID, methodName, 
+      log, logTime, logDescription, 
+      other)
+    values (#{classname,jdbcType=VARCHAR}, #{classid,jdbcType=BIGINT}, #{methodname,jdbcType=VARCHAR}, 
+      #{log,jdbcType=VARCHAR}, #{logtime,jdbcType=TIMESTAMP}, #{logdescription,jdbcType=VARCHAR}, 
+      #{other,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.WechatLog" >
+    insert into wechatLog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classname != null" >
+        className,
+      </if>
+      <if test="classid != null" >
+        classID,
+      </if>
+      <if test="methodname != null" >
+        methodName,
+      </if>
+      <if test="log != null" >
+        log,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="logdescription != null" >
+        logDescription,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=BIGINT},
+      </if>
+      <if test="methodname != null" >
+        #{methodname,jdbcType=VARCHAR},
+      </if>
+      <if test="log != null" >
+        #{log,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logdescription != null" >
+        #{logdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

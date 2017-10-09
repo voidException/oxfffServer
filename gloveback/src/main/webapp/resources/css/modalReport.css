@@ -1,0 +1,50 @@
+
+.modalReport{
+    display: none;
+    /*background-color:gray;*/
+    /*opacity: 0.6;*/
+    background-color: rgba(0,0,0,0.4);
+    filter:Alpha(Opacity=50);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width: 100%;
+    /*z-index: 50;*/
+}
+
+.tipsReport{
+    /*display: block;*/
+    /*display: none;*/
+    margin-top: 100px;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-radius:5px ;
+    /*z-index: 55;*/
+    background-color: #F1F1F1;
+}
+.doCommentReport{
+    margin-left: 15px;
+    margin-bottom: 6px;
+}
+.commentTextReport{
+    width: 100%;
+
+}
+.cancelReplayReport{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top: solid #E2E2E2 2px;
+    margin-top: 15px;
+}
+.cancelReport{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-right: solid #E2E2E2 2px;
+}

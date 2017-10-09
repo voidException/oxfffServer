@@ -1,0 +1,71 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e6e8e8;
+    padding-left: 80px;
+    padding-right: 80px;
+    height: 60px;
+}
+.headerLeft{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.appHelp{
+    margin-left: 40px;
+    font-size: 16px;
+    color: #6f7a7e;
+}
+.headerRight{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    line-height: 40px;
+    width: 220px;
+    height: 40px;
+    border-radius: 10px;
+    border: #75ffba solid 1px;
+    font-size: 16px;
+    color: #6f7a7e;
+}
+.publishItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 40px;
+    width: 120px;
+    height: 40px;
+    border-radius: 10px;
+    border: #75ffba solid 1px;
+    font-size: 16px;
+    color: #6f7a7e;
+}
+.login{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: #73ff37 1px solid;
+    width: 110px;
+}
+.register{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-left: #73ff37 1px solid;
+    width: 110px;
+}

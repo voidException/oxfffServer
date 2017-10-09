@@ -1,0 +1,82 @@
+
+.loginWrapper{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginEmail{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    border: 1px solid #E1E5E7;
+    margin-top: 10px;
+}
+.loginPass{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    border: 1px solid #E1E5E7;
+    margin-top: 40px;
+}
+
+input{
+    height: 34px;
+    width: 200px;
+    border-radius: 4px;
+    border:0px solid #FFFFFF ;
+    font-size: 13px;
+}
+.doLogin{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    background:#00BB3B ;
+    border-radius: 5px;
+    height: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+.forget{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5px;
+    cursor: pointer;
+    color: #ffffff;
+}
+a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 260px;
+    text-decoration: none;
+}
+.modalReport{
+    display: none;
+    /*background-color:gray;*/
+    /*opacity: 0.6;*/
+    background-color: rgba(0,0,0,0.4);
+    filter:Alpha(Opacity=50);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width: 100%;
+    /*z-index: 50;*/
+}
+

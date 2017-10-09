@@ -1,0 +1,54 @@
+
+.checkTeam{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 44px;
+    width: 100%;
+    border-bottom: 1px solid #E1E5E7;
+}
+.checkTeamTxt{
+    padding-left: 10px;
+    width: 70px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #00BB3B;
+    color: #ffffff;
+    text-align: center;
+    line-height: 40px;
+    margin-left: 5px;
+}
+.checkTeamInput{
+    height: 40px;
+    width: 60%;
+    border-radius: 4px;
+    border:0px solid #FFFFFF ;
+    font-size: 13px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
