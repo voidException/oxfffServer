@@ -64,7 +64,7 @@ new Vue({
                 cityName:registerCityInput,
             };
 
-            this.$http.post('http://localhost:8080/glove/user/register.do',param).then(response => {
+            this.$http.post('/user/register.do',param).then(response => {
                 //console.log(response.body);
                 this.userProfile=response.body.data;
                 if(response.body.retcode==2000){

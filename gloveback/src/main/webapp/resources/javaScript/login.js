@@ -4,6 +4,7 @@
  * 这个适用于公众号内登录
  * 登录成功，要将数据存储在本地，然后显示相应内容
  */
+let common="http://localhost:8080/glove"
 new Vue({
     el: '#wechatLogin',
     data: {
@@ -41,7 +42,7 @@ new Vue({
             };
             //发送请求前先，隐藏弹出框，避免多次点击
             //发送网络请求
-            this.$http.post('http://localhost:8080/glove/user/login.do',userAccount).then(response => {
+            this.$http.post(common+'/user/login.do',userAccount).then(response => {
                 //console.log(response.body);
 
                 //存储或者改变相应的值
