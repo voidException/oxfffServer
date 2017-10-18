@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: #4EB160;
+}
+.headertxt{
+    color: #FFFFFF;
+}
+
+.middle{
+   display: flex;
+    flex-direction: row;
+}
+.sidebar{
+    width: 20%;
+    height: 700px;
+   border-right: rgba(42,255,48,0.82) 1px dashed;
+}
+.content{
+    width: 80%;
+    height: 90%;
+}

@@ -13,4 +13,7 @@
       <module name="glove" target="1.8" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="DEPRECATION" value="false" />
+  </component>
 </project>
