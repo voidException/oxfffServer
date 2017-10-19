@@ -13,7 +13,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
 	<script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
-	<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/putaohelpcss/index.css">
+	<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">
 	<%--<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>--%>
 	<title>首页用来测试</title>
 </head>
@@ -22,7 +22,7 @@
 <div class="header" style="height:50px">
 	<div class="headertxt">葡萄互助</div>
 	<div class="headertxt">葡萄众筹</div>
-	<div class="headertxt">欢迎您！<a href="#">退出</a></div>
+	<div class="headertxt">欢迎您！<a href="/glove/admin/login.do">登录</a></div>
 </div>
 <!---这个是中间部分-->
 <div class="middle">
@@ -33,7 +33,7 @@
 				<ul>
 					<li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
 					<li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-					<li><a target="Conframe" href="<%=basePath%>resources/test.html">本地test.html</a></li>
+					<li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
 					<li><a target="Conframe" href="gon.html">分离的链接</a></li>
 				</ul>
 			</li>
@@ -44,7 +44,7 @@
 				<ul>
 					<li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
 					<li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-					<li><a target="Conframe" href="<%=basePath%>resources/test.html">本地test.html</a></li>
+					<li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
 					<li><a target="Conframe" href="gon.html">分离的链接</a></li>
 				</ul>
 			</li>
