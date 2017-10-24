@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,18 +27,25 @@ public class AdminHelpController {
     private T_userService t_userService ;
 
     @RequestMapping("/loginadmin.do")
-    public String login(T_user user, Model model){
+    public ModelAndView login(T_user user, Model model){
+        ModelAndView mav=new ModelAndView();
         Subject subject = SecurityUtils.getSubject() ;
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPassword()) ;
         try {
             subject.login(token);
             String userName= (String) subject.getPrincipal();
-            System.out.println(userName);
-            return "putaohelp/admin" ;
+            //System.out.println(userName);
+            mav.addObject("userName",userName);
+            mav.addObject("userToken","token"); //用于ajax请求携带
+            mav.setViewName("putaohelp/admin");
+            return  mav;
+
         }catch (Exception e){
             model.addAttribute("error","用户名或密码错误") ;
-            return "putaohelp/login" ;
+            mav.setViewName("putaohelp/login");
+            return  mav;
         }
+
     }
 
 

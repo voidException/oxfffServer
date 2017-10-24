@@ -19,10 +19,11 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">
 </head>
 <body>
-<div class="header" style="height:50px">
+<div class="header" style="height:50px;padding-left: 30px;padding-right: 30px">
     <div class="headertxt">葡萄互助</div>
     <div class="headertxt">葡萄众筹</div>
-    <div class="headertxt">欢迎您！<a href="/glove/admin/login.do">登录</a></div>
+    <div id="userToken"  style="display: none">${userToken}</div>
+    <div id="userName" class="headertxt">欢迎您！${userName } </div>
 </div>
 <!---这个是中间部分-->
 <div class="middle">
@@ -73,7 +74,7 @@
         </ul>
     </div>
     <div class="content">
-        <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/test.html"
+        <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/putaohelp/test.html"
                 class="page-ifream"
                 frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                 width="100%" height="700">

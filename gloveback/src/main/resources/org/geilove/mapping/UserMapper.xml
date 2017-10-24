@@ -55,6 +55,8 @@
     <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
   </resultMap>
 
+  <!--葡萄互助后台，用于获取用户列表-->
+  
 
   <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
   <select id="selectMenListLoadMore" resultMap="BaseResultMap" >
