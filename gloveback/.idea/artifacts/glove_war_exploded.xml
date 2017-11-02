@@ -123,6 +123,9 @@
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-core:1.2.4" />
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-web:1.2.4" />
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-spring:1.2.4" />
+          <element id="library" level="project" name="Maven: net.sf.json-lib:json-lib-ext-spring:1.0.2" />
+          <element id="library" level="project" name="Maven: net.sf.json-lib:json-lib:jdk15:2.2.2" />
+          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

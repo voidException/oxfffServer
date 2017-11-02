@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.NewsMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.News" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="newsuuid" property="newsuuid" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="publishdate" property="publishdate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="vicetitle" property="vicetitle" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="newscontent" property="newscontent" jdbcType="VARCHAR" />
+    <result column="imageone" property="imageone" jdbcType="VARCHAR" />
+    <result column="imagetwo" property="imagetwo" jdbcType="VARCHAR" />
+    <result column="imagethree" property="imagethree" jdbcType="VARCHAR" />
+    <result column="newsurl" property="newsurl" jdbcType="VARCHAR" />
+    <result column="newstype" property="newstype" jdbcType="VARCHAR" />
+    <result column="lable" property="lable" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, newsuuid, author, publishdate, title, vicetitle, source, newscontent, imageone, 
+    imagetwo, imagethree, newsurl, newstype, lable
+  </sql>
+<!--自定义，获取新闻列表-->
+  <!--查看自己发布的要救助的tweet,-->
+  <select id="getNewss" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from news
+    where publishdate &lt; #{publishdate}
+    order by publishdate  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from news
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.News" >
+    insert into news (id, newsuuid, author, 
+      publishdate, title, vicetitle, 
+      source, newscontent, imageone, 
+      imagetwo, imagethree, newsurl, 
+      newstype, lable)
+    values (#{id,jdbcType=BIGINT}, #{newsuuid,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{publishdate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, #{vicetitle,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{newscontent,jdbcType=VARCHAR}, #{imageone,jdbcType=VARCHAR}, 
+      #{imagetwo,jdbcType=VARCHAR}, #{imagethree,jdbcType=VARCHAR}, #{newsurl,jdbcType=VARCHAR}, 
+      #{newstype,jdbcType=VARCHAR}, #{lable,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="newsuuid != null" >
+        newsuuid,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="publishdate != null" >
+        publishdate,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="vicetitle != null" >
+        vicetitle,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="newscontent != null" >
+        newscontent,
+      </if>
+      <if test="imageone != null" >
+        imageone,
+      </if>
+      <if test="imagetwo != null" >
+        imagetwo,
+      </if>
+      <if test="imagethree != null" >
+        imagethree,
+      </if>
+      <if test="newsurl != null" >
+        newsurl,
+      </if>
+      <if test="newstype != null" >
+        newstype,
+      </if>
+      <if test="lable != null" >
+        lable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="newsuuid != null" >
+        #{newsuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        #{publishdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitle != null" >
+        #{vicetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="newscontent != null" >
+        #{newscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="imageone != null" >
+        #{imageone,jdbcType=VARCHAR},
+      </if>
+      <if test="imagetwo != null" >
+        #{imagetwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imagethree != null" >
+        #{imagethree,jdbcType=VARCHAR},
+      </if>
+      <if test="newsurl != null" >
+        #{newsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newstype != null" >
+        #{newstype,jdbcType=VARCHAR},
+      </if>
+      <if test="lable != null" >
+        #{lable,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.News" >
+    update news
+    <set >
+      <if test="newsuuid != null" >
+        newsuuid = #{newsuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        publishdate = #{publishdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitle != null" >
+        vicetitle = #{vicetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="newscontent != null" >
+        newscontent = #{newscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="imageone != null" >
+        imageone = #{imageone,jdbcType=VARCHAR},
+      </if>
+      <if test="imagetwo != null" >
+        imagetwo = #{imagetwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imagethree != null" >
+        imagethree = #{imagethree,jdbcType=VARCHAR},
+      </if>
+      <if test="newsurl != null" >
+        newsurl = #{newsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newstype != null" >
+        newstype = #{newstype,jdbcType=VARCHAR},
+      </if>
+      <if test="lable != null" >
+        lable = #{lable,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.News" >
+    update news
+    set newsuuid = #{newsuuid,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      publishdate = #{publishdate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      vicetitle = #{vicetitle,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      newscontent = #{newscontent,jdbcType=VARCHAR},
+      imageone = #{imageone,jdbcType=VARCHAR},
+      imagetwo = #{imagetwo,jdbcType=VARCHAR},
+      imagethree = #{imagethree,jdbcType=VARCHAR},
+      newsurl = #{newsurl,jdbcType=VARCHAR},
+      newstype = #{newstype,jdbcType=VARCHAR},
+      lable = #{lable,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

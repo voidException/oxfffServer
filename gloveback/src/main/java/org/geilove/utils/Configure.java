@@ -10,25 +10,26 @@ public class Configure {
 
 	//公众账号ID
 	private static String appid = "wx13eeb70a6cad4d76"; //互助管家的
-	
-	//Android支付AppID
-	private static String androidAppID = "wcnmdwxndapishityy";
-	
 	//公众账号AppSecret
 	private static String appSecret = "a751a981b4584205e609650f9a5a7058";  //互助管家的
-	
+	//API密钥
+	private static String key = "qazwsxedcrfvtgbyhnujmikolp123456"; //互助管家
+	//商户号
+	private static String mch_id = "1444279102";   //互助管家的
+
+	//葡萄互助的Appid
+	public static String  putaohuzhuappid="";
+	//葡萄互助的AppSecret
+	public static  String putaohuzhuAppSecret="";
+
+	//Android支付AppID
+	private static String androidAppID = "wcnmdwxndapishityy";
 	//Android应用 AppSecret(应用密钥
 	private static String androidAppSecret = "1326123jhkjsdkfalsdjflkk32jbbmsa";
 
-	//商户号
-	private static String mch_id = "1444279102";   //互助管家的
-	
 	//Android商户号
 	private static String android_mch_id = "8888888888";
-	
-	//API密钥
-	private static String key = "qazwsxedcrfvtgbyhnujmikolp123456"; //互助管家
-	
+
 	//androidkey
 	private static String androidkey = "skfK3JL2K4323KLJjlkFLKLSKFL23K4L";
 	
@@ -81,9 +82,21 @@ public class Configure {
 	public static String getSuccessBackUrlApp() {
 		return successBackUrlApp;
 	}
+	public static String getPutaohuzhuappid() {
+		return putaohuzhuappid;
+	}
 
-   //	public static String getPayBackUrl() {
-   //		return payBackUrl;
-   //	}
+	public static void setPutaohuzhuappid(String putaohuzhuappid) {
+		Configure.putaohuzhuappid = putaohuzhuappid;
+	}
+
+	public static String getPutaohuzhuAppSecret() {
+		return putaohuzhuAppSecret;
+	}
+
+	public static void setPutaohuzhuAppSecret(String putaohuzhuAppSecret) {
+		Configure.putaohuzhuAppSecret = putaohuzhuAppSecret;
+	}
+
 
 }
