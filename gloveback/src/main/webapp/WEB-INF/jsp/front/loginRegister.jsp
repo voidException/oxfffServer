@@ -27,10 +27,10 @@
             <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
             <div style="color:#00BB3B;cursor: pointer">首页</div>
         </a>
-        <a class="logo  appHelp" href="http://www.geilove.org/pages/appDownload" style="text-decoration: none" >
+        <a class="logo  appHelp" href="/glove/pages/appDownload.do" style="text-decoration: none" >
             <span>App下载</span>
         </a>
-        <a href="http://www.geilove.org/pages/helpCenter" class="logo appHelp" style="text-decoration: none">
+        <a href="/glove/pages/helpCenter.do" class="logo appHelp" style="text-decoration: none">
             <span>帮助中心</span>
         </a>
     </div>
@@ -80,9 +80,9 @@
         <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
     </div>
     <div class="footerItem">
-        <a href="http://www.geilove.org/pages/aboutus" style="text-decoration: none">关于我们</a>
-        <a href="http://www.geilove.org/pages/helpCenter" style="text-decoration: none">帮助中心</a>
-        <a href="http://www.geilove.org/pages/userProtocol" style="text-decoration: none">用户协议</a>
+        <a href="/glove/pages/aboutus.do" style="text-decoration: none">关于我们</a>
+        <a href="/glove/pages/helpCenter.do" style="text-decoration: none">帮助中心</a>
+        <a href="/glove/pages/userProtocol.do" style="text-decoration: none">用户协议</a>
     </div>
     <div class="footerItem">
         <div>联系方式</div>

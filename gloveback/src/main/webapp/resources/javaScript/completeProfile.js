@@ -2,6 +2,10 @@
  * Created by aihaitao on 20/5/2017.
  */
 
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#completeProfile',
     data: {
@@ -20,7 +24,7 @@ new Vue({
             if (token==null){
                 alert("请登录");
                setTimeout(function () {
-                   window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do";
+                   window.location.href=publicurl+"/glove/path/pages/mobileWo.do";
                },500)
                 return;
             }
@@ -37,11 +41,11 @@ new Vue({
                 mobilePhone:mobilePhone,
                 selfIntroduce:selfIntroduce
             };
-            this.$http.post('http://localhost:8080/glove/profile/completeProfileJSP.do',param).then(response => {
+            this.$http.post(publicurl+'/glove/profile/completeProfileJSP.do',param).then(response => {
                 //console.log(response.body);
                 if(response.body.retcode==2000){
                     alert("更新成功");
-                    window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do";
+                    window.location.href=publicurl+"/glove/path/pages/mobileWo.do";
                     return;
                 }else {
                     alert("更新失败");

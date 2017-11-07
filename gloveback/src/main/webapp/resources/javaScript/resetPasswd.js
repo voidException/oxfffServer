@@ -1,4 +1,8 @@
 
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#resetPasswd',
     data: {
@@ -52,14 +56,14 @@ new Vue({
                 newPass:newPass,
                 againPass:againPass
             };
-            this.$http.post('http://localhost:8080/glove/user/resetpass.do',param,"application/json").then(response => {
+            this.$http.post(publicurl+'/glove/user/resetpass.do',param,"application/json").then(response => {
 
                 if(response.body.retcode==2000){
                     this.stopTag=0;
                     //接下来，应该清除本地缓存，让用户重新登录，待完成
                     alert("重置密码成功");
                     setTimeout(function(){
-                        window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do" //跳转到首页
+                        window.location.href=publicurl+"/glove/path/pages/mobileWo.do" //跳转到首页
                     },100);
 
                 }else {

@@ -21,19 +21,19 @@
     effectiveDate, stopDate, nowState, applyhelptimes
   </sql>
   <!--获取公司所有员工getAllStuffs-->
-  <!--<select id="getAllStuffs" resultMap="BaseResultMap" parameterType="java.util.HashMap" >-->
-    <!--select-->
-    <!--<include refid="Base_Column_List" />-->
-    <!--from userstaff-->
-    <!--where useruuid = #{uuid} AND affirm=#{affirm}-->
-    <!--order by joinDate  desc-->
-    <!--limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}-->
-  <!--</select>-->
- <!--&lt;!&ndash;deleteByUserUUIDAccount&ndash;&gt;-->
-  <!--<delete id="deleteByUserUUIDAccount" parameterType="java.lang.HashMap" >-->
-    <!--delete from userstaff-->
-    <!--where useruuid = #{uuid} AND account=#{account}-->
-  <!--</delete>-->
+  <select id="getAllStuffs" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where useruuid = #{uuid} AND affirm=#{affirm} AND helptype=#{helptype}
+    order by joinDate  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+ <!--deleteByUserUUIDAccount-->
+  <delete id="deleteByUserUUIDAccount" parameterType="java.util.HashMap" >
+    delete from userstaff
+    where useruuid = #{uuid} AND account=#{account}
+  </delete>
 
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

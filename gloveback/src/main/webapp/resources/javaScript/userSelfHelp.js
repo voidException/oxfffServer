@@ -1,5 +1,9 @@
 //如果用户没有发布求助信息，就隐藏这一块
 
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#userSelfHelp',
     data: {
@@ -11,10 +15,10 @@ new Vue({
             if (userUUID==null){
                 alert("请登录");
                 setTimeout(function () {
-                    window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do"; //
+                    window.location.href=publicurl+"/glove/path/pages/mobileMainPage.do"; //
                 },500)
             }
-            let url="http://localhost:8080/glove/weibos/"+userUUID+"/helpselflist.do" ;
+            let url=publicurl+"/glove/weibos/"+userUUID+"/helpselflist.do" ;
             var that=this;
             this.$http.get(url).then(response => {
                // console.log(response.body);
@@ -47,7 +51,7 @@ new Vue({
         },
     methods:{
         goTimeline:function () {
-            window.location.href="http://localhost:8080/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10"
+            window.location.href=publicurl+"/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10"
         }
     }
 

@@ -1,9 +1,7 @@
-/**
- * Created by mfhj-dz-001-424 on 17/2/15.
- */
-/**
- * Created by mfhj-dz-001-424 on 17/1/18.
- */
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 var uppart = new Vue({
     el: '#publishInfo',
     data: {
@@ -18,12 +16,12 @@ var uppart = new Vue({
         realMoney:1314,  //已抽到钱数
         helpTimes:100, //捐助次数
         tweet:"各位好心热心人士你们好！泣血跪求各位能施援手，共救我哥哥的命。我20岁叫赵艳芳。我哥叫赵家胜。我是她的妹妹。他今年22岁。于2017年1月8日上午发生车祸，他为了闪避车导致的。现在伤的非常严重。 身上多处骨折，肋骨也断了，脑部受到严重的脑震荡，有出血，水肿的现象，现在没有什么意识。肺部也受到很大的创伤，现在感染的很厉害，只能靠吸氧机呼吸。我家是单亲家庭。", //项目详情
-        imgOneUrl:'http://localhost:8080/glove/resources/image/1.jpg', //照片的地址
-        imgTwoUrl:"http://localhost:8080/glove/resources/image/2.jpg",
-        imgThreeUrl:"http://localhost:8080/glove/resources/image/25.jpg",
-        imgFourUrl:"http://localhost:8080/glove/resources/image/4.jpg",
-        imgFiveUrl:"http://localhost:8080/glove/resources/image/5.jpg",
-        imgSixUrl:"http://localhost:8080/glove/resources/image/6.jpeg",
+        imgOneUrl:publicurl+'/glove/resources/image/1.jpg', //照片的地址
+        imgTwoUrl:publicurl+"/glove/resources/image/2.jpg",
+        imgThreeUrl:publicurl+"glove/resources/image/25.jpg",
+        imgFourUrl:publicurl+"/glove/resources/image/4.jpg",
+        imgFiveUrl:publicurl+"/glove/resources/image/5.jpg",
+        imgSixUrl:publicurl+"/glove/resources/image/6.jpeg",
         imgSevenUrl:"",
         imgEightUrl:"",
         authority:"互助管家", //认证机构
@@ -37,7 +35,7 @@ var uppart = new Vue({
         otherProve:2,  //其它证明已提交
         affirmPeopleCount:80, //证实人数
         defaultAffirmUrl:"", //当没有人证实时，就显示这个默认的图片
-        affirmImgUrls:['http://localhost:8080/glove/resources/image/1.jpg','http://localhost:8080/glove/resources/image/5.jpg','http://localhost:8080/glove/resources/image/25.jpg','http://localhost:8080/glove/resources/image/4.jpg']
+        affirmImgUrls:[publicurl+'/glove/resources/image/1.jpg',publicurl+'/glove/resources/image/5.jpg',publicurl+'/glove/resources/image/25.jpg',publicurl+'/glove/resources/image/4.jpg']
 
     },
 
@@ -56,7 +54,7 @@ var uppart = new Vue({
         },
     },
     mounted: function () {
-        this.$http.get('http://localhost:8080/glove/timelinetweet/info/1').then(response => {
+        this.$http.get(publicurl+'/glove/timelinetweet/info/1').then(response => {
             // console.log(response.body);
             this.bodyMsg=response.body;
             this.$nextTick(function() {

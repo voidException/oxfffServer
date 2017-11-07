@@ -1,7 +1,6 @@
-/**
- * Created by aihaitao on 29/3/2017.
- */
-
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
 new Vue({
     el: '#loginRegister',
     data: {
@@ -50,7 +49,7 @@ new Vue({
                 userPassword:registerPasswdInput,
                 cityName:registerCityInput,
             };
-            this.$http.post('http://www.geilove.org/user/register',param).then(response => {
+            this.$http.post(publicurl+'/glove/user/register.do',param).then(response => {
                 console.log(response.body);
                 this.userProfile=response.body.data;
                 if(response.body.retcode==2000){

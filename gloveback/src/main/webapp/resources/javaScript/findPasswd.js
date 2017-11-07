@@ -5,6 +5,9 @@
  */
 
 
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
 
 new Vue({
     el: '#findPasswd',
@@ -44,7 +47,7 @@ new Vue({
                 originPass:originPass,
                 againPass:againPass
             };
-            this.$http.post('http://localhost:8080/glove/user/changePasswd.do',param,"application/json").then(response => {
+            this.$http.post(publicurl+'/glove/user/changePasswd.do',param,"application/json").then(response => {
 
                 if(response.body.retcode==2000){
                     this.stopTag=0;

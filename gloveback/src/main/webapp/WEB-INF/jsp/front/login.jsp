@@ -30,7 +30,7 @@
 		</div>
 		<div class="doLogin"   v-on:click="loginIn" >登录</div>
 	</div>
-	<div class="forget"><a href="http://localhost:8080/glove/user/putEmail.do">忘记密码?</a></div>
+	<div class="forget"><a href="/glove/user/putEmail.do">忘记密码?</a></div>
 
 	<!-- 模态弹出框-->
 	<!--这个"modal 初始时是要隐藏的"-->

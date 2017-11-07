@@ -2,6 +2,11 @@
  * Created by aihaitao on 12/4/2017.
  * 对评论或者回复进行发送用的
  */
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#modal',
     data: {},
@@ -84,7 +89,7 @@ new Vue({
                     refer:dataReferInteger,
                     content:content
                 };
-                this.$http.post('http://localhost:8080/glove/itemprogress/addupdatecomment.do',param).then(response => {
+                this.$http.post(publicurl+'/glove/itemprogress/addupdatecomment.do',param).then(response => {
                     console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，
@@ -110,7 +115,7 @@ new Vue({
                     refer:dataReferInteger,
                     pingluntext:content
                 };
-                this.$http.post('http://localhost:8080/glove/moneysource/addmoneysourcecomment.do',param).then(response => {
+                this.$http.post(publicurl+'/glove/moneysource/addmoneysourcecomment.do',param).then(response => {
                     //console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，

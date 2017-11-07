@@ -433,7 +433,7 @@ var mainBody = new Vue({
             "pageSize":5,
         };
         let options={'Content-Type':'application/json'};
-        this.$http.post('http://www.geilove.org/productInfo/listProduct',param,options).then(response => {
+        this.$http.post(publicurl+'/productInfo/listProduct.do',param,options).then(response => {
              console.log(response.body);
             this.productInfos=response.body.productInfos;
 

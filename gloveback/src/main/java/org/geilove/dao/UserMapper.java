@@ -43,6 +43,9 @@ public interface UserMapper {
 
     User selectByNicknameOrEmail(Map<String,Object> map); //根据用户的昵称或者邮箱选择出一个用户，用于注册时检查是否已有注册用户
 
+    ////********************************以下是手机号********************************************///
+    User getUserByPhone(String phone);
+
 }
 
 

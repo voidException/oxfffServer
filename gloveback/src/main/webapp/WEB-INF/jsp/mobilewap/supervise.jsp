@@ -38,7 +38,7 @@
     </div>
 </div>
 </div>
-<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/mobileWo.js"></script>
+<%--<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/mobileWo.js"></script>--%>
 </body>
 </html>
 

@@ -1,17 +1,8 @@
-// /**
-//  * Created by mfhj-dz-001-424 on 17/2/15.
-//  */
-// function getQueryString(name)
-// {
-//     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-//     var r = window.location.search.substr(1).match(reg);
-//     if(r!=null)
-//         return  decodeURIComponent(r[2]);
-//     return null;
-// }
-// console.log(getQueryString("tweetiD"));
-// console.log(getQueryString("useriD"));
-// console.log(getQueryString("cashiD"));
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 //动态更新
 new Vue({
     el: '#dynamic',
@@ -116,7 +107,7 @@ new Vue({
         //             "timeStamp":"2027-09-04 00:00:00"
         //         };
         //
-        //         that.$http.post('http://localhost:8080/glove/moneysource/backuplist',requestParam).then(response => {
+        //         that.$http.post(publicurl+'/glove/moneysource/backuplist',requestParam).then(response => {
         //             // console.log(response.body);
         //             that.$nextTick(function(){
         //                 this.lp=response.body.lp.concat(this.lp);
@@ -139,7 +130,7 @@ new Vue({
         };
 
         setTimeout(function(){
-            that.$http.post('http://localhost:8080/glove/moneysource/backuplist.do',param).then(response => {
+            that.$http.post(publicurl+'/glove/moneysource/backuplist.do',param).then(response => {
                 console.log(response.body);
                 that.$nextTick(function(){
                     that.lp=response.body.lp;

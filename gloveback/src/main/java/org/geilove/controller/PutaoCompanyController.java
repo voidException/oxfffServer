@@ -89,9 +89,10 @@ public class PutaoCompanyController {
     public Object getAllStuffs(HttpServletRequest request){
         Response<List<UserStaff>> resp = new Response<List<UserStaff>>();
 
-        String token=request.getParameter("token");
+        String  token=request.getParameter("token");
         String  uuid=request.getParameter("uuid"); //用户的uuid
         String  affirm=request.getParameter("affirm");
+        String  helptype=request.getParameter("helptype");
         String userPassword=token.substring(0,32); //token是password和userID拼接成的。
         String useridStr=token.substring(32);
         Long userid=Long.valueOf(useridStr).longValue();
@@ -104,6 +105,7 @@ public class PutaoCompanyController {
         Map<String,Object>  map=new HashMap<String,Object>();
         map.put("uuid",uuid);
         map.put("affirm",affirm);
+        map.put("helptype",helptype);
         map.put("page",0);
         map.put("pageSize",10);
         List<UserStaff> userStaffs;
@@ -161,7 +163,6 @@ public class PutaoCompanyController {
 
         String  token=request.getParameter("token");
         String  uuid=request.getParameter("uuid"); //用户的uuid
-
         String userPassword=token.substring(0,32); //token是password和userID拼接成的。
         String useridStr=token.substring(32);
         Long userid=Long.valueOf(useridStr).longValue();

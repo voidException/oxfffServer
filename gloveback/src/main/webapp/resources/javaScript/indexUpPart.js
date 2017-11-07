@@ -1,15 +1,15 @@
-/**
- * Created by mfhj-dz-001-424 on 17/2/15.
- */
-/**
- * Created by mfhj-dz-001-424 on 17/1/18.
- */
+
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 var uppart = new Vue({
     el: '#uppart',
     data: {
         tweet:{},
         cash:{},
-        affirmImgUrls:['http://localhost:8080/glove/resources/image/1.jpg','http://localhost:8080/glove/resources/image/5.jpg','http://localhost:8080/glove/resources/image/25.jpg','http://localhost:8080/glove/resources/image/4.jpg'],
+        affirmImgUrls:[publicurl+'/glove/resources/image/1.jpg',publicurl+'/glove/resources/image/5.jpg',publicurl+'/glove/resources/image/25.jpg',publicurl+'/glove/resources/image/4.jpg'],
     },
 
     methods: {
@@ -38,7 +38,7 @@ var uppart = new Vue({
         let tweetUUID= this.getQueryString("tweetUUID");   //"5eedb509-f9d5-41eb-acc5-e51d25275607";
         let cashUUID= this.getQueryString("cashUUID"); //"5fedb509-f9d5-41eb-acc5-e51d25275607";
 
-        let  url="http://localhost:8080/glove/wechatShare/"+userUUID+'/'+tweetUUID+'/'+cashUUID;
+        let  url=publicurl+"/glove/wechatShare/"+userUUID+'/'+tweetUUID+'/'+cashUUID;
 
         this.$http.get(url).then(response => {
              console.log(response.body.lp);

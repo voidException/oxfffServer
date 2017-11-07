@@ -1,6 +1,9 @@
-/**
- * Created by aihaitao on 19/5/2017.
- */
+
+
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
 
 new Vue({
     el: '#setting',
@@ -10,7 +13,7 @@ new Vue({
         if(useremail==null){ //未登录
             let  setBody=document.getElementById("setBody");
             setBody.style.display="none";
-            window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do"
+            window.location.href=publicurl+"/glove/path/pages/mobileWo.do"
 
         }
     },
@@ -18,7 +21,7 @@ new Vue({
         logOut:function (){
             console.log("logout")
             localStorage.clear();
-            window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do"
+            window.location.href=publicurl+"/glove/path/pages/mobileWo.do"
         }
     }
 

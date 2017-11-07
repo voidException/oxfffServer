@@ -2,6 +2,11 @@
  * Created by aihaitao on 16/5/2017.
  */
 
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 window.onload = function () {
     //设置input的初始值
     let  token=localStorage.getItem("backupfour");
@@ -12,7 +17,7 @@ window.onload = function () {
     if(token==null || useruuid==null || userName==null || userphoto==null){
         alert("请登录");
         setTimeout(function(){
-            window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do"; //公众号首页
+            window.location.href=publicurl+"/glove/path/pages/mobileWo.do"; //公众号首页
         },500)
 
         return;

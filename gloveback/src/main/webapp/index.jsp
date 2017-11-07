@@ -14,13 +14,14 @@
 <body id="root">
 <div style="display: flex;flex-direction: column">
 	<div style="display: flex;flex-direction: row">
-		<div style="width: 40%;height: 100px">
+		<div style="width: 40%;height: 150px">
 			<div style="font-size: larger;color: red">本地一级页面</div>
 			<a href="/glove/path/pages/header2.do">公共头部</a><br/>
 			<a href="/glove/path/pages/jianduchu.do">监督处</a><br/>
 			<a href="/glove/path/pages/mobileMain.do">公众号首页</a><br/>
+			<a href="/glove/path/pages/mobileWo.do">公众号我的</a><br/>
 		</div>
-		<div style="width: 40%;height: 100px">
+		<div style="width: 40%;height: 150px">
 			<div style="font-size: larger;color: red">远程一级页面</div>
 			<a href="http://geilove.org/glove/path/pages/jianduchu.do">监督处</a><br/>
 			<a href="http://geilove.org/glove/path/pages/mobileWo.do">公众号我的</a><br/>

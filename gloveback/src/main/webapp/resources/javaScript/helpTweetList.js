@@ -1,7 +1,8 @@
-/**
- * Created by aihaitao on 19/5/2017.
- */
 
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
 
 new Vue({
     el: '#userSelfHelp',
@@ -11,7 +12,7 @@ new Vue({
     mounted: function () {
 
        // let url='http://localhost:8080/glove/weibos/helpTweetlist.do?lastUpdate="2018-09-02"'
-        let baseurl='http://localhost:8080/glove/weibos/helpTweetlist.do'
+        let baseurl= publicurl+'/glove/weibos/helpTweetlist.do'
         let update="2028-09-02";
         let helpType=this.getQueryString("helpType");
         let urlfinal=baseurl+'?'+"lastUpdate="+update+"&&helpType="+helpType;
@@ -44,7 +45,7 @@ new Vue({
             let userUUID=event.target.getAttribute("data-useruuidtweet");
             let cashuuid=event.target.getAttribute("data-cashuuid");
             let tweetUUID=event.target.getAttribute("data-tweetUUID");
-            let url="http://localhost:8080/glove/path/pages/shareTotimeline.do?userUUID="+userUUID+"&tweetUUID="+tweetUUID+"&cashUUID="+cashuuid
+            let url= publicurl+"/glove/path/pages/shareTotimeline.do?userUUID="+userUUID+"&tweetUUID="+tweetUUID+"&cashUUID="+cashuuid
             window.location.href=url;
         }
     }

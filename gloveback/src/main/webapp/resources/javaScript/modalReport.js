@@ -3,6 +3,10 @@
  * 这里是举报或者证实的逻辑处理的地方，通过data-RCTag 来区分是举报还是证实
  */
 
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#modalReport',
     data: {
@@ -80,7 +84,7 @@ new Vue({
                 tuiwenid:tweetiD
             };
 
-            this.$http.post('http://localhost:8080/glove/confirm/report2.do',paramReport).then(response => {
+            this.$http.post(publicurl+'/glove/confirm/report2.do',paramReport).then(response => {
                  console.log(response.body);
                 //这里呢，要显示dialog，
                 this.showDialog(response.body.msg); //显示登录结果

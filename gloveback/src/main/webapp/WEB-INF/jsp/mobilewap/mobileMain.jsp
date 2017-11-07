@@ -37,16 +37,16 @@
 
         <div class="IpublishWrapper" style="margin-top: 30px">
             <img src="http://onejf30n8.bkt.clouddn.com/gongzhongcollege.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
-            <a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=college">支持母校</a>
+            <a href="/glove/path/pages/helpTweetList.do?helpType=college">支持母校</a>
         </div>
         <div class="IpublishWrapper">
             <img src="http://onejf30n8.bkt.clouddn.com/gongzhongpinkun.png"  style="width: 20px;height: 20px;border-radius: 10px"/>
-            <a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=shangxue">资助贫困生</a>
+            <a href="/glove/path/pages/helpTweetList.do?helpType=shangxue">资助贫困生</a>
         </div>
 
         <div class="IpublishWrapper">
             <img src="http://onejf30n8.bkt.clouddn.com/gongzhongbing.png"  style="width: 20px;height: 20px;border-radius: 10px"/>
-            <a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=dabing">大病救急</a>
+            <a href="/glove/path/pages/helpTweetList.do?helpType=dabing">大病救急</a>
         </div>
 
     </div>
