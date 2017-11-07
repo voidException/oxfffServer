@@ -5,7 +5,7 @@
     <id column="userID" property="userid" jdbcType="BIGINT" />
     <result column="digital" property="digital" jdbcType="BIGINT" />
     <result column="userNickName" property="usernickname" jdbcType="VARCHAR" />
-    <result column="userEMail" property="useremail" jdbcType="VARCHAR" />
+    <result column="userEmail" property="useremail" jdbcType="VARCHAR" />
     <result column="userPassword" property="userpassword" jdbcType="VARCHAR" />
     <result column="userType" property="usertype" jdbcType="TINYINT" />
     <result column="certificateType" property="certificatetype" jdbcType="TINYINT" />
@@ -43,130 +43,114 @@
     <result column="acceptMoney" property="acceptmoney" jdbcType="INTEGER" />
     <result column="beHelpTime" property="behelptime" jdbcType="TIMESTAMP" />
     <result column="beHelpedType" property="behelpedtype" jdbcType="INTEGER" />
-    <result column="backupseven" jdbcType="VARCHAR" property="backupseven" />
-    <result column="backupeight" jdbcType="VARCHAR" property="backupeight" />
-    <result column="backupnine" jdbcType="VARCHAR" property="backupnine" />
-    <result column="backupten" jdbcType="VARCHAR" property="backupten" />
-    <result column="tobeuseone" jdbcType="INTEGER" property="tobeuseone" />
-    <result column="tobeusetwo" jdbcType="INTEGER" property="tobeusetwo" />
-    <result column="tobeusethree" jdbcType="INTEGER" property="tobeusethree" />
+    <result column="backupseven" property="backupseven" jdbcType="VARCHAR" />
+    <result column="backupeight" property="backupeight" jdbcType="VARCHAR" />
+    <result column="backupnine" property="backupnine" jdbcType="VARCHAR" />
+    <result column="backupten" property="backupten" jdbcType="VARCHAR" />
+    <result column="tobeuseone" property="tobeuseone" jdbcType="INTEGER" />
+    <result column="tobeusetwo" property="tobeusetwo" jdbcType="INTEGER" />
+    <result column="tobeusethree" property="tobeusethree" jdbcType="INTEGER" />
     <result column="cityName" property="cityname" jdbcType="VARCHAR" />
     <result column="openId" property="openid" jdbcType="VARCHAR" />
     <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="userPhone" property="userphone" jdbcType="VARCHAR" />
+    <result column="wecharbind" property="wecharbind" jdbcType="VARCHAR" />
+    <result column="phonebind" property="phonebind" jdbcType="VARCHAR" />
+    <result column="userToken" property="usertoken" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
   </resultMap>
-
-  <!--葡萄互助后台，用于获取用户列表-->
-  
 
   <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
   <select id="selectMenListLoadMore" resultMap="BaseResultMap" >
-    select      
-	   <include refid="Base_Column_List" />
-    from 
-    	user
-    where 
-     	userType= #{tag,jdbcType=INTEGER} AND registerDate &lt; #{lastTime}
-    order by 
-     	registerDate  desc
-    limit 
-     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}    
+    select
+    <include refid="Base_Column_List" />
+    from
+    user
+    where
+    userType= #{tag,jdbcType=INTEGER} AND registerDate &lt; #{lastTime}
+    order by
+    registerDate  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!--自定义结束 -->
 
-   <!-- 公益排行榜，-->
+  <!-- 公益排行榜，-->
   <select id="gongyiMenListloadMore" resultMap="BaseResultMap" >
-    select      
-	   <include refid="Base_Column_List" />
-    from 
-    	user
-    where 
-     	tobeuseone= 2 AND userDonate &lt; #{money}
-    order by 
-     	userDonate  desc
-    limit 
-     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}    
+    select
+    <include refid="Base_Column_List" />
+    from
+    user
+    where
+    tobeuseone= 2 AND userDonate &lt; #{money}
+    order by
+    userDonate  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!-- 公益排行榜结束 -->
-  
-  
+
+
   <!--  自定义，根据一组ids获取用户信息,列表,在我关注的人使用了-->
   <select id="getPayOrWatchPeople" resultMap="BaseResultMap" >
-    select      
-	   <include refid="Base_Column_List" />
+    select
+    <include refid="Base_Column_List" />
     from user
     where userID  in
-         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-               #{item}
-        </foreach>       
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
   <!--自定义结束 -->
   <!--自定义，用于用户密码验证-->
   <select id="selectMD5Password" resultType="java.lang.String"  parameterType="java.lang.Long">
-    select      
-	    userPassword
+    select
+    userPassword
     from user
-    where userID= #{userid}             
+    where userID= #{userid}
   </select>
   <!--自定义结束 -->
   <!--自定义，用于找回密码-->
   <select id="findPasswd" resultType="java.lang.String"  parameterType="java.lang.String">
-    select      
-	    userPassword
+    select
+    userPassword
     from user
     where userEmail= #{userEmail}
   </select>
   <!--自定义结束 -->
   <!--  自定义，获取昵称 头像 简介部分信息-->
   <select id="selectUserPartProfile" resultType="org.geilove.sqlpojo.OtherPartHelpPojo" >
-    select      
-	    userID,userNickName, selfIntroduce, userPhoto, photoUpload
+    select
+    userID,userNickName, selfIntroduce, userPhoto, photoUpload
     from user
     where userID  in
-         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-               #{item}
-        </foreach>       
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
   <!--自定义结束 -->
 
   <!--这个是自定义的返回部分字段的，不知道行不行啊 -->
   <resultMap id="UserPhotoResultMap" type="org.geilove.vo.UserPhotoUrl" >
-     <id column="userID" property="userid" jdbcType="BIGINT" />
-     <result column="userPhoto" property="userphoto" jdbcType="VARCHAR" />
+    <id column="userID" property="userid" jdbcType="BIGINT" />
+    <result column="userPhoto" property="userphoto" jdbcType="VARCHAR" />
   </resultMap>
-   
+
   <sql id="UserPhotoList" >
     userID, userPhoto
   </sql>
-  
+
   <!--  自定义，获得用户的头像-->
   <select id="selectUserPhotos" resultMap="UserPhotoResultMap" >
-    select 
+    select
     <include refid="UserPhotoList" />
-    from  user 
+    from  user
     where userID  in
-         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-               #{item}
-       </foreach>
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
   <!--自定义返回用户头像的结束 -->
-   
-  <sql id="Base_Column_List" >
-    userID, digital, userNickName, userEMail, userPassword, userType, certificateType, 
-    realName, identityCard, sex, selfIntroduce, userTag, university, collegeYear, universityTwo, 
-    collegeYearTwo, company, address, country, registerDate, msgPubCount, boxCount, fansCount, 
-    followCount, notSay, notSayTime, canSayTime, userPhoto, photoUpload, backupOne, backupTwo, 
-    backupThree, backupFour, backupFive, backupSix,userHelpsMan,userDonate,amountAccept,acceptMoney,beHelpTime,beHelpedType,
-    backupseven, backupeight, backupnine, backupten, 
-    tobeuseone, tobeusetwo, tobeusethree, cityName, openId, userUUID
-  </sql>
-
-
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where userID = #{userid,jdbcType=BIGINT}
-  </select>
 
   <!--根据用户的UUId 选择用户，-->
   <select id="selectByUUID" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -191,58 +175,80 @@
   </select>
   <!-- 以下是自定义的,根据用户的邮箱选出用户的信息-->
   <select id="selectByUserEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select
-  	<include refid="Base_Column_List" />
-  	from user
-  	where userEmail=#{useremail,jdbcType=VARCHAR}
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userEmail=#{useremail,jdbcType=VARCHAR}
   </select>
   <!-- 以下是自定义的,根据用户的昵称选出用户的信息-->
   <select id="selectByUserNickName" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select
-  	<include refid="Base_Column_List" />
-  	from user
-  	where userNickName=#{usernickname,jdbcType=VARCHAR}
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userNickName=#{usernickname,jdbcType=VARCHAR}
   </select>
-  
+
+
+
+  <sql id="Base_Column_List" >
+    userID, digital, userNickName, userEmail, userPassword, userType, certificateType,
+    realName, identityCard, sex, selfIntroduce, userTag, university, collegeYear, universityTwo,
+    collegeYearTwo, company, address, country, registerDate, msgPubCount, boxCount, fansCount,
+    followCount, notSay, notSayTime, canSayTime, userPhoto, photoUpload, backupOne, backupTwo,
+    backupThree, backupFour, backupFive, backupSix, userHelpsMan, userDonate, amountAccept,
+    acceptMoney, beHelpTime, beHelpedType, backupseven, backupeight, backupnine, backupten,
+    tobeuseone, tobeusetwo, tobeusethree, cityName, openId, userUUID, userPhone, wecharbind,
+    phonebind, userToken, token
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userID = #{userid,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user
     where userID = #{userid,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="org.geilove.pojo.User" >
-    insert into user (userID, digital, userNickName, 
-      userEMail, userPassword, userType, 
-      certificateType, realName, identityCard, 
-      sex, selfIntroduce, userTag, 
-      university, collegeYear, universityTwo, 
-      collegeYearTwo, company, address, 
-      country, registerDate, msgPubCount, 
-      boxCount, fansCount, followCount, 
-      notSay, notSayTime, canSayTime, 
-      userPhoto, photoUpload, backupOne, 
-      backupTwo, backupThree, backupFour, 
-      backupFive, backupSix,userHelpsMan,userDonate,amountAccept,acceptMoney,beHelpTime,beHelpedType,
-      backupseven, 
-      backupeight, backupnine, backupten, 
-      tobeuseone, tobeusetwo, tobeusethree,cityName, openId, userUUID)
-    values (#{userid,jdbcType=BIGINT}, #{digital,jdbcType=BIGINT}, #{usernickname,jdbcType=VARCHAR}, 
-      #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, #{usertype,jdbcType=TINYINT}, 
-      #{certificatetype,jdbcType=TINYINT}, #{realname,jdbcType=VARCHAR}, #{identitycard,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{selfintroduce,jdbcType=VARCHAR}, #{usertag,jdbcType=VARCHAR}, 
-      #{university,jdbcType=VARCHAR}, #{collegeyear,jdbcType=DATE}, #{universitytwo,jdbcType=VARCHAR}, 
-      #{collegeyeartwo,jdbcType=DATE}, #{company,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{country,jdbcType=VARCHAR}, #{registerdate,jdbcType=TIMESTAMP}, #{msgpubcount,jdbcType=INTEGER}, 
-      #{boxcount,jdbcType=INTEGER}, #{fanscount,jdbcType=INTEGER}, #{followcount,jdbcType=INTEGER}, 
-      #{notsay,jdbcType=TINYINT}, #{notsaytime,jdbcType=TIMESTAMP}, #{cansaytime,jdbcType=TIMESTAMP}, 
-      #{userphoto,jdbcType=VARCHAR}, #{photoupload,jdbcType=TINYINT}, #{backupone,jdbcType=VARCHAR}, 
-      #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
-      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{userhelpsman,jdbcType=INTEGER},
-      #{userdonate,jdbcType=INTEGER},#{amountaccept,jdbcType=INTEGER},#{acceptmoney,jdbcType=INTEGER},
-      #{behelptime,jdbcType=TIMESTAMP},#{behelpedtype,jdbcType=INTEGER},
-      #{backupseven,jdbcType=VARCHAR}, 
-      #{backupeight,jdbcType=VARCHAR}, #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, 
-      #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, #{tobeusethree,jdbcType=INTEGER},
-      #{cityname,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}
-      )
+    insert into user (userID, digital, userNickName,
+    userEmail, userPassword, userType,
+    certificateType, realName, identityCard,
+    sex, selfIntroduce, userTag,
+    university, collegeYear, universityTwo,
+    collegeYearTwo, company, address,
+    country, registerDate, msgPubCount,
+    boxCount, fansCount, followCount,
+    notSay, notSayTime, canSayTime,
+    userPhoto, photoUpload, backupOne,
+    backupTwo, backupThree, backupFour,
+    backupFive, backupSix, userHelpsMan,
+    userDonate, amountAccept, acceptMoney,
+    beHelpTime, beHelpedType, backupseven,
+    backupeight, backupnine, backupten,
+    tobeuseone, tobeusetwo, tobeusethree,
+    cityName, openId, userUUID,
+    userPhone, wecharbind, phonebind,
+    userToken, token)
+    values (#{userid,jdbcType=BIGINT}, #{digital,jdbcType=BIGINT}, #{usernickname,jdbcType=VARCHAR},
+    #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, #{usertype,jdbcType=TINYINT},
+    #{certificatetype,jdbcType=TINYINT}, #{realname,jdbcType=VARCHAR}, #{identitycard,jdbcType=VARCHAR},
+    #{sex,jdbcType=VARCHAR}, #{selfintroduce,jdbcType=VARCHAR}, #{usertag,jdbcType=VARCHAR},
+    #{university,jdbcType=VARCHAR}, #{collegeyear,jdbcType=DATE}, #{universitytwo,jdbcType=VARCHAR},
+    #{collegeyeartwo,jdbcType=DATE}, #{company,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+    #{country,jdbcType=VARCHAR}, #{registerdate,jdbcType=TIMESTAMP}, #{msgpubcount,jdbcType=INTEGER},
+    #{boxcount,jdbcType=INTEGER}, #{fanscount,jdbcType=INTEGER}, #{followcount,jdbcType=INTEGER},
+    #{notsay,jdbcType=TINYINT}, #{notsaytime,jdbcType=TIMESTAMP}, #{cansaytime,jdbcType=TIMESTAMP},
+    #{userphoto,jdbcType=VARCHAR}, #{photoupload,jdbcType=TINYINT}, #{backupone,jdbcType=VARCHAR},
+    #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR},
+    #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{userhelpsman,jdbcType=INTEGER},
+    #{userdonate,jdbcType=INTEGER}, #{amountaccept,jdbcType=INTEGER}, #{acceptmoney,jdbcType=INTEGER},
+    #{behelptime,jdbcType=TIMESTAMP}, #{behelpedtype,jdbcType=INTEGER}, #{backupseven,jdbcType=VARCHAR},
+    #{backupeight,jdbcType=VARCHAR}, #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR},
+    #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, #{tobeusethree,jdbcType=INTEGER},
+    #{cityname,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR},
+    #{userphone,jdbcType=VARCHAR}, #{wecharbind,jdbcType=VARCHAR}, #{phonebind,jdbcType=VARCHAR},
+    #{usertoken,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.User" >
     insert into user
@@ -257,7 +263,7 @@
         userNickName,
       </if>
       <if test="useremail != null" >
-        userEMail,
+        userEmail,
       </if>
       <if test="userpassword != null" >
         userPassword,
@@ -352,43 +358,43 @@
       <if test="backupsix != null" >
         backupSix,
       </if>
-       <if test="userhelpsman != null" >
+      <if test="userhelpsman != null" >
         userHelpsMan,
       </if>
-       <if test="userdonate != null" >
+      <if test="userdonate != null" >
         userDonate,
       </if>
-       <if test="amountaccept != null" >
+      <if test="amountaccept != null" >
         amountAccept,
       </if>
-       <if test="acceptmoney != null" >
+      <if test="acceptmoney != null" >
         acceptMoney,
       </if>
-       <if test="behelptime != null" >
+      <if test="behelptime != null" >
         beHelpTime,
       </if>
-       <if test="behelpedtype != null" >
+      <if test="behelpedtype != null" >
         beHelpedType,
       </if>
-      <if test="backupseven != null">
+      <if test="backupseven != null" >
         backupseven,
       </if>
-      <if test="backupeight != null">
+      <if test="backupeight != null" >
         backupeight,
       </if>
-      <if test="backupnine != null">
+      <if test="backupnine != null" >
         backupnine,
       </if>
-      <if test="backupten != null">
+      <if test="backupten != null" >
         backupten,
       </if>
-      <if test="tobeuseone != null">
+      <if test="tobeuseone != null" >
         tobeuseone,
       </if>
-      <if test="tobeusetwo != null">
+      <if test="tobeusetwo != null" >
         tobeusetwo,
       </if>
-      <if test="tobeusethree != null">
+      <if test="tobeusethree != null" >
         tobeusethree,
       </if>
       <if test="cityname != null" >
@@ -399,6 +405,21 @@
       </if>
       <if test="useruuid != null" >
         userUUID,
+      </if>
+      <if test="userphone != null" >
+        userPhone,
+      </if>
+      <if test="wecharbind != null" >
+        wecharbind,
+      </if>
+      <if test="phonebind != null" >
+        phonebind,
+      </if>
+      <if test="usertoken != null" >
+        userToken,
+      </if>
+      <if test="token != null" >
+        token,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -510,7 +531,7 @@
       <if test="userhelpsman != null" >
         #{userhelpsman,jdbcType=INTEGER},
       </if>
-       <if test="userdonate != null" >
+      <if test="userdonate != null" >
         #{userdonate,jdbcType=INTEGER},
       </if>
       <if test="amountaccept != null" >
@@ -522,28 +543,28 @@
       <if test="behelptime != null" >
         #{behelptime,jdbcType=TIMESTAMP},
       </if>
-       <if test="behelpedtype != null" >
+      <if test="behelpedtype != null" >
         #{behelpedtype,jdbcType=INTEGER},
       </if>
-      <if test="backupseven != null">
+      <if test="backupseven != null" >
         #{backupseven,jdbcType=VARCHAR},
       </if>
-      <if test="backupeight != null">
+      <if test="backupeight != null" >
         #{backupeight,jdbcType=VARCHAR},
       </if>
-      <if test="backupnine != null">
+      <if test="backupnine != null" >
         #{backupnine,jdbcType=VARCHAR},
       </if>
-      <if test="backupten != null">
+      <if test="backupten != null" >
         #{backupten,jdbcType=VARCHAR},
       </if>
-      <if test="tobeuseone != null">
+      <if test="tobeuseone != null" >
         #{tobeuseone,jdbcType=INTEGER},
       </if>
-      <if test="tobeusetwo != null">
+      <if test="tobeusetwo != null" >
         #{tobeusetwo,jdbcType=INTEGER},
       </if>
-      <if test="tobeusethree != null">
+      <if test="tobeusethree != null" >
         #{tobeusethree,jdbcType=INTEGER},
       </if>
       <if test="cityname != null" >
@@ -554,6 +575,21 @@
       </if>
       <if test="useruuid != null" >
         #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="wecharbind != null" >
+        #{wecharbind,jdbcType=VARCHAR},
+      </if>
+      <if test="phonebind != null" >
+        #{phonebind,jdbcType=VARCHAR},
+      </if>
+      <if test="usertoken != null" >
+        #{usertoken,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -567,7 +603,7 @@
         userNickName = #{usernickname,jdbcType=VARCHAR},
       </if>
       <if test="useremail != null" >
-        userEMail = #{useremail,jdbcType=VARCHAR},
+        userEmail = #{useremail,jdbcType=VARCHAR},
       </if>
       <if test="userpassword != null" >
         userPassword = #{userpassword,jdbcType=VARCHAR},
@@ -662,43 +698,43 @@
       <if test="backupsix != null" >
         backupSix = #{backupsix,jdbcType=INTEGER},
       </if>
-       <if test="userhelpsman != null" >
+      <if test="userhelpsman != null" >
         userHelpsMan = #{userhelpsman,jdbcType=INTEGER},
       </if>
-       <if test="userdonate != null" >
+      <if test="userdonate != null" >
         userDonate = #{userdonate,jdbcType=INTEGER},
       </if>
       <if test="amountaccept != null" >
         amountAccept = #{amountaccept,jdbcType=INTEGER},
       </if>
-       <if test="acceptmoney != null" >
+      <if test="acceptmoney != null" >
         acceptMoney = #{acceptmoney,jdbcType=INTEGER},
       </if>
       <if test="behelptime != null" >
         beHelpTime = #{behelptime,jdbcType=TIMESTAMP},
       </if>
-       <if test="behelpedtype != null" >
+      <if test="behelpedtype != null" >
         beHelpedType = #{behelpedtype,jdbcType=INTEGER},
       </if>
-      <if test="backupseven != null">
+      <if test="backupseven != null" >
         backupseven = #{backupseven,jdbcType=VARCHAR},
       </if>
-      <if test="backupeight != null">
+      <if test="backupeight != null" >
         backupeight = #{backupeight,jdbcType=VARCHAR},
       </if>
-      <if test="backupnine != null">
+      <if test="backupnine != null" >
         backupnine = #{backupnine,jdbcType=VARCHAR},
       </if>
-      <if test="backupten != null">
+      <if test="backupten != null" >
         backupten = #{backupten,jdbcType=VARCHAR},
       </if>
-      <if test="tobeuseone != null">
+      <if test="tobeuseone != null" >
         tobeuseone = #{tobeuseone,jdbcType=INTEGER},
       </if>
-      <if test="tobeusetwo != null">
+      <if test="tobeusetwo != null" >
         tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
       </if>
-      <if test="tobeusethree != null">
+      <if test="tobeusethree != null" >
         tobeusethree = #{tobeusethree,jdbcType=INTEGER},
       </if>
       <if test="cityname != null" >
@@ -710,60 +746,81 @@
       <if test="useruuid != null" >
         userUUID = #{useruuid,jdbcType=VARCHAR},
       </if>
+      <if test="userphone != null" >
+        userPhone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="wecharbind != null" >
+        wecharbind = #{wecharbind,jdbcType=VARCHAR},
+      </if>
+      <if test="phonebind != null" >
+        phonebind = #{phonebind,jdbcType=VARCHAR},
+      </if>
+      <if test="usertoken != null" >
+        userToken = #{usertoken,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
     </set>
     where userID = #{userid,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.User" >
     update user
     set digital = #{digital,jdbcType=BIGINT},
-      userNickName = #{usernickname,jdbcType=VARCHAR},
-      userEMail = #{useremail,jdbcType=VARCHAR},
-      userPassword = #{userpassword,jdbcType=VARCHAR},
-      userType = #{usertype,jdbcType=TINYINT},
-      certificateType = #{certificatetype,jdbcType=TINYINT},
-      realName = #{realname,jdbcType=VARCHAR},
-      identityCard = #{identitycard,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      selfIntroduce = #{selfintroduce,jdbcType=VARCHAR},
-      userTag = #{usertag,jdbcType=VARCHAR},
-      university = #{university,jdbcType=VARCHAR},
-      collegeYear = #{collegeyear,jdbcType=DATE},
-      universityTwo = #{universitytwo,jdbcType=VARCHAR},
-      collegeYearTwo = #{collegeyeartwo,jdbcType=DATE},
-      company = #{company,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      country = #{country,jdbcType=VARCHAR},
-      registerDate = #{registerdate,jdbcType=TIMESTAMP},
-      msgPubCount = #{msgpubcount,jdbcType=INTEGER},
-      boxCount = #{boxcount,jdbcType=INTEGER},
-      fansCount = #{fanscount,jdbcType=INTEGER},
-      followCount = #{followcount,jdbcType=INTEGER},
-      notSay = #{notsay,jdbcType=TINYINT},
-      notSayTime = #{notsaytime,jdbcType=TIMESTAMP},
-      canSayTime = #{cansaytime,jdbcType=TIMESTAMP},
-      userPhoto = #{userphoto,jdbcType=VARCHAR},
-      photoUpload = #{photoupload,jdbcType=TINYINT},
-      backupOne = #{backupone,jdbcType=VARCHAR},
-      backupTwo = #{backuptwo,jdbcType=VARCHAR},
-      backupThree = #{backupthree,jdbcType=VARCHAR},
-      backupFour = #{backupfour,jdbcType=VARCHAR},
-      backupFive = #{backupfive,jdbcType=INTEGER},
-      backupSix = #{backupsix,jdbcType=INTEGER},
-      userHelpsMan = #{userhelpsman,jdbcType=INTEGER},
-      userDonate = #{userdonate,jdbcType=INTEGER},
-      amountAccept = #{amountaccept,jdbcType=INTEGER},
-      beHelpTime = #{behelptime,jdbcType=TIMESTAMP},
-      beHelpedType = #{behelpedtype,jdbcType=INTEGER},
-      backupseven = #{backupseven,jdbcType=VARCHAR},
-      backupeight = #{backupeight,jdbcType=VARCHAR},
-      backupnine = #{backupnine,jdbcType=VARCHAR},
-      backupten = #{backupten,jdbcType=VARCHAR},
-      tobeuseone = #{tobeuseone,jdbcType=INTEGER},
-      tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
-      tobeusethree = #{tobeusethree,jdbcType=INTEGER},
-      cityName = #{cityname,jdbcType=VARCHAR},
-      openId = #{openid,jdbcType=VARCHAR},
-      userUUID = #{useruuid,jdbcType=VARCHAR}
+    userNickName = #{usernickname,jdbcType=VARCHAR},
+    userEmail = #{useremail,jdbcType=VARCHAR},
+    userPassword = #{userpassword,jdbcType=VARCHAR},
+    userType = #{usertype,jdbcType=TINYINT},
+    certificateType = #{certificatetype,jdbcType=TINYINT},
+    realName = #{realname,jdbcType=VARCHAR},
+    identityCard = #{identitycard,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    selfIntroduce = #{selfintroduce,jdbcType=VARCHAR},
+    userTag = #{usertag,jdbcType=VARCHAR},
+    university = #{university,jdbcType=VARCHAR},
+    collegeYear = #{collegeyear,jdbcType=DATE},
+    universityTwo = #{universitytwo,jdbcType=VARCHAR},
+    collegeYearTwo = #{collegeyeartwo,jdbcType=DATE},
+    company = #{company,jdbcType=VARCHAR},
+    address = #{address,jdbcType=VARCHAR},
+    country = #{country,jdbcType=VARCHAR},
+    registerDate = #{registerdate,jdbcType=TIMESTAMP},
+    msgPubCount = #{msgpubcount,jdbcType=INTEGER},
+    boxCount = #{boxcount,jdbcType=INTEGER},
+    fansCount = #{fanscount,jdbcType=INTEGER},
+    followCount = #{followcount,jdbcType=INTEGER},
+    notSay = #{notsay,jdbcType=TINYINT},
+    notSayTime = #{notsaytime,jdbcType=TIMESTAMP},
+    canSayTime = #{cansaytime,jdbcType=TIMESTAMP},
+    userPhoto = #{userphoto,jdbcType=VARCHAR},
+    photoUpload = #{photoupload,jdbcType=TINYINT},
+    backupOne = #{backupone,jdbcType=VARCHAR},
+    backupTwo = #{backuptwo,jdbcType=VARCHAR},
+    backupThree = #{backupthree,jdbcType=VARCHAR},
+    backupFour = #{backupfour,jdbcType=VARCHAR},
+    backupFive = #{backupfive,jdbcType=INTEGER},
+    backupSix = #{backupsix,jdbcType=INTEGER},
+    userHelpsMan = #{userhelpsman,jdbcType=INTEGER},
+    userDonate = #{userdonate,jdbcType=INTEGER},
+    amountAccept = #{amountaccept,jdbcType=INTEGER},
+    acceptMoney = #{acceptmoney,jdbcType=INTEGER},
+    beHelpTime = #{behelptime,jdbcType=TIMESTAMP},
+    beHelpedType = #{behelpedtype,jdbcType=INTEGER},
+    backupseven = #{backupseven,jdbcType=VARCHAR},
+    backupeight = #{backupeight,jdbcType=VARCHAR},
+    backupnine = #{backupnine,jdbcType=VARCHAR},
+    backupten = #{backupten,jdbcType=VARCHAR},
+    tobeuseone = #{tobeuseone,jdbcType=INTEGER},
+    tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
+    tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+    cityName = #{cityname,jdbcType=VARCHAR},
+    openId = #{openid,jdbcType=VARCHAR},
+    userUUID = #{useruuid,jdbcType=VARCHAR},
+    userPhone = #{userphone,jdbcType=VARCHAR},
+    wecharbind = #{wecharbind,jdbcType=VARCHAR},
+    phonebind = #{phonebind,jdbcType=VARCHAR},
+    userToken = #{usertoken,jdbcType=VARCHAR},
+    token = #{token,jdbcType=VARCHAR}
     where userID = #{userid,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -41,7 +41,7 @@ public class User {
 
     private String country;
 
-    private Date registerdate; //这个在我帮助的人列表时，临时存储帮助的时间
+    private Date registerdate;
 
     private Integer msgpubcount;
 
@@ -72,19 +72,19 @@ public class User {
     private Integer backupfive;
 
     private Integer backupsix;
-    //以下是修改表后新添加的字段
+
     private Integer userhelpsman;
-    
+
     private Integer userdonate;
-    
-    private Integer  amountaccept;
-    
+
+    private Integer amountaccept;
+
     private Integer acceptmoney;
-    
-    private  Date  behelptime;  
-    
+
+    private Date behelptime;
+
     private Integer behelpedtype;
-    //以下是修改表后新添加的字段
+
     private String backupseven;
 
     private String backupeight;
@@ -93,19 +93,29 @@ public class User {
 
     private String backupten;
 
-    private Integer tobeuseone; //用户是否捐钱了
+    private Integer tobeuseone;
 
-    private Integer tobeusetwo; //查看我帮助的人，或者帮助我的人，这个存储具体的钱数
+    private Integer tobeusetwo;
 
     private Integer tobeusethree;
 
-    private String cityname; //用户所在的城市
+    private String cityname;
 
-    private String openid; //公众号id
+    private String openid;
 
-    private String useruuid; //用户的uuid
-    
-	public Long getUserid() {
+    private String useruuid;
+
+    private String userphone;
+
+    private String wecharbind;
+
+    private String phonebind;
+
+    private String usertoken;
+
+    private String token;
+
+    public Long getUserid() {
         return userid;
     }
 
@@ -385,131 +395,171 @@ public class User {
         this.backupsix = backupsix;
     }
 
-	public Integer getUserhelpsman() {
-		return userhelpsman;
-	}
+    public Integer getUserhelpsman() {
+        return userhelpsman;
+    }
 
-	public void setUserhelpsman(Integer userhelpsman) {
-		this.userhelpsman = userhelpsman;
-	}
+    public void setUserhelpsman(Integer userhelpsman) {
+        this.userhelpsman = userhelpsman;
+    }
 
-	public Integer getUserdonate() {
-		return userdonate;
-	}
+    public Integer getUserdonate() {
+        return userdonate;
+    }
 
-	public void setUserdonate(Integer userdonate) {
-		this.userdonate = userdonate;
-	}
+    public void setUserdonate(Integer userdonate) {
+        this.userdonate = userdonate;
+    }
 
-	public Integer getAmountaccept() {
-		return amountaccept;
-	}
+    public Integer getAmountaccept() {
+        return amountaccept;
+    }
 
-	public void setAmountaccept(Integer amountaccept) {
-		this.amountaccept = amountaccept;
-	}
+    public void setAmountaccept(Integer amountaccept) {
+        this.amountaccept = amountaccept;
+    }
 
-	public Integer getAcceptmoney() {
-		return acceptmoney;
-	}
+    public Integer getAcceptmoney() {
+        return acceptmoney;
+    }
 
-	public void setAcceptmoney(Integer acceptmoney) {
-		this.acceptmoney = acceptmoney;
-	}
+    public void setAcceptmoney(Integer acceptmoney) {
+        this.acceptmoney = acceptmoney;
+    }
 
-	public Date getBehelptime() {
-		return behelptime;
-	}
+    public Date getBehelptime() {
+        return behelptime;
+    }
 
-	public void setBehelptime(Date behelptime) {
-		this.behelptime = behelptime;
-	}
+    public void setBehelptime(Date behelptime) {
+        this.behelptime = behelptime;
+    }
 
-	public Integer getBehelpedtype() {
-		return behelpedtype;
-	}
+    public Integer getBehelpedtype() {
+        return behelpedtype;
+    }
 
-	public void setBehelpedtype(Integer behelpedtype) {
-		this.behelpedtype = behelpedtype;
-	}
+    public void setBehelpedtype(Integer behelpedtype) {
+        this.behelpedtype = behelpedtype;
+    }
 
-	 public String getBackupseven() {
-	        return backupseven;
-	    }
+    public String getBackupseven() {
+        return backupseven;
+    }
 
-	    public void setBackupseven(String backupseven) {
-	        this.backupseven = backupseven == null ? null : backupseven.trim();
-	    }
+    public void setBackupseven(String backupseven) {
+        this.backupseven = backupseven == null ? null : backupseven.trim();
+    }
 
-	    public String getBackupeight() {
-	        return backupeight;
-	    }
+    public String getBackupeight() {
+        return backupeight;
+    }
 
-	    public void setBackupeight(String backupeight) {
-	        this.backupeight = backupeight == null ? null : backupeight.trim();
-	    }
+    public void setBackupeight(String backupeight) {
+        this.backupeight = backupeight == null ? null : backupeight.trim();
+    }
 
-	    public String getBackupnine() {
-	        return backupnine;
-	    }
+    public String getBackupnine() {
+        return backupnine;
+    }
 
-	    public void setBackupnine(String backupnine) {
-	        this.backupnine = backupnine == null ? null : backupnine.trim();
-	    }
+    public void setBackupnine(String backupnine) {
+        this.backupnine = backupnine == null ? null : backupnine.trim();
+    }
 
-	    public String getBackupten() {
-	        return backupten;
-	    }
+    public String getBackupten() {
+        return backupten;
+    }
 
-	    public void setBackupten(String backupten) {
-	        this.backupten = backupten == null ? null : backupten.trim();
-	    }
+    public void setBackupten(String backupten) {
+        this.backupten = backupten == null ? null : backupten.trim();
+    }
 
-	    public Integer getTobeuseone() {
-	        return tobeuseone;
-	    }
+    public Integer getTobeuseone() {
+        return tobeuseone;
+    }
 
-	    public void setTobeuseone(Integer tobeuseone) {
-	        this.tobeuseone = tobeuseone;
-	    }
+    public void setTobeuseone(Integer tobeuseone) {
+        this.tobeuseone = tobeuseone;
+    }
 
-	    public Integer getTobeusetwo() {
-	        return tobeusetwo;
-	    }
+    public Integer getTobeusetwo() {
+        return tobeusetwo;
+    }
 
-	    public void setTobeusetwo(Integer tobeusetwo) {
-	        this.tobeusetwo = tobeusetwo;
-	    }
+    public void setTobeusetwo(Integer tobeusetwo) {
+        this.tobeusetwo = tobeusetwo;
+    }
 
-	    public Integer getTobeusethree() {
-	        return tobeusethree;
-	    }
+    public Integer getTobeusethree() {
+        return tobeusethree;
+    }
 
-	    public void setTobeusethree(Integer tobeusethree) {
-	        this.tobeusethree = tobeusethree;
-	    }
-        public String getCityname() {
-            return cityname;
-        }
+    public void setTobeusethree(Integer tobeusethree) {
+        this.tobeusethree = tobeusethree;
+    }
 
-        public void setCityname(String cityname) {
-            this.cityname = cityname == null ? null : cityname.trim();
-        }
+    public String getCityname() {
+        return cityname;
+    }
 
-        public String getOpenid() {
-            return openid;
-        }
+    public void setCityname(String cityname) {
+        this.cityname = cityname == null ? null : cityname.trim();
+    }
 
-        public void setOpenid(String openid) {
-            this.openid = openid == null ? null : openid.trim();
-        }
+    public String getOpenid() {
+        return openid;
+    }
 
-        public String getUseruuid() {
-            return useruuid;
-        }
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
+    }
 
-        public void setUseruuid(String useruuid) {
-            this.useruuid = useruuid == null ? null : useruuid.trim();
-        }
-    
+    public String getUseruuid() {
+        return useruuid;
+    }
+
+    public void setUseruuid(String useruuid) {
+        this.useruuid = useruuid == null ? null : useruuid.trim();
+    }
+
+    public String getUserphone() {
+        return userphone;
+    }
+
+    public void setUserphone(String userphone) {
+        this.userphone = userphone == null ? null : userphone.trim();
+    }
+
+    public String getWecharbind() {
+        return wecharbind;
+    }
+
+    public void setWecharbind(String wecharbind) {
+        this.wecharbind = wecharbind == null ? null : wecharbind.trim();
+    }
+
+    public String getPhonebind() {
+        return phonebind;
+    }
+
+    public void setPhonebind(String phonebind) {
+        this.phonebind = phonebind == null ? null : phonebind.trim();
+    }
+
+    public String getUsertoken() {
+        return usertoken;
+    }
+
+    public void setUsertoken(String usertoken) {
+        this.usertoken = usertoken == null ? null : usertoken.trim();
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token == null ? null : token.trim();
+    }
 }
