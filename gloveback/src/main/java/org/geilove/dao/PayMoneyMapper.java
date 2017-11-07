@@ -2,6 +2,7 @@ package org.geilove.dao;
 
 import org.geilove.pojo.PayMoney;
 
+import java.util.List;
 import java.util.Map;
 
 public interface PayMoneyMapper {
@@ -18,5 +19,7 @@ public interface PayMoneyMapper {
     int updateByPrimaryKey(PayMoney record);
 
     PayMoney selectByMapKeys(Map<String,String> map);
+
+    List<PayMoney> getPaymoneyList(String  useruuid);
 
 }

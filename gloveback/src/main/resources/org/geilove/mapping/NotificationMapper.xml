@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.NotificationMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Notification" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="notifyuuid" property="notifyuuid" jdbcType="VARCHAR" />
+    <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="notifytime" property="notifytime" jdbcType="TIMESTAMP" />
+    <result column="readif" property="readif" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="msgtype" property="msgtype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, notifyuuid, useruuid, notifytime, readif, message, msgtype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from notification
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from notification
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Notification" >
+    insert into notification (id, notifyuuid, useruuid, 
+      notifytime, readif, message, 
+      msgtype)
+    values (#{id,jdbcType=BIGINT}, #{notifyuuid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}, 
+      #{notifytime,jdbcType=TIMESTAMP}, #{readif,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{msgtype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Notification" >
+    insert into notification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="notifyuuid != null" >
+        notifyuuid,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+      <if test="notifytime != null" >
+        notifytime,
+      </if>
+      <if test="readif != null" >
+        readif,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="msgtype != null" >
+        msgtype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="notifyuuid != null" >
+        #{notifyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="notifytime != null" >
+        #{notifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readif != null" >
+        #{readif,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Notification" >
+    update notification
+    <set >
+      <if test="notifyuuid != null" >
+        notifyuuid = #{notifyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        useruuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="notifytime != null" >
+        notifytime = #{notifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readif != null" >
+        readif = #{readif,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null" >
+        msgtype = #{msgtype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Notification" >
+    update notification
+    set notifyuuid = #{notifyuuid,jdbcType=VARCHAR},
+      useruuid = #{useruuid,jdbcType=VARCHAR},
+      notifytime = #{notifytime,jdbcType=TIMESTAMP},
+      readif = #{readif,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      msgtype = #{msgtype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

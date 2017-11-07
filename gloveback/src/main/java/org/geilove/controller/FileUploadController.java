@@ -75,8 +75,6 @@ public class FileUploadController {	 //发布推文,带图片的
 		String useridStr=token.substring(32);		
 		Long userid=Long.valueOf(useridStr).longValue();
         String passwdTrue=null;
-
-
         try{
             passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
         }catch (Exception e){

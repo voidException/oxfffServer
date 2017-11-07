@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Message" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="msguuid" property="msguuid" jdbcType="VARCHAR" />
+    <result column="phonenumbers" property="phonenumbers" jdbcType="VARCHAR" />
+    <result column="templatecode" property="templatecode" jdbcType="VARCHAR" />
+    <result column="templateparam" property="templateparam" jdbcType="VARCHAR" />
+    <result column="senddate" property="senddate" jdbcType="TIMESTAMP" />
+    <result column="requestid" property="requestid" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="bizid" property="bizid" jdbcType="VARCHAR" />
+    <result column="yewu" property="yewu" jdbcType="VARCHAR" />
+    <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, msguuid, phonenumbers, templatecode, templateparam, senddate, requestid, code, 
+    bizid, yewu, useruuid, account
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Message" >
+    insert into message (id, msguuid, phonenumbers, 
+      templatecode, templateparam, senddate, 
+      requestid, code, bizid, 
+      yewu, useruuid, account
+      )
+    values (#{id,jdbcType=BIGINT}, #{msguuid,jdbcType=VARCHAR}, #{phonenumbers,jdbcType=VARCHAR}, 
+      #{templatecode,jdbcType=VARCHAR}, #{templateparam,jdbcType=VARCHAR}, #{senddate,jdbcType=TIMESTAMP}, 
+      #{requestid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{bizid,jdbcType=VARCHAR}, 
+      #{yewu,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="msguuid != null" >
+        msguuid,
+      </if>
+      <if test="phonenumbers != null" >
+        phonenumbers,
+      </if>
+      <if test="templatecode != null" >
+        templatecode,
+      </if>
+      <if test="templateparam != null" >
+        templateparam,
+      </if>
+      <if test="senddate != null" >
+        senddate,
+      </if>
+      <if test="requestid != null" >
+        requestid,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="bizid != null" >
+        bizid,
+      </if>
+      <if test="yewu != null" >
+        yewu,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="msguuid != null" >
+        #{msguuid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumbers != null" >
+        #{phonenumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="templatecode != null" >
+        #{templatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateparam != null" >
+        #{templateparam,jdbcType=VARCHAR},
+      </if>
+      <if test="senddate != null" >
+        #{senddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestid != null" >
+        #{requestid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="bizid != null" >
+        #{bizid,jdbcType=VARCHAR},
+      </if>
+      <if test="yewu != null" >
+        #{yewu,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Message" >
+    update message
+    <set >
+      <if test="msguuid != null" >
+        msguuid = #{msguuid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumbers != null" >
+        phonenumbers = #{phonenumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="templatecode != null" >
+        templatecode = #{templatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateparam != null" >
+        templateparam = #{templateparam,jdbcType=VARCHAR},
+      </if>
+      <if test="senddate != null" >
+        senddate = #{senddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestid != null" >
+        requestid = #{requestid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="bizid != null" >
+        bizid = #{bizid,jdbcType=VARCHAR},
+      </if>
+      <if test="yewu != null" >
+        yewu = #{yewu,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        useruuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Message" >
+    update message
+    set msguuid = #{msguuid,jdbcType=VARCHAR},
+      phonenumbers = #{phonenumbers,jdbcType=VARCHAR},
+      templatecode = #{templatecode,jdbcType=VARCHAR},
+      templateparam = #{templateparam,jdbcType=VARCHAR},
+      senddate = #{senddate,jdbcType=TIMESTAMP},
+      requestid = #{requestid,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      bizid = #{bizid,jdbcType=VARCHAR},
+      yewu = #{yewu,jdbcType=VARCHAR},
+      useruuid = #{useruuid,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

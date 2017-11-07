@@ -1,7 +1,7 @@
 package org.geilove.controller;
 
 /**
- * 这里是专门为同舟共济App开发的接口.
+ * 这里是专门葡萄互助App开发的接口.
  * http请求路径必须是包含 /ship
  */
 import org.geilove.pojo.Public;

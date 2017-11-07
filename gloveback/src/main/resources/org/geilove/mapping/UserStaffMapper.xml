@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.UserStaffMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.UserStaff" >
+    <id column="staffid" property="staffid" jdbcType="BIGINT" />
+    <result column="staffuuid" property="staffuuid" jdbcType="VARCHAR" />
+    <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="staffname" property="staffname" jdbcType="VARCHAR" />
+    <result column="staffphone" property="staffphone" jdbcType="VARCHAR" />
+    <result column="helptype" property="helptype" jdbcType="VARCHAR" />
+    <result column="affirm" property="affirm" jdbcType="VARCHAR" />
+    <result column="joinDate" property="joindate" jdbcType="TIMESTAMP" />
+    <result column="effectiveDate" property="effectivedate" jdbcType="TIMESTAMP" />
+    <result column="stopDate" property="stopdate" jdbcType="TIMESTAMP" />
+    <result column="nowState" property="nowstate" jdbcType="VARCHAR" />
+    <result column="applyhelptimes" property="applyhelptimes" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    staffid, staffuuid, useruuid, account, staffname, staffphone, helptype, affirm, joinDate, 
+    effectiveDate, stopDate, nowState, applyhelptimes
+  </sql>
+  <!--获取公司所有员工getAllStuffs-->
+  <!--<select id="getAllStuffs" resultMap="BaseResultMap" parameterType="java.util.HashMap" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from userstaff-->
+    <!--where useruuid = #{uuid} AND affirm=#{affirm}-->
+    <!--order by joinDate  desc-->
+    <!--limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}-->
+  <!--</select>-->
+ <!--&lt;!&ndash;deleteByUserUUIDAccount&ndash;&gt;-->
+  <!--<delete id="deleteByUserUUIDAccount" parameterType="java.lang.HashMap" >-->
+    <!--delete from userstaff-->
+    <!--where useruuid = #{uuid} AND account=#{account}-->
+  <!--</delete>-->
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from userstaff
+    where staffid = #{staffid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from userstaff
+    where staffid = #{staffid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.UserStaff" >
+    insert into userstaff (staffid, staffuuid, useruuid, 
+      account, staffname, staffphone, 
+      helptype, affirm, joinDate, 
+      effectiveDate, stopDate, nowState, 
+      applyhelptimes)
+    values (#{staffid,jdbcType=BIGINT}, #{staffuuid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}, 
+      #{account,jdbcType=VARCHAR}, #{staffname,jdbcType=VARCHAR}, #{staffphone,jdbcType=VARCHAR}, 
+      #{helptype,jdbcType=VARCHAR}, #{affirm,jdbcType=VARCHAR}, #{joindate,jdbcType=TIMESTAMP}, 
+      #{effectivedate,jdbcType=TIMESTAMP}, #{stopdate,jdbcType=TIMESTAMP}, #{nowstate,jdbcType=VARCHAR}, 
+      #{applyhelptimes,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.UserStaff" >
+    insert into userstaff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffid != null" >
+        staffid,
+      </if>
+      <if test="staffuuid != null" >
+        staffuuid,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="staffname != null" >
+        staffname,
+      </if>
+      <if test="staffphone != null" >
+        staffphone,
+      </if>
+      <if test="helptype != null" >
+        helptype,
+      </if>
+      <if test="affirm != null" >
+        affirm,
+      </if>
+      <if test="joindate != null" >
+        joinDate,
+      </if>
+      <if test="effectivedate != null" >
+        effectiveDate,
+      </if>
+      <if test="stopdate != null" >
+        stopDate,
+      </if>
+      <if test="nowstate != null" >
+        nowState,
+      </if>
+      <if test="applyhelptimes != null" >
+        applyhelptimes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffid != null" >
+        #{staffid,jdbcType=BIGINT},
+      </if>
+      <if test="staffuuid != null" >
+        #{staffuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="staffname != null" >
+        #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="staffphone != null" >
+        #{staffphone,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="affirm != null" >
+        #{affirm,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectivedate != null" >
+        #{effectivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopdate != null" >
+        #{stopdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nowstate != null" >
+        #{nowstate,jdbcType=VARCHAR},
+      </if>
+      <if test="applyhelptimes != null" >
+        #{applyhelptimes,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.UserStaff" >
+    update userstaff
+    <set >
+      <if test="staffuuid != null" >
+        staffuuid = #{staffuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        useruuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="staffname != null" >
+        staffname = #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="staffphone != null" >
+        staffphone = #{staffphone,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        helptype = #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="affirm != null" >
+        affirm = #{affirm,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        joinDate = #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectivedate != null" >
+        effectiveDate = #{effectivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopdate != null" >
+        stopDate = #{stopdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nowstate != null" >
+        nowState = #{nowstate,jdbcType=VARCHAR},
+      </if>
+      <if test="applyhelptimes != null" >
+        applyhelptimes = #{applyhelptimes,jdbcType=INTEGER},
+      </if>
+    </set>
+    where staffid = #{staffid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.UserStaff" >
+    update userstaff
+    set staffuuid = #{staffuuid,jdbcType=VARCHAR},
+      useruuid = #{useruuid,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      staffname = #{staffname,jdbcType=VARCHAR},
+      staffphone = #{staffphone,jdbcType=VARCHAR},
+      helptype = #{helptype,jdbcType=VARCHAR},
+      affirm = #{affirm,jdbcType=VARCHAR},
+      joinDate = #{joindate,jdbcType=TIMESTAMP},
+      effectiveDate = #{effectivedate,jdbcType=TIMESTAMP},
+      stopDate = #{stopdate,jdbcType=TIMESTAMP},
+      nowState = #{nowstate,jdbcType=VARCHAR},
+      applyhelptimes = #{applyhelptimes,jdbcType=INTEGER}
+    where staffid = #{staffid,jdbcType=BIGINT}
+  </update>
+</mapper>

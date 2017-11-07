@@ -113,7 +113,7 @@
     select      
 	    userPassword
     from user
-    where userEMail= #{userEmail}             
+    where userEmail= #{userEmail}
   </select>
   <!--自定义结束 -->
   <!--  自定义，获取昵称 头像 简介部分信息-->

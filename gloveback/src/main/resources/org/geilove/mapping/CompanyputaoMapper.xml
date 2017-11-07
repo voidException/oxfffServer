@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.CompanyputaoMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Companyputao" >
+    <id column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="companyuuid" property="companyuuid" jdbcType="VARCHAR" />
+    <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="staffall" property="staffall" jdbcType="INTEGER" />
+    <result column="totalmoney" property="totalmoney" jdbcType="INTEGER" />
+    <result column="totalmoenystr" property="totalmoenystr" jdbcType="VARCHAR" />
+    <result column="average" property="average" jdbcType="VARCHAR" />
+    <result column="helptype" property="helptype" jdbcType="VARCHAR" />
+    <result column="needtips" property="needtips" jdbcType="VARCHAR" />
+    <result column="tipstimes" property="tipstimes" jdbcType="INTEGER" />
+    <result column="tipsdate" property="tipsdate" jdbcType="TIMESTAMP" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    companyid, companyuuid, useruuid, staffall, totalmoney, totalmoenystr, average, helptype, 
+    needtips, tipstimes, tipsdate, updatedate, createdate
+  </sql>
+
+  <!--getCompanyputao-->
+  <select id="getCompanyputao" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from companyputao
+    where useruuid = #{uuid}
+    order by createdate  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+<!--&lt;!&ndash;delOneStuff&ndash;&gt;-->
+  <!--<delete id="delOneStuff" parameterType="java.lang.String" >-->
+    <!--delete from companyputao-->
+    <!--where useruuid = #{useruuid}-->
+  <!--</delete>-->
+  <!--&lt;!&ndash;getCompanyputaoInfo&ndash;&gt;-->
+  <!--<select id="getCompanyputaoInfo" resultMap="BaseResultMap" parameterType="java.lang.HashMap" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from companyputao-->
+    <!--where useruuid = #{uuid} AND helptype=#{helptype}-->
+
+  <!--</select>-->
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from companyputao
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from companyputao
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Companyputao" >
+    insert into companyputao (companyid, companyuuid, useruuid, 
+      staffall, totalmoney, totalmoenystr, 
+      average, helptype, needtips, 
+      tipstimes, tipsdate, updatedate, 
+      createdate)
+    values (#{companyid,jdbcType=INTEGER}, #{companyuuid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}, 
+      #{staffall,jdbcType=INTEGER}, #{totalmoney,jdbcType=INTEGER}, #{totalmoenystr,jdbcType=VARCHAR}, 
+      #{average,jdbcType=VARCHAR}, #{helptype,jdbcType=VARCHAR}, #{needtips,jdbcType=VARCHAR}, 
+      #{tipstimes,jdbcType=INTEGER}, #{tipsdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}, 
+      #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Companyputao" >
+    insert into companyputao
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyid != null" >
+        companyid,
+      </if>
+      <if test="companyuuid != null" >
+        companyuuid,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+      <if test="staffall != null" >
+        staffall,
+      </if>
+      <if test="totalmoney != null" >
+        totalmoney,
+      </if>
+      <if test="totalmoenystr != null" >
+        totalmoenystr,
+      </if>
+      <if test="average != null" >
+        average,
+      </if>
+      <if test="helptype != null" >
+        helptype,
+      </if>
+      <if test="needtips != null" >
+        needtips,
+      </if>
+      <if test="tipstimes != null" >
+        tipstimes,
+      </if>
+      <if test="tipsdate != null" >
+        tipsdate,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyid != null" >
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="companyuuid != null" >
+        #{companyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="staffall != null" >
+        #{staffall,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoney != null" >
+        #{totalmoney,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoenystr != null" >
+        #{totalmoenystr,jdbcType=VARCHAR},
+      </if>
+      <if test="average != null" >
+        #{average,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="needtips != null" >
+        #{needtips,jdbcType=VARCHAR},
+      </if>
+      <if test="tipstimes != null" >
+        #{tipstimes,jdbcType=INTEGER},
+      </if>
+      <if test="tipsdate != null" >
+        #{tipsdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Companyputao" >
+    update companyputao
+    <set >
+      <if test="companyuuid != null" >
+        companyuuid = #{companyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        useruuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="staffall != null" >
+        staffall = #{staffall,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoney != null" >
+        totalmoney = #{totalmoney,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoenystr != null" >
+        totalmoenystr = #{totalmoenystr,jdbcType=VARCHAR},
+      </if>
+      <if test="average != null" >
+        average = #{average,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        helptype = #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="needtips != null" >
+        needtips = #{needtips,jdbcType=VARCHAR},
+      </if>
+      <if test="tipstimes != null" >
+        tipstimes = #{tipstimes,jdbcType=INTEGER},
+      </if>
+      <if test="tipsdate != null" >
+        tipsdate = #{tipsdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Companyputao" >
+    update companyputao
+    set companyuuid = #{companyuuid,jdbcType=VARCHAR},
+      useruuid = #{useruuid,jdbcType=VARCHAR},
+      staffall = #{staffall,jdbcType=INTEGER},
+      totalmoney = #{totalmoney,jdbcType=INTEGER},
+      totalmoenystr = #{totalmoenystr,jdbcType=VARCHAR},
+      average = #{average,jdbcType=VARCHAR},
+      helptype = #{helptype,jdbcType=VARCHAR},
+      needtips = #{needtips,jdbcType=VARCHAR},
+      tipstimes = #{tipstimes,jdbcType=INTEGER},
+      tipsdate = #{tipsdate,jdbcType=TIMESTAMP},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      createdate = #{createdate,jdbcType=TIMESTAMP}
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </update>
+</mapper>

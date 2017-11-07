@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.aliyuncs:sdk-java-alimsg:20171107">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/aliyuncs/sdk-java-alimsg/20171107/sdk-java-alimsg-20171107.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/aliyuncs/sdk-java-alimsg/20171107/sdk-java-alimsg-20171107-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/aliyuncs/sdk-java-alimsg/20171107/sdk-java-alimsg-20171107-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

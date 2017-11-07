@@ -1,9 +1,6 @@
 package org.geilove.service;
 
-import org.geilove.pojo.Public;
-import org.geilove.pojo.Statistics;
-import  org.geilove.pojo.Account;
-import  org.geilove.pojo.UserAccount;
+import org.geilove.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +30,9 @@ public interface AshipService {
     public int updateByPrimaryKeySelective(UserAccount userAccount);
 
     public int updateByPrimaryKeySelectiveAndBusiness(UserAccount userAccount);
+
+    ///////////获取用户的充值记录///////////////////
+    public List<PayMoney> getPayMoneyList(String  useruuid);
 
 
 }

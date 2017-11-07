@@ -1,13 +1,7 @@
 package org.geilove.service.impl;
 
-import org.geilove.dao.AccountMapper;
-import org.geilove.dao.PublicMapper;
-import org.geilove.dao.StatisticsMapper;
-import org.geilove.dao.UserAccountMapper;
-import org.geilove.pojo.Account;
-import org.geilove.pojo.Public;
-import org.geilove.pojo.Statistics;
-import org.geilove.pojo.UserAccount;
+import org.geilove.dao.*;
+import org.geilove.pojo.*;
 import org.geilove.service.AshipService;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +22,11 @@ public class AshipServiceImpl implements AshipService {
     private AccountMapper    accountMapper;
     @Resource
     private UserAccountMapper  userAccountMapper;
-
     @Resource
     private PublicMapper  publicMapper;
+    @Resource
+    private PayMoneyMapper payMoneyMapper;
+
 
     @Override
     public Statistics getStatistics(){
@@ -90,6 +86,12 @@ public class AshipServiceImpl implements AshipService {
     @Override
     public int updateByPrimaryKeySelectiveAndBusiness(UserAccount userAccount) {
         return userAccountMapper.updateByPrimaryKeySelectiveAndBusiness(userAccount);
+    }
+
+    ///////////////////////////
+    public List<PayMoney> getPayMoneyList(String  useruuid){
+         List<PayMoney> payMoneyList=payMoneyMapper.getPaymoneyList(useruuid);
+         return  payMoneyList;
     }
 
 }
