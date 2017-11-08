@@ -178,70 +178,21 @@ public class RegisterLoginController {
             commonRsp.setRetcode(2001);
             return commonRsp;
         }
-
         try {
-            int tag=0;
-            try {
-                tag = registerLoginService.userRegister(userRegister);
-            } catch (Exception e) {
-                e.printStackTrace();
-                commonRsp.setMsg("注册出现问题");
-                commonRsp.setRetcode(2001);
-                return commonRsp;
-            }
-            if (tag == 1) {
-                //注册成功之后，将会记录分享人的useruuid  这样会在通过分享注册的用户 首次充值的时候 给分享人一个5元的红包
-                if (userRegisterVo.getShareUserUUID() != null) {
-                    //shareuseruuid 不是空 说明用户通过分享注册
-                    String shareUserUUID = userRegisterVo.getShareUserUUID();
-                    ShareUser shareUser = new ShareUser();
-                    shareUser.setShareuseruuid(shareUserUUID);
-                    shareUser.setHaspay(0);   //0尚未充值 1 已经充值
-                    shareUser.setUseruuid(userRegister.getUseruuid());
-                    Date date = new Date();
-                    shareUser.setCreateddate(date);
-                    int tagJoinIn=0;
-                    try {
-                        tagJoinIn = registerByShareService.registerByShare(shareUser);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (tagJoinIn == 1) {
-                        commonRsp.setMsg("您已经通过分享注册成功，充值之后分享人将获得5元红包");
-                        commonRsp.setRetcode(2000);
-
-                        //为分享的人生成红包
-                        RedMoney redMoney=new RedMoney();
-                        redMoney.setUseruuid(shareUserUUID);
-                        redMoney.setRedmoney(5L);
-                        redMoney.setRedmoneystate("waiting");
-                        redMoney.setUseruuidclick(userRegister.getUseruuid());
-                        redMoney.setRedmoneydate(date);
-                        redMoney.setRedmoneyuuid(UUID.randomUUID().toString());
-                        int redmoney=selRedMoneyService.insertRedMoneyByShare(redMoney);
-                        System.out.println("生成红包的方法"+redMoney);
-
-
-                    } else {
-                        commonRsp.setMsg("注册成功，但是记录分享人失败");
-                        commonRsp.setRetcode(2000);
-                    }
-                } else {
-                    commonRsp.setMsg("注册成功");
-                    commonRsp.setRetcode(2000);
-                }
-//				commonRsp.setMsg("注册成功");
-//				commonRsp.setRetcode(2000);
-            } else {
-                commonRsp.setMsg("注册失败");
-                commonRsp.setRetcode(2001);
-            }
+           int tag = registerLoginService.userRegister(userRegister);
+           if (tag==0){
+               commonRsp.setMsg("注册失败");
+               commonRsp.setRetcode(2001);
+               return  commonRsp;
+           }
         } catch (Exception e) {
-            commonRsp.setMsg("注册出现异常");
+            e.printStackTrace();
+            commonRsp.setMsg("注册出现问题");
             commonRsp.setRetcode(2001);
-
+            return commonRsp;
         }
-        return commonRsp; //这么返回是为了，注册成功立马跳转到主页，和登录时一样。
+        commonRsp.setRetcode(2000);
+        return commonRsp;
     }
 
     /* 1、 跳转到用户输入注册的邮箱  */
@@ -416,6 +367,7 @@ public class RegisterLoginController {
         user.setUserid(userid);
         user.setUserpassword(MD5.string2MD5(originPass)); //密码要加密
         try {
+
             int updateTag = registerLoginService.updateUserSelective(user);
             if (updateTag != 1) {
                 commonRsp.setMsg("密码重置失败");

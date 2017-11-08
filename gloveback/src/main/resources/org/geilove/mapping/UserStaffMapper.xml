@@ -32,7 +32,7 @@
  <!--deleteByUserUUIDAccount-->
   <delete id="deleteByUserUUIDAccount" parameterType="java.util.HashMap" >
     delete from userstaff
-    where useruuid = #{uuid} AND account=#{account}
+    where useruuid = #{uuid} AND account=#{account} AND helptype=#{helptype}
   </delete>
 
 

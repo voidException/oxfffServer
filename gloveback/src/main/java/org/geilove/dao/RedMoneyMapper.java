@@ -21,4 +21,6 @@ public interface RedMoneyMapper {
     RedMoney selectByUserUUIDClick(String userUUIDClick);
 
     List<RedMoney> selectAllUserRedMoney(HashMap<String,Object> hashMap);
+
+
 }

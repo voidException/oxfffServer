@@ -15,6 +15,16 @@
     <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
     <result column="account" property="account" jdbcType="VARCHAR" />
   </resultMap>
+  <!--selectPhoneCode-->
+  <select id="selectPhoneCode" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from message
+    where phonenumbers= #{phone} AND templateparam = #{templateparam}
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
   <sql id="Base_Column_List" >
     id, msguuid, phonenumbers, templatecode, templateparam, senddate, requestid, code, 
     bizid, yewu, useruuid, account

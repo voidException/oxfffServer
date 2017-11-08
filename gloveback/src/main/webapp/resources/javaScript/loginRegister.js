@@ -15,7 +15,7 @@ new Vue({
                 userEmail:loginEmailInputValue,
                 userPassword:loginPasswdInputValue,
             };
-            this.$http.post('http://www.geilove.org/user/login',param).then(response => {
+            this.$http.post(publicurl+'/glove/user/login.do',param).then(response => {
                 console.log(response.body.data);
                 this.userProfile=response.body.data; //存入数据库
 

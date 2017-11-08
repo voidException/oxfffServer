@@ -60,20 +60,30 @@
     <result column="token" property="token" jdbcType="VARCHAR" />
   </resultMap>
 
+
+    <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
+    <select id="getUserByPhonePass" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where
+        userPhone= #{phone} AND userPassword = #{passmd5}
+
+    </select>
+    <!--自定义结束 -->
+
   <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
   <select id="selectMenListLoadMore" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from
-    user
+    from user
     where
     userType= #{tag,jdbcType=INTEGER} AND registerDate &lt; #{lastTime}
     order by
     registerDate  desc
-    limit
-    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    limit  #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
-  <!--自定义结束 -->
+
 
   <!-- 公益排行榜，-->
   <select id="gongyiMenListloadMore" resultMap="BaseResultMap" >
@@ -188,7 +198,179 @@
     where userNickName=#{usernickname,jdbcType=VARCHAR}
   </select>
 
+<!--自定义，根据手机号更新用户密码-->
+    <update id="updateByPhone" parameterType="org.geilove.pojo.User" >
+        update user
+        <set >
+            <if test="userid != null" >
+                userID = #{userid,jdbcType=BIGINT},
+            </if>
+            <if test="digital != null" >
+                digital = #{digital,jdbcType=BIGINT},
+            </if>
+            <if test="usernickname != null" >
+                userNickName = #{usernickname,jdbcType=VARCHAR},
+            </if>
+            <if test="useremail != null" >
+                userEmail = #{useremail,jdbcType=VARCHAR},
+            </if>
+            <if test="userpassword != null" >
+                userPassword = #{userpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="usertype != null" >
+                userType = #{usertype,jdbcType=TINYINT},
+            </if>
+            <if test="certificatetype != null" >
+                certificateType = #{certificatetype,jdbcType=TINYINT},
+            </if>
+            <if test="realname != null" >
+                realName = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="identitycard != null" >
+                identityCard = #{identitycard,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="selfintroduce != null" >
+                selfIntroduce = #{selfintroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="usertag != null" >
+                userTag = #{usertag,jdbcType=VARCHAR},
+            </if>
+            <if test="university != null" >
+                university = #{university,jdbcType=VARCHAR},
+            </if>
+            <if test="collegeyear != null" >
+                collegeYear = #{collegeyear,jdbcType=DATE},
+            </if>
+            <if test="universitytwo != null" >
+                universityTwo = #{universitytwo,jdbcType=VARCHAR},
+            </if>
+            <if test="collegeyeartwo != null" >
+                collegeYearTwo = #{collegeyeartwo,jdbcType=DATE},
+            </if>
+            <if test="company != null" >
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null" >
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="registerdate != null" >
+                registerDate = #{registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="msgpubcount != null" >
+                msgPubCount = #{msgpubcount,jdbcType=INTEGER},
+            </if>
+            <if test="boxcount != null" >
+                boxCount = #{boxcount,jdbcType=INTEGER},
+            </if>
+            <if test="fanscount != null" >
+                fansCount = #{fanscount,jdbcType=INTEGER},
+            </if>
+            <if test="followcount != null" >
+                followCount = #{followcount,jdbcType=INTEGER},
+            </if>
+            <if test="notsay != null" >
+                notSay = #{notsay,jdbcType=TINYINT},
+            </if>
+            <if test="notsaytime != null" >
+                notSayTime = #{notsaytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cansaytime != null" >
+                canSayTime = #{cansaytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userphoto != null" >
+                userPhoto = #{userphoto,jdbcType=VARCHAR},
+            </if>
+            <if test="photoupload != null" >
+                photoUpload = #{photoupload,jdbcType=TINYINT},
+            </if>
+            <if test="backupone != null" >
+                backupOne = #{backupone,jdbcType=VARCHAR},
+            </if>
+            <if test="backuptwo != null" >
+                backupTwo = #{backuptwo,jdbcType=VARCHAR},
+            </if>
+            <if test="backupthree != null" >
+                backupThree = #{backupthree,jdbcType=VARCHAR},
+            </if>
+            <if test="backupfour != null" >
+                backupFour = #{backupfour,jdbcType=VARCHAR},
+            </if>
+            <if test="backupfive != null" >
+                backupFive = #{backupfive,jdbcType=INTEGER},
+            </if>
+            <if test="backupsix != null" >
+                backupSix = #{backupsix,jdbcType=INTEGER},
+            </if>
+            <if test="userhelpsman != null" >
+                userHelpsMan = #{userhelpsman,jdbcType=INTEGER},
+            </if>
+            <if test="userdonate != null" >
+                userDonate = #{userdonate,jdbcType=INTEGER},
+            </if>
+            <if test="amountaccept != null" >
+                amountAccept = #{amountaccept,jdbcType=INTEGER},
+            </if>
+            <if test="acceptmoney != null" >
+                acceptMoney = #{acceptmoney,jdbcType=INTEGER},
+            </if>
+            <if test="behelptime != null" >
+                beHelpTime = #{behelptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="behelpedtype != null" >
+                beHelpedType = #{behelpedtype,jdbcType=INTEGER},
+            </if>
+            <if test="backupseven != null" >
+                backupseven = #{backupseven,jdbcType=VARCHAR},
+            </if>
+            <if test="backupeight != null" >
+                backupeight = #{backupeight,jdbcType=VARCHAR},
+            </if>
+            <if test="backupnine != null" >
+                backupnine = #{backupnine,jdbcType=VARCHAR},
+            </if>
+            <if test="backupten != null" >
+                backupten = #{backupten,jdbcType=VARCHAR},
+            </if>
+            <if test="tobeuseone != null" >
+                tobeuseone = #{tobeuseone,jdbcType=INTEGER},
+            </if>
+            <if test="tobeusetwo != null" >
+                tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
+            </if>
+            <if test="tobeusethree != null" >
+                tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+            </if>
+            <if test="cityname != null" >
+                cityName = #{cityname,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null" >
+                openId = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="useruuid != null" >
+                userUUID = #{useruuid,jdbcType=VARCHAR},
+            </if>
 
+            <if test="wecharbind != null" >
+                wecharbind = #{wecharbind,jdbcType=VARCHAR},
+            </if>
+            <if test="phonebind != null" >
+                phonebind = #{phonebind,jdbcType=VARCHAR},
+            </if>
+            <if test="usertoken != null" >
+                userToken = #{usertoken,jdbcType=VARCHAR},
+            </if>
+            <if test="token != null" >
+                token = #{token,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userPhone = #{userphone,jdbcType=VARCHAR}
+    </update>
 
   <sql id="Base_Column_List" >
     userID, digital, userNickName, userEmail, userPassword, userType, certificateType,
@@ -593,6 +775,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.User" >
     update user
     <set >

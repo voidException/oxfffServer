@@ -3,6 +3,11 @@
  *分享到朋友圈的登录模态弹出框
  * 2017-04-10
  */
+
+//let publicurl="http://localhost:8080"
+//线上
+let publicurl="http://geilove.org";
+
 new Vue({
     el: '#loginEmail',
     data: {
@@ -77,7 +82,7 @@ new Vue({
             //发送请求前先，隐藏弹出框，避免多次点击
             this.closeLoginModal();
             //发送网络请求
-            this.$http.post('http://localhost:8080/glove/user/login.do',userAccount).then(response => {
+            this.$http.post(publicurl+'/glove/user/login.do',userAccount).then(response => {
                 console.log(response.body);
                 //这里呢，要显示dialog，
                 this.showDialog(response.body.msg); //显示登录结果

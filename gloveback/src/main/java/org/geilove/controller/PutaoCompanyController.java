@@ -132,8 +132,8 @@ public class PutaoCompanyController {
         String  token=request.getParameter("token");
         String  uuid=request.getParameter("uuid"); //用户的uuid
         String  account=request.getParameter("account"); //被删除员工的身份证号
-        String  helptyep=request.getParameter("helptype");
-        String  affirm=request.getParameter("affirm"); //
+        String  helptyep=request.getParameter("helptype"); //参与的互助的类型
+        //String  affirm=request.getParameter("affirm"); //
 
         String userPassword=token.substring(0,32); //token是password和userID拼接成的。
         String useridStr=token.substring(32);
@@ -147,7 +147,7 @@ public class PutaoCompanyController {
         map.put("uuid",uuid);
         map.put("account",account);
         map.put("helptype",helptyep);
-        map.put("affirm",affirm); //del
+       // map.put("affirm",affirm); //del
         CompanyBaseInfo companyBaseInfo=companyputaoService.delResult(map);
         //判断companyBaseInfo 中的code值，
         resp.success(companyBaseInfo);
