@@ -39,7 +39,7 @@ public class PhotoUploadController {//上传用户头像
 	@RequestMapping(value="upload.do",method=RequestMethod.POST)
 	@ResponseBody
 	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{
-		//System.out.print("aaa");
+		System.out.print("aaa");
 		CommonRsp commonRsp=new CommonRsp();
 
 		String ipAndport= ServerIP.getiPPort(); //特别注意正式部署服务器端口是80，而不是8080

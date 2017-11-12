@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping(value="/backPages")
-public class AdminKeeperController {
+public class KeeperAdminController {
     @RequestMapping(value="/checkProfileList",method = RequestMethod.GET)
     public String checkProfiles(){
         String index="backSite/checkProfileList";

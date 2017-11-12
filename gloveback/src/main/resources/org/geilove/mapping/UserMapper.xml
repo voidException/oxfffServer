@@ -58,6 +58,7 @@
     <result column="phonebind" property="phonebind" jdbcType="VARCHAR" />
     <result column="userToken" property="usertoken" jdbcType="VARCHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
   </resultMap>
 
 
@@ -99,8 +100,13 @@
     #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!-- 公益排行榜结束 -->
-
-
+  <!--getUserByunionid通过微信的unionid 选择出用户-->
+    <select id="getUserByunionid" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where unionid=#{unionid}
+    </select>
   <!--  自定义，根据一组ids获取用户信息,列表,在我关注的人使用了-->
   <select id="getPayOrWatchPeople" resultMap="BaseResultMap" >
     select
@@ -368,6 +374,9 @@
             <if test="token != null" >
                 token = #{token,jdbcType=VARCHAR},
             </if>
+            <if test="unionid != null" >
+                unionid = #{unionid,jdbcType=VARCHAR},
+            </if>
         </set>
         where userPhone = #{userphone,jdbcType=VARCHAR}
     </update>
@@ -380,7 +389,7 @@
     backupThree, backupFour, backupFive, backupSix, userHelpsMan, userDonate, amountAccept,
     acceptMoney, beHelpTime, beHelpedType, backupseven, backupeight, backupnine, backupten,
     tobeuseone, tobeusetwo, tobeusethree, cityName, openId, userUUID, userPhone, wecharbind,
-    phonebind, userToken, token
+    phonebind, userToken, token,unionid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -411,7 +420,7 @@
     tobeuseone, tobeusetwo, tobeusethree,
     cityName, openId, userUUID,
     userPhone, wecharbind, phonebind,
-    userToken, token)
+    userToken, token,unionid)
     values (#{userid,jdbcType=BIGINT}, #{digital,jdbcType=BIGINT}, #{usernickname,jdbcType=VARCHAR},
     #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, #{usertype,jdbcType=TINYINT},
     #{certificatetype,jdbcType=TINYINT}, #{realname,jdbcType=VARCHAR}, #{identitycard,jdbcType=VARCHAR},
@@ -430,7 +439,7 @@
     #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, #{tobeusethree,jdbcType=INTEGER},
     #{cityname,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR},
     #{userphone,jdbcType=VARCHAR}, #{wecharbind,jdbcType=VARCHAR}, #{phonebind,jdbcType=VARCHAR},
-    #{usertoken,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR})
+    #{usertoken,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR},#{unionid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.User" >
     insert into user
@@ -603,6 +612,9 @@
       <if test="token != null" >
         token,
       </if>
+        <if test="unionid != null" >
+            unionid,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -773,6 +785,9 @@
       <if test="token != null" >
         #{token,jdbcType=VARCHAR},
       </if>
+        <if test="unionid != null" >
+            #{unionid,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
 
@@ -944,6 +959,9 @@
       <if test="token != null" >
         token = #{token,jdbcType=VARCHAR},
       </if>
+        <if test="unionid != null" >
+            unionid = #{unionid,jdbcType=VARCHAR},
+        </if>
     </set>
     where userID = #{userid,jdbcType=BIGINT}
   </update>
@@ -1003,7 +1021,8 @@
     wecharbind = #{wecharbind,jdbcType=VARCHAR},
     phonebind = #{phonebind,jdbcType=VARCHAR},
     userToken = #{usertoken,jdbcType=VARCHAR},
-    token = #{token,jdbcType=VARCHAR}
+    token = #{token,jdbcType=VARCHAR},
+     unionid = #{unionid,jdbcType=VARCHAR}
     where userID = #{userid,jdbcType=BIGINT}
   </update>
 </mapper>

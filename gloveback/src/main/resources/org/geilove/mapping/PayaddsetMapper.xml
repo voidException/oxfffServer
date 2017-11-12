@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.PayaddsetMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Payaddset" >
+    <id column="payaddid" property="payaddid" jdbcType="BIGINT" />
+    <result column="payadduuid" property="payadduuid" jdbcType="VARCHAR" />
+    <result column="accountuuid" property="accountuuid" jdbcType="VARCHAR" />
+    <result column="useruuid" property="useruuid" jdbcType="VARCHAR" />
+    <result column="categorytype" property="categorytype" jdbcType="VARCHAR" />
+    <result column="wechatPay" property="wechatpay" jdbcType="DECIMAL" />
+    <result column="moneystr" property="moneystr" jdbcType="VARCHAR" />
+    <result column="notify_time" property="notifyTime" jdbcType="TIMESTAMP" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="VARCHAR" />
+    <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+    <result column="passback_params" property="passbackParams" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    payaddid, payadduuid, accountuuid, useruuid, categorytype, wechatPay, moneystr, notify_time, 
+    app_id, sign_type, trade_no, out_trade_no, buyer_id, total_amount, trade_status, 
+    passback_params, seller_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from payaddset
+    where payaddid = #{payaddid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from payaddset
+    where payaddid = #{payaddid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Payaddset" >
+    insert into payaddset (payaddid, payadduuid, accountuuid, 
+      useruuid, categorytype, wechatPay, 
+      moneystr, notify_time, app_id, 
+      sign_type, trade_no, out_trade_no, 
+      buyer_id, total_amount, trade_status, 
+      passback_params, seller_id)
+    values (#{payaddid,jdbcType=BIGINT}, #{payadduuid,jdbcType=VARCHAR}, #{accountuuid,jdbcType=VARCHAR}, 
+      #{useruuid,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{wechatpay,jdbcType=DECIMAL}, 
+      #{moneystr,jdbcType=VARCHAR}, #{notifyTime,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, 
+      #{signType,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, 
+      #{buyerId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, 
+      #{passbackParams,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Payaddset" >
+    insert into payaddset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="payaddid != null" >
+        payaddid,
+      </if>
+      <if test="payadduuid != null" >
+        payadduuid,
+      </if>
+      <if test="accountuuid != null" >
+        accountuuid,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+      <if test="categorytype != null" >
+        categorytype,
+      </if>
+      <if test="wechatpay != null" >
+        wechatPay,
+      </if>
+      <if test="moneystr != null" >
+        moneystr,
+      </if>
+      <if test="notifyTime != null" >
+        notify_time,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status,
+      </if>
+      <if test="passbackParams != null" >
+        passback_params,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payaddid != null" >
+        #{payaddid,jdbcType=BIGINT},
+      </if>
+      <if test="payadduuid != null" >
+        #{payadduuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpay != null" >
+        #{wechatpay,jdbcType=DECIMAL},
+      </if>
+      <if test="moneystr != null" >
+        #{moneystr,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="passbackParams != null" >
+        #{passbackParams,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Payaddset" >
+    update payaddset
+    <set >
+      <if test="payadduuid != null" >
+        payadduuid = #{payadduuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        accountuuid = #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        useruuid = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        categorytype = #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpay != null" >
+        wechatPay = #{wechatpay,jdbcType=DECIMAL},
+      </if>
+      <if test="moneystr != null" >
+        moneystr = #{moneystr,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        notify_time = #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="passbackParams != null" >
+        passback_params = #{passbackParams,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where payaddid = #{payaddid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Payaddset" >
+    update payaddset
+    set payadduuid = #{payadduuid,jdbcType=VARCHAR},
+      accountuuid = #{accountuuid,jdbcType=VARCHAR},
+      useruuid = #{useruuid,jdbcType=VARCHAR},
+      categorytype = #{categorytype,jdbcType=VARCHAR},
+      wechatPay = #{wechatpay,jdbcType=DECIMAL},
+      moneystr = #{moneystr,jdbcType=VARCHAR},
+      notify_time = #{notifyTime,jdbcType=TIMESTAMP},
+      app_id = #{appId,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=VARCHAR},
+      total_amount = #{totalAmount,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      passback_params = #{passbackParams,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=VARCHAR}
+    where payaddid = #{payaddid,jdbcType=BIGINT}
+  </update>
+</mapper>

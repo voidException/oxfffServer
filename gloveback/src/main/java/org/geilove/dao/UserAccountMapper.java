@@ -31,5 +31,5 @@ public interface UserAccountMapper {
 
     int updateByPrimaryKeySelectiveAndBusiness(UserAccount userAccount);
 
-    UserAccount  selectByUUID(Map<String,String> map);
+    UserAccount  selectByUUID(Map<String,Object> map);
 }

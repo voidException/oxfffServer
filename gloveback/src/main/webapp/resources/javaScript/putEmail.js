@@ -9,42 +9,58 @@ new Vue({
         stopTag:0, // 防止用户多次点击的标志位
     },
     methods: {
-        putEmail: function () {
-            if(this.stopTag==1){
-                //console.log("stopTag")
-                return;
-            }
-            this.stopTag=1;
-            let email=document.getElementById("userEmail").value;
-            let regx=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            if (email==null ||email.length<10 || email.length>30  ||!regx.test(email)){
-                this.stopTag=0;
-                return  alert("输入邮箱有误");
+        doSubmit: function () {
+            // if(this.stopTag==1){
+            //     //console.log("stopTag")
+            //     return;
+            // }
+            // this.stopTag=1;
+            let email=document.getElementById("phone").value;
+            let verifycode=document.getElementById("verifycode").value;
+            let password=document.getElementById("userPassword").value;
+
+            let regx=/^1(3|4|5|7|8)\d{9}$/;
+            let regP=/^[0-9|a-z|A-Z]\w{5,17}$/; //6-18w位数字和字母组成的密码
+
+            if(email===null ||password===null ||email.length!=11 ||
+                password.length<6  ||verifycode==null ||verifycode.length!=4 ||password.length>18|| !regx.test(email) || !regP.test(password)){
+                //控制'您输入的邮箱或密码有误'  errorTips
+                return ;
             }
             //这里应该加入，对邮箱进行校验的代码
-            let param={
-                userEmail:email,
-            };
-            this.$http.post(publicurl+'/glove/user/findpassword.do',param).then(response => {
 
-                if(response.body.retcode==2000){
+            var userAccount = new FormData();
+            userAccount.append('phone',email);
+            userAccount.append('userPassword',password);
+            userAccount.append("verifycode",verifycode);
+
+            axios.post('/glove/phone/resetpass.do',userAccount,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                    console.log(response)
+
+                if(response.data.retcode==2000){
                     this.stopTag=0;
                     //接下来，应该清除本地缓存，让用户重新登录，待完成
-                    alert("请查看邮箱");
+                    alert("密码修改成功");
                     setTimeout(function(){
-                        window.location.href=publicurl+"/glove/mobile.do" //跳转到首页
+                        window.location.href="/glove//path/pages/mobileMain.do" //跳转到首页
                     },100);
 
                 }else {
                     this.stopTag=0;
-                    alert("发送失败");
+                    alert(response.data);
                 }
 
             }, err => {
                 this.stopTag=0;
-                alert("发送出现异常")
+                alert(err)
             });
 
+        },
+        getVerifyCode: function () {
+            //这个是获取验证码的
         }
     }
 });

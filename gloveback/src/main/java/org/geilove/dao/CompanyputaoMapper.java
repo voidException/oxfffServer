@@ -24,7 +24,8 @@ public interface CompanyputaoMapper {
     //员工数减一
     int delOneStuff(String useruuid);
 
-    //获得一公司参与的某互助计划info，useruuid、helptype
+    //获得一公司参与的某互助计划信息，useruuid、helptype
     Companyputao getCompanyputaoInfo(Map<String,Object> map);
+
 
 }

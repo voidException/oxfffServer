@@ -10,6 +10,7 @@ import java.util.List;
 public class TuiWenListRsp {
 
     private List<WeiBo> data;
+
     private Integer retcode ;
     private String msg;
 

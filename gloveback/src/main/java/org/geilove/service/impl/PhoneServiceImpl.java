@@ -141,7 +141,7 @@ public class PhoneServiceImpl  implements PhoneService{
         return  message.get(0);
     }
 
-    //手机号注册
+    //手机号注册,适用于葡萄互助
     @Override
     public CommonRsp phoneRegister(String phone,String userPassword,String verifycode,String shareUserUUID){
         CommonRsp  commonRsp=new CommonRsp();

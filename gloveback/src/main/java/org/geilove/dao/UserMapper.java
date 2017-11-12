@@ -47,6 +47,8 @@ public interface UserMapper {
     User getUserByPhone(String phone); //根据用户手机号选择用户
     User getUserByPhonePass(Map<String,Object> map); //根据手机号和加密的密码，查询出用户
     int  updateByPhone(User user);
+    //////////////---------根据unionid 选择出用户--------////////////////////////////////
+    User getUserByunionid(String  unionid); //通过微信的unionid选择出用户
 
 }
 

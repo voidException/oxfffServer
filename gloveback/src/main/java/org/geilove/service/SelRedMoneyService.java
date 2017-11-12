@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /*
-* 红包在注册时产生unactive，充值时激活，使用完活过期后失效。
+* 红包在注册时产生unactive，充值时或者跑定时任务激活红包，使用完或者定时任务过期后失效。
 * */
 
 public interface SelRedMoneyService {

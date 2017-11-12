@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/")
-public class AdminHelpController {
+public class HelpAdminController {
 
     @Autowired
     private T_userService t_userService ;

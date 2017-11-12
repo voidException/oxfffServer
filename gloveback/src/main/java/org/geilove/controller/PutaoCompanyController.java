@@ -412,17 +412,22 @@ public class PutaoCompanyController {
         }
         Map<String,Object> map=new HashMap<>();
         map.put("uuid",uuid);
-        map.put("page",1);
+        map.put("page",0);
         map.put("pageSize",10);
         List<Notification> notificationList;
         try{
              notificationList=companyputaoService.getNotifications(map);
+             if(notificationList==null || notificationList.isEmpty()){
+                 resp.failByNoData();
+                 return resp;
+             }
         }catch (Exception e){
-
+            resp.failByException();
+            return resp;
         }
 
-
-        return 0;
+        resp.success(notificationList);
+        return resp;
     }
 
 

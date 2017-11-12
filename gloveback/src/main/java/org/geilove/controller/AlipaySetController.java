@@ -44,11 +44,26 @@ public class AlipaySetController {
     @Resource
     private RegisterLoginService rlService;
 
-    /*alipay 支付，批量加入预付订单生成*/
+    class OrderThread extends Thread{
+        public  PayMoney payMoney;
+        public   List<AlipayOrderUser> alipayOrderUsers;
+
+        public  OrderThread(PayMoney payMoney, List<AlipayOrderUser> alipayOrderUsers){
+            this.payMoney=payMoney;
+            this.alipayOrderUsers=alipayOrderUsers;
+        }
+        public  void run(){
+            //paymoney表一条记录  payaddset表N条记录  充值记录表不入记录
+            alipayService.paySetInsert(this.payMoney,this.alipayOrderUsers);
+        }
+    }
+
+    /*alipay 支付，批量加入互助计划预付订单生成*/
     @RequestMapping(value = "/getOrderSet.do",method=RequestMethod.POST)
     @ResponseBody
     public Object  getOrderSet(@RequestBody AlipayOrderSetParam alipayOrderSetParam )throws AlipayApiException, IOException{
         System.out.print("aaa");
+
         AlipayOrderRsp alipayOrderRsp =new AlipayOrderRsp();
         if (alipayOrderSetParam==null){
             alipayOrderRsp.setRetcode(2001);
@@ -60,7 +75,7 @@ public class AlipaySetController {
         List<AlipayOrderUser> alipayOrderUserList=alipayOrderSetParam.getAlipayorderuserlist();
         String  total_amount="" ;// 这个需要计算出来
         String  seller_id="2088911776278734";//合作者账号，PID，非必须
-        String  passback_params="multy"; //这个代表多用户充值
+        String  passback_params="many"; //这个代表多用户充值，公司充值时company，普通用户单人充值是accountUUID+userName
 
         String token=alipayOrderSetParam.getToken();
         String userPassword=token.substring(0,32); //token是password和userID拼接成的。
@@ -74,23 +89,32 @@ public class AlipaySetController {
             return alipayOrderRsp;
         }
         // 0.计算总的金额
-        BigDecimal totalMoney=new BigDecimal(0);
+        BigDecimal totalMoney=new BigDecimal(0); //总金额
         for( AlipayOrderUser alipayOrderUser: alipayOrderUserList){
              String singleMoneyStr=alipayOrderUser.getMoney();
              BigDecimal singleMoneyBd=new BigDecimal(singleMoneyStr);
              totalMoney.add(singleMoneyBd);
         }
-        total_amount=totalMoney.toString(); //
+        total_amount=totalMoney.toString(); //总金额转化成字符串类型
+
+        //通过out_trade_no 在回调中，将本次批量充值的人联系起来。
         PayMoney payMoney=new PayMoney();
-        payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
+        payMoney.setPaymoneyuuid(out_trade_no);
+        payMoney.setAccountuuid(passback_params); //多人充值，这里用many作为标志
         payMoney.setUseruuid(body); //userUUID
-       //payMoney.setAccountuuid(accountUUID); //被充值用户的身份证号
         payMoney.setCategorytype(subject); //互助类型
-        payMoney.setOutTradeNo(out_trade_no); //商户订单号
+        payMoney.setNotifyTime(new Date());
         payMoney.setTotalAmount(total_amount); //充值的金额
+        payMoney.setOutTradeNo(out_trade_no); //重要，PayMoney表 payaddset表关联的重要字段
+        payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
         payMoney.setSellerId(seller_id); //卖家支付宝用户号2088开头
 
-        // 1. 开启新线程 操作 缴纳充值记录表，
+        // 1. 开启新线程 操作 缴纳充值记录表，充值辅助表
+        try{
+            new OrderThread(payMoney,alipayOrderUserList).start();
+        }catch (Exception e){
+
+        }
 
         // 2.生成预付订单并返回，这个回调地址是不是可以用不同的？
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway_url,
@@ -108,8 +132,10 @@ public class AlipaySetController {
         model.setProductCode(AlipayConfig.product_code); // 销售产品码，商家和支付宝签约的产品码，
         model.setPassbackParams(passback_params); // 描述信息 添加附加数据
         model.setSellerId(seller_id);
+
         request.setBizModel(model); //业务参数.参见文档
         request.setNotifyUrl(AlipayConfig.notify_url); // 回调地址
+
         String orderStr = "";  //最终加密的字符串
         try {
             //这里和普通的接口调用不同，使用的是sdkExecute

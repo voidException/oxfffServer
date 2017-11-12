@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class AlipayOrderSetParam {
 
-    private  String  categorytype;
+    private  String  categorytype; //互助的计划
     private  String  useruuid;
     private  String  token;
     private List<AlipayOrderUser>  alipayorderuserlist;

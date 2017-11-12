@@ -124,7 +124,7 @@ public class AShipNormalController {
         return  commonRsp;
     }
 
-    //获得我的员工列表
+    //获得我的家人
     @RequestMapping(value="/getMyEmployee.do",method=RequestMethod.POST)
     @ResponseBody
     public Object getMyEmployee(@RequestBody MyEmployeeParam myEmployeeParam, HttpServletRequest  getMyEmployeeParam){//这个是获取我的员工列表

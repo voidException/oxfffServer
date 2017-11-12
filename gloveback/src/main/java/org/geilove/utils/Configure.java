@@ -18,9 +18,9 @@ public class Configure {
 	private static String mch_id = "1444279102";   //互助管家的
 
 	//葡萄互助的Appid
-	public static String  putaohuzhuappid="";
+	public static String  putaohuzhuappid="wxbdcf30c9232401a4";
 	//葡萄互助的AppSecret
-	public static  String putaohuzhuAppSecret="";
+	public static  String putaohuzhuAppSecret="68b8ef8f7c8e84e0d427e838d69a16c9";
 
 	//Android支付AppID
 	private static String androidAppID = "wcnmdwxndapishityy";

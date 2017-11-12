@@ -10,6 +10,17 @@
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="msgtype" property="msgtype" jdbcType="VARCHAR" />
   </resultMap>
+  <!--getNotifications-->
+  <select id="getNotifications" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from notification
+    where useruuid = #{uuid}
+    order by notifytime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
   <sql id="Base_Column_List" >
     id, notifyuuid, useruuid, notifytime, readif, message, msgtype
   </sql>

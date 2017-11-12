@@ -48,6 +48,7 @@ public class AlipayController {
 
     @Resource
     private RegisterLoginService rlService;
+
     class OrderThread extends Thread{
         public PayMoney payMoney;
 
@@ -59,23 +60,8 @@ public class AlipayController {
         }
     }
 
-    //内部类，用于异步通知处理业务逻辑
-    class AlipayNotifyThread  extends  Thread {
 
-        public PayMoney payMoney;
-
-        public AlipayNotifyThread(PayMoney  payMoney){  //构造方法
-
-            this.payMoney=payMoney;
-        }
-        public  void  run(){
-            // aliNotify这里面完成所有逻辑
-            System.out.println("新线程开启成功---------------------------------------");
-             alipayService.aliNotify(this.payMoney);//这个是获得通知后进一步处理业务
-            // System.out.print(moneySource.getMoneynum());
-        }
-    }
-
+    // 适用于给公司充值，个人补充充值。
     @RequestMapping(value="/getOrder.do",method=RequestMethod.POST)
     @ResponseBody
     public Object payOrder(@RequestBody AlipayOrderParam httpRequest){
@@ -86,14 +72,21 @@ public class AlipayController {
             alipayOrderRsp.setOderStr(null);
             return  alipayOrderRsp;
         }
-        String  body=httpRequest.getUserUUID();     //对一笔交易的具体描述信息。httpequest传输过来 userUUID
+        String  body=httpRequest.getUserUUID();     //对交易或商品的描述。httpequest传输过来 userUUID
         String  subject=httpRequest.getCategoryType();  //商品的标题/交易标题/.  httpequest传输过来(互助类别)categoryType
         String  out_trade_no=getOutTradeNo();           // 商户订单号，本地生成 payMoneyUUID
         String  total_amount=httpRequest.getAmount(); //App传来的总金额
         String  seller_id="2088911776278734";        //合作者账号，PID，非必须
+
         String  userName=httpRequest.getUserName();
         String  accountUUID=httpRequest.getAccountUUID();
-        String  passback_params=accountUUID+userName;    //公众回传参数，这里我放进去App传过来的accountUUID和userName，
+        String  passback_params="";
+        if ("company".equals(accountUUID)){
+            passback_params=accountUUID;  //公司充值
+        }else {
+            passback_params=accountUUID+userName;//公众回传参数，个人充值这里我放进去App传过来的accountUUID和userName，
+        }
+
 
         PayMoney payMoney=new PayMoney();
         payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
@@ -145,94 +138,6 @@ public class AlipayController {
         }
         return alipayOrderRsp;  //返回结果
     }
-
-    /*alipay 支付异步通知  http://www.putaohuzhu.cn/glove/alipay/notify.do */
-    @Transactional(rollbackFor = Exception.class)
-    @RequestMapping(value="/notify.do",method=RequestMethod.POST)
-    public void alipayNotify(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
-        response.setContentType("text/plain; charset=utf-8");
-        PrintWriter out = response.getWriter();
-        //  获取支付宝POST过来反馈信息
-        //logger.debug("支付宝异步回调");
-        Map<String, String> params = new HashMap<String, String>();
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-                //logger.debug(valueStr);
-            }
-            // 乱码解决，这段代码在出现乱码时使用。
-            // valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-            params.put(name, valueStr);
-        }
-
-        /*
-        boolean flag = AlipaySignature.rsaCheckV1(params,
-                AlipayConfig.alipay_public_key,
-                AlipayConfig.charset,
-                AlipayConfig.sign_type);
-                */
-        // if (flag) {
-        if (true) {
-            if ("TRADE_SUCCESS".equals(params.get("trade_status"))) {
-                //trade_status
-                String trade_status="TRADE_SUCCESS"; //交易状态号
-                //notify_timeStr 通知时间
-                String  notify_timeStr=params.get("notify_time");
-                //notify_time
-                //Date notify_time=new Date();
-                //app_id
-                String  app_id=params.get("app_id");
-                // 订单金额
-                String total_amount = params.get("total_amount");
-                // 商户订单号
-                String out_trade_no = params.get("out_trade_no");
-                // 支付宝交易号
-                String trade_no = params.get("trade_no");
-                // 互助类别
-                String  categorytype=params.get("subject");
-                //userUUID
-                String  userUUID=params.get("body");
-                //passback_params 包含accountUUID和userName
-                String  passback_params=params.get("passback_params");
-                //accountUUID
-                String  accountUUID=passback_params.substring(0,18);
-                //seller_id
-                String  seller_id=params.get("seller_id");
-                // 买家支付宝用户号
-                String buyer_id = params.get("buyer_id");
-                // 交易创建时间 格式为yyyy-MM-dd HH:mm:ss
-                String gmt_create = params.get("gmt_create");
-
-                PayMoney  payMoney=new PayMoney();
-                payMoney.setTradeStatus(trade_status);
-                payMoney.setNotifyTime(new Date());
-                payMoney.setAppId(app_id);
-                payMoney.setTotalAmount(total_amount); //总金额
-                payMoney.setOutTradeNo(out_trade_no); //本地生成的订单
-                payMoney.setTradeNo(trade_no); //支付宝自己生成的交易单
-                payMoney.setCategorytype(categorytype); //互助的类别
-                payMoney.setUseruuid(userUUID); //用户的uuid
-                payMoney.setPassbackParams(passback_params);
-                payMoney.setAccountuuid(accountUUID); //账号的UUID
-                payMoney.setSellerId(seller_id); //卖家的id
-                payMoney.setBuyerId(buyer_id); //买家的支付宝账号
-                //用线程的方法更新,先查询数据库确认是否有此次交易，校验通过后，更新相应的数据库表
-                AlipayNotifyThread  alipayNotifyThread=new AlipayNotifyThread(payMoney);
-                alipayNotifyThread.start();
-                out.print("success");
-                //logger.debug("-----支付宝异步通知成功----");
-            } else {
-                //logger.debug("-----支付宝异步通知，订单未成功付款----");
-                out.print("failure");
-            }
-        }
-            //logger.debug("-----支付宝异步通知，订单验证错误----");
-        out.print("failure");
-    } //notify
 
 
     private static String getOutTradeNo() {

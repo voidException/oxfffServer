@@ -114,7 +114,7 @@ public class TuiWenController {
     }
 
 
-    @RequestMapping(value="/getTweetByOtherUseriD")
+    @RequestMapping(value="/getTweetByOtherUseriD.do")
     public  @ResponseBody Object getTweetByOtherUserID(@RequestBody TuiWenListParam param, HttpServletRequest request){
         /*@ 该接口用于从别人的主页，查看对方的推文@*/
         TuiWenListRsp  tuiWenListRsp=new TuiWenListRsp();

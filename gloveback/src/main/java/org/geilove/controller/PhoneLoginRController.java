@@ -3,6 +3,7 @@ package org.geilove.controller;
 /**
  *  葡萄互助------手机号注册，登录，验证
  */
+
 import org.geilove.dao.UserMapper;
 import org.geilove.pojo.Companyputao;
 import org.geilove.pojo.Message;
@@ -119,6 +120,11 @@ public class PhoneLoginRController {
             userProfileRsp.setRetcode(2001);
             return userProfileRsp;
         }
+        String userToken=user.getUseruuid()+user.getUserpassword();
+        String oldToken= user.getUserpassword()+user.getUserid();
+        user.setUsertoken(userToken);
+        user.setToken(oldToken);
+        user.setBackupfour(oldToken);
         userProfileRsp.setMsg("成功");
         userProfileRsp.setRetcode(2000);
         userProfileRsp.setData(user);

@@ -115,6 +115,8 @@ public class User {
 
     private String token;
 
+    private String unionid;
+
     public Long getUserid() {
         return userid;
     }
@@ -561,5 +563,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token == null ? null : token.trim();
+    }
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid == null ? null : unionid.trim();
     }
 }
