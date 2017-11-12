@@ -4,7 +4,7 @@
 %>
 <html>
 <head>
-    <title>输入邮箱</title>
+    <title>找回密码</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/putEmail.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
 </head>
 <body style="background-color: #E1E5E7;margin: 0px">
 <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;margin-top: 60px">

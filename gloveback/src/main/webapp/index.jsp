@@ -38,11 +38,12 @@
 
 			<a href="/glove/path/pages/shareTotimeline.do?userUUID=94111BD33D3F474590C535C0BE24905B&tweetUUID=5eedb509-f9d5-41eb-acc5-e51d25275607&cashUUID=5fedb509-f9d5-41eb-acc5-e51d25275607">分享到朋友圈</a><br/>
 
-			<a href="/glove/path/pages/loginRegister.do">登录PC</a><br/>
 
 			<a href="/glove/path/pages/login.do">公众号登录</a><br/>
 
 			<a href="/glove/path/pages/register.do">公众号注册</a><br/>
+
+			<a href="/glove/user/putEmail.do">找回密码（手机号）</a><br/>
 
 			<a href="/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>
 
@@ -57,10 +58,6 @@
 			<a href="/glove/photo/setting.do">设置</a><br/>
 
 			<a href="/glove/profile/goAddProfile.do">完善资料</a><br/>
-
-			<a href="/glove/user/resetPassword.do">修改密码</a><br/>
-
-			<a href="/glove/user/putEmail.do">找回密码（输入邮箱）</a><br/>
 
 			<a href="/glove/publishInfo/upload/addman.do">发布求助信息</a><br/>
 

@@ -12,60 +12,68 @@ new Vue({
 
             //输入完密码，点击return时，校验邮箱和密码是否合法
             //设置3个布尔变量，校验通过为true，否则false
-            let email=obj.userEmail;
-            let password=obj.userPassword;
-            let nickName=obj.userNickName;
+            let phone=obj.phone;
+            let verifycode=obj.verifycode;
+            let userPassword=obj.userPassword;
+            let nickName=obj.nickName;
+            let cityName=obj.cityName;
 
-            let regx=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            let regx=/^1(3|4|5|7|8)\d{9}$/;
             let regP=/^[0-9|a-z|A-Z]\w{5,17}$/; //6-18w位数字和字母组成的密码
-            //let testEm='@567890qwertyui';
-            //console.log(regP.test(testEm));
-            let Vemail=false;
-            let Vpass=false;
-            let VnickName=false;
+            if(phone===null ||phone.length!=11 ){
+                return alert("手机号长度不对");
+            }
+            if ( regx.test(phone)){
+                return alert("手机号格式不对")
+            }
+            if (userPassword!==null && userPassword.length>5 && userPassword.length<19 && regP.test(userPassword)) {
+               return alert("密码不对")
+            };
 
-            if(email!==null && email.length<31 && email.length>9 && regx.test(email)){
-                Vemail=true;
-            }
-            if (password!==null && password.length>5 && password.length<19 && regP.test(password)) {
-                Vpass=true;
-            };
             if (nickName.length>2 && nickName.length<31) {
-                VnickName=true;
+                return alert("昵称长度不对")
             };
-            if (Vpass && Vemail && VnickName) {
-                return true;
-            }else{
-                return false;
-            }
+
+            if (verifycode.length!==4) {
+                return alert("验证码不对")
+            };
+            if (cityName.length <1 ||cityName.length>10) {
+                return alert("城市名长度不对")
+            };
+
         },
 
         doregister:function(event) {
-            var registerEmailInput=document.getElementById("registerEmailInput").value;   //邮箱
-            var registerPasswdInput=document.getElementById("registerPasswdInput").value;   //密码
-            var registerNickNameInput=document.getElementById("registerNickNameInput").value; //昵称
-            var registerCityInput=document.getElementById("registerCityInput").value;   //城市
+            var phone=document.getElementById("phone").value;   //手机号
+            let verifycode=document.getElementById("verifycode").value; //验证码
+            var userPassword=document.getElementById("userPassword").value;   //密码
+            var nickName=document.getElementById("nickName").value; //昵称
+            var cityName=document.getElementById("cityName").value;   //城市
 
-
-            if (!this.verify(param)){
-                return alert("输入有误");
-            }
-            if (registerCityInput.length>8 ||registerCityInput==null){
-                return alert("城市名字有误")
-            }
-            //接下来发送注册请求
             let param={
-                userNickName:registerNickNameInput,
-                userEmail:registerEmailInput,
-                userPassword:registerPasswdInput,
-                cityName:registerCityInput,
+                phone:phone,
+                verifycode:verifycode,
+                userPassword:userPassword,
+                nickName:nickName,
+                cityName:cityName
             };
 
-            this.$http.post(publicurl+'/user/register.do',param).then(response => {
+            this.verify(param);
+            var userAccount = new FormData();
+            userAccount.append('phone',phone);
+            userAccount.append('userPassword',userPassword);
+            userAccount.append("verifycode",verifycode);
+            userAccount.append("nickName",nickName);
+            userAccount.append("cityName",cityName);
+
+            //接下来发送注册请求,后台接口需要写
+            this.$http.post(publicurl+'/user/register.do',userAccount,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
                 //console.log(response.body);
                 this.userProfile=response.body.data;
-                if(response.body.retcode==2000){
-
+                if(response.data.retcode==2000){
                     alert("注册成功，请登录");
                 }else {
                     alert("注册失败");
