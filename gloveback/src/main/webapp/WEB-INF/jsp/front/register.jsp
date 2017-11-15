@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/register.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
 <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;margin-top: 60px">
@@ -29,7 +30,7 @@
     <div style="display: flex; height: 40px;flex-direction: row;width: 100%;height: 44px;align-items: center;background-color:#ffffff">
         <div  style="width: 20%;padding-left: 10px">验证码</div>
         <input  id="verifycode"  class="checkTeamInput2"   name="newPass"  type="text" value="" placeholder="验证码"/>
-        <button style="width: 20%; padding-right: 2px;background-color: #00BB3B ; border-radius: 4px;height: 40px " >
+        <button onclick="getCode()" id="timeId" style="width: 20%; padding-right: 2px;background-color: #00BB3B ; color: #ffffff; border-radius: 4px;height: 40px " >
             获取验证码
         </button>
     </div>
@@ -55,5 +56,6 @@
 
 
 </body>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/verfyCode.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/register.js"></script>
 </html>

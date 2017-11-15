@@ -1,7 +1,7 @@
 
 //let publicurl="http://localhost:8080"
 //线上
-let publicurl="http://geilove.org";
+//let publicurl="http://geilove.org";
 
 new Vue({
     el: '#putEmial',

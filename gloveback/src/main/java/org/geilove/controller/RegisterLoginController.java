@@ -162,6 +162,7 @@ public class RegisterLoginController {
         userRegister.setNotsay((byte) 1);
         //这里需要先查询是否有该邮箱和昵称的用户已经注册
         Map<String, Object> map = new HashMap<>();
+
         map.put("userEmail", userEmail);
         map.put("userNickname", userNickName);
 

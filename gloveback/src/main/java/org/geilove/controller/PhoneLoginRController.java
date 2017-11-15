@@ -52,6 +52,23 @@ public class PhoneLoginRController {
         CommonRsp commonRsp=new CommonRsp();
         String phone=request.getParameter("phone");
 
+        if (phone==null || phone.length()!=11){
+            commonRsp.setMsg("手机格式不对");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        try{
+            Boolean B=isPhoneLegal(phone);
+            if (B==false){
+                commonRsp.setMsg("手机格式不对");
+                commonRsp.setRetcode(2001);
+                return commonRsp;
+            }
+        }catch (Exception e){
+            commonRsp.setMsg("校验手机格式抛出异常");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
         try {
             commonRsp=phoneService.getVerifyCode(phone);
 

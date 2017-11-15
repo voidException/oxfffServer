@@ -189,6 +189,14 @@
     from user
     where userEmail=#{userEmail,jdbcType=VARCHAR} OR userNickName=#{userNickname,jdbcType=VARCHAR}
   </select>
+    <!-- 以下是自定义的,根据用户昵称或者邮箱选择出记录，-->
+    <select id="selectByNicknameOrPhone" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where userPhone=#{phone,jdbcType=VARCHAR} OR userNickName=#{nickName,jdbcType=VARCHAR}
+    </select>
+
   <!-- 以下是自定义的,根据用户的邮箱选出用户的信息-->
   <select id="selectByUserEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
