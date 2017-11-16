@@ -154,5 +154,6 @@
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" name="Maven: com.aliyuncs:sdk-java-alimsg:20171107" level="project" />
     <orderEntry type="library" name="Maven: com.aliyundysmsapi:sdk-java-dysmsapi:20171107" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20090211" level="project" />
   </component>
 </module>

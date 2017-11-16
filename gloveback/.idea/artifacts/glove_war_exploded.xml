@@ -128,6 +128,7 @@
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.4" />
           <element id="library" level="project" name="Maven: com.aliyuncs:sdk-java-alimsg:20171107" />
           <element id="library" level="project" name="Maven: com.aliyundysmsapi:sdk-java-dysmsapi:20171107" />
+          <element id="library" level="project" name="Maven: org.json:json:20090211" />
         </element>
       </element>
       <element id="directory" name="META-INF">

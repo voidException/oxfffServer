@@ -53,6 +53,7 @@ public class WechatLoginController {
     @RequestMapping(value="/login.do",method= RequestMethod.POST)
     @ResponseBody
     public Object wechatlogin(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("次数qqq");
         Response<User> resp = new Response<User>();
         //String  state=request.getParameter("state"); //如何判断用户的请求是真实的？
         String  code=request.getParameter("code");
@@ -145,7 +146,7 @@ public class WechatLoginController {
             user.setRegisterdate(new Date());
             //存入数据库
             try {
-                int insertTag=userMapper.insertSelective(user);
+                int insertTag=userMapper.insert(user);
             }catch (Exception e){
             }
             resp.success(user);
