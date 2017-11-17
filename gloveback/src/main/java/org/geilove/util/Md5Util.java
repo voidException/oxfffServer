@@ -1,6 +1,7 @@
 package org.geilove.util;
 
 import java.security.MessageDigest;
+import java.util.UUID;
 
 /**
  * Md5 工具
@@ -16,11 +17,7 @@ public class Md5Util {
         }
     }
 
-    /**
-     * 用于获取一个String的md5值
-     * @param string
-     * @return
-     */
+
     public static String getMd5(String str) {
         byte[] bs = md5.digest(str.getBytes());
         StringBuilder sb = new StringBuilder(40);
@@ -35,7 +32,8 @@ public class Md5Util {
     }
      //测试
     public static void main(String[] args) {
-        System.out.println(getMd5("123456"));
+      //  System.out.println(getMd5("1234567891234567").toString().length());
+        System.out.println( UUID.randomUUID().toString());
     }
 }
 

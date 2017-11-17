@@ -10,6 +10,7 @@ import org.geilove.pojo.User;
 import org.geilove.service.MoneySourceService;
 import org.geilove.service.PhoneService;
 import org.geilove.service.RegisterLoginService;
+import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
 import org.geilove.utils.Configure;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import net.sf.json.JSONObject;
 @RequestMapping(value="/wechat")
@@ -53,7 +57,7 @@ public class WechatLoginController {
     @RequestMapping(value="/login.do",method= RequestMethod.POST)
     @ResponseBody
     public Object wechatlogin(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("次数qqq");
+
         Response<User> resp = new Response<User>();
         //String  state=request.getParameter("state"); //如何判断用户的请求是真实的？
         String  code=request.getParameter("code");
@@ -107,7 +111,7 @@ public class WechatLoginController {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
             BufferedReader in = new BufferedReader(inputStreamReader);
             String jsonUserStr =in.readLine().toString();
-            System.out.println("jsonUserStr = "+jsonUserStr);
+            //System.out.println("jsonUserStr = "+jsonUserStr);
             // 释放资源
             inputStream.close();
             inputStream = null;
@@ -135,7 +139,7 @@ public class WechatLoginController {
             }
             user = new User(); //存入数据库一份，返回给前端一份
             user.setUseruuid(UUID.randomUUID().toString());
-            user.setUserphone(userPhoto);
+            user.setUserphoto(userPhoto);
             user.setUsernickname(nickname);
             user.setSex(sex);
             user.setCityname(city);
@@ -143,16 +147,31 @@ public class WechatLoginController {
             user.setCountry(country);
             user.setUnionid(unionid);
             user.setPhonebind("no");
+            user.setCertificatetype((byte) 0); //0无认证申请，1申请中，2申请通过
+            user.setUsertype((byte) 0); //0 是普通用户，1是企业用户
             user.setRegisterdate(new Date());
+            user.setPhotoupload((byte) 1); //这里无意义，统一用远程服务器的
+
             //存入数据库
             try {
                 int insertTag=userMapper.insert(user);
+                if (insertTag!=1){
+                    resp.failByNoData();
+                    resp.setMsg("数据入库出错");
+                    return resp;
+                }
             }catch (Exception e){
+                System.out.println("######");
+                System.out.println(e.getMessage());
+                resp.failByException();
+                return resp;
             }
+
             resp.success(user);
             return resp;
 
         } catch (Exception e) {
+
             resp.failByException();
             return  resp;
         }
@@ -164,11 +183,56 @@ public class WechatLoginController {
     public Object wechatBindPhone(HttpServletRequest request, HttpServletResponse response) {
         Response<User> resp = new Response<User>();
         String phone=request.getParameter("phone");
+        String userPass=request.getParameter("userPass");
         String verifyCode=request.getParameter("verifyCode");
         String unionid=request.getParameter("unionid");
         String userPhoto=request.getParameter("userPhoto");
         String nickName=request.getParameter("nickName");
 
+        if (phone==null ||"".equals(phone) ||phone.length()!=11 || userPass.length() < 6 || userPass.length() > 18 ){
+            resp.failByNoData();
+            resp.setMsg("手机号或密码长度不对");
+            return resp;
+        }
+        if (verifyCode==null ||"".equals(verifyCode) || verifyCode.length()!=4 ){
+            resp.failByNoData();
+            resp.setMsg("验证码长度不对");
+            return resp;
+        }
+        //正则表达式校验手机号码
+        try{
+            Boolean B=isPhoneLegal(phone);
+            if (B==false){
+                resp.failByNoData();
+                resp.setMsg("手机格式不对");
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByNoData();
+            resp.setMsg("校验手机格式出现异常");
+            return resp;
+        }
+        // 2.校验密码的正确性
+        String regPass = "^[0-9a-zA-Z]{5,17}$"; //邮箱密码的正则表达式
+        Pattern patternPW = Pattern.compile(regPass);
+        Matcher matcherPW = patternPW.matcher(userPass);
+        boolean pwb = matcherPW.matches();
+        if (pwb == false) {
+            resp.failByNoData();
+            resp.setMsg("密码不符合格式");
+            return resp;
+        }
+        // 3.校验验证码格式，是否为4个数字
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(verifyCode);
+        if( !isNum.matches() ){
+            resp.failByNoData();
+            resp.setMsg("验证码不符合格式");
+            return resp;
+        }
+
+        // 4.验证手机号和密码是否匹配
+        User user=null;
         try{
             Message message=phoneService.checkPhoneCode(phone,verifyCode);
             if (message==null){
@@ -180,25 +244,26 @@ public class WechatLoginController {
             resp.failByException();
             return resp;
         }
-        // 1.先查询手机号，如果有手机号
-        User user=null;
+        // 1.先查询手机号
         try{
             user=userMapper.getUserByPhone(phone);
 
         }catch (Exception e){
 
         }
-        if (user==null){
+        if (user==null){ //手机号没注册，就把手机号绑定，
             user=new User();
             user.setUserphone(phone);
             user.setUnionid(unionid);
+            String passmd5 = Md5Util.getMd5(userPass); //对密码进行加密
+            user.setUserpassword(passmd5);
             user.setPhonebind("yes");
-            user.setWecharbind("yes");
+
             try{
-               int uptag= userMapper.updateByPhone(user); //通过unionid进行更新
+               int uptag= userMapper.updateByUnionid(user); //通过unionid进行更新
                if (uptag!=1){
                    resp.failByNoData();
-                   resp.setMsg("更新失败");
+                   resp.setMsg("绑定失败");
                    return resp;
                }
             }catch (Exception e){
@@ -209,7 +274,6 @@ public class WechatLoginController {
             //手机号已经注册，那就把微信的信息迁移到手机号账户里
             user.setUnionid(unionid);
             user.setPhonebind("yes");
-            user.setWecharbind("yes");
             user.setUserphone(userPhoto);
             user.setUsernickname(nickName);
             try{
@@ -227,7 +291,8 @@ public class WechatLoginController {
         }//else
         //家下来查询数据库，然后把最新的用户信息返回给App
         try{
-            user=userMapper.selectByUserNickName(nickName);
+            user=userMapper.getUserByunionid(unionid);
+
             if (user!=null){
                 resp.success(user);
                 return  resp;
@@ -239,4 +304,39 @@ public class WechatLoginController {
         resp.success(user);
         return resp;
     } //wechatBindPhone
+
+
+    /************************************手机号校验方法*************************************************/
+    /**
+     * 大陆号码或香港号码均可
+     */
+    public static boolean isPhoneLegal(String str)throws PatternSyntaxException {
+        return isChinaPhoneLegal(str) || isHKPhoneLegal(str);
+    }
+
+    /**
+     * 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
+     * 此方法中前三位格式有：
+     * 13+任意数
+     * 15+除4的任意数
+     * 18+除1和4的任意数
+     * 17+除9的任意数
+     * 147
+     */
+    public static boolean isChinaPhoneLegal(String str) throws PatternSyntaxException {
+        String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
+    /**
+     * 香港手机号码8位数，5|6|8|9开头+7位任意数
+     */
+    public static boolean isHKPhoneLegal(String str)throws PatternSyntaxException {
+        String regExp = "^(5|6|8|9)\\d{7}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
 }

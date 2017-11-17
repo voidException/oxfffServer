@@ -81,7 +81,6 @@ public class PhoneLoginRController {
 
     }
 
-
     /********************************手机号登录***********************/
     @RequestMapping(value="/login.do",method=RequestMethod.POST)
     @ResponseBody
@@ -139,6 +138,7 @@ public class PhoneLoginRController {
         }
         String userToken=user.getUseruuid()+user.getUserpassword();
         String oldToken= user.getUserpassword()+user.getUserid();
+
         user.setUsertoken(userToken);
         user.setToken(oldToken);
         user.setBackupfour(oldToken);
@@ -221,7 +221,8 @@ public Object mobileRegister(HttpServletRequest  request){
         User user = new User();
         user.setUserphone(phone);
        // user.setUserid(new Long(135));
-        user.setUserpassword(MD5.string2MD5(userPassword)); //密码要加密
+        String passmd5 = Md5Util.getMd5(userPassword); //对密码进行加密
+        user.setUserpassword(passmd5); //密码要加密
         try {
            // int aa= userMapper.updateByPrimaryKeySelective(user);
             int updateTag = userMapper.updateByPhone(user);

@@ -7,6 +7,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import org.apache.log4j.Logger;
 import org.geilove.dao.MessageMapper;
 import org.geilove.dao.UserMapper;
 import org.geilove.pojo.Message;
@@ -32,6 +33,7 @@ import java.util.regex.PatternSyntaxException;
 
 @Service("phoneSevice")
 public class PhoneServiceImpl  implements PhoneService{
+    Logger logger= Logger.getLogger(this.getClass());
 
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
@@ -50,8 +52,8 @@ public class PhoneServiceImpl  implements PhoneService{
     private SelRedMoneyService selRedMoneyService; //用到了另一个service
 
     class BornRedMoney extends Thread{
-        public String  shareUserUUID;
-        public String  newUserUUID;
+        public String  shareUserUUID; //分享链接的用户uuid
+        public String  newUserUUID; //新用户uuid
         public  BornRedMoney( String  shareUserUUID, String  newUserUUID){
             this.shareUserUUID=shareUserUUID;
             this.newUserUUID=newUserUUID;
@@ -99,10 +101,13 @@ public class PhoneServiceImpl  implements PhoneService{
         //hint 此处可能会抛出异常，注意catch
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
         String code=sendSmsResponse.getCode();
+
         Message message=new Message();
         message.setMsguuid(UUID.randomUUID().toString());
         message.setPhonenumbers(phone);
-        message.setTemplateparam(code);
+        message.setTemplateparam(fourRandom);
+        message.setCode(code);
+
         message.setSenddate(new Date());
         try {
             int insertTag= messageMapper.insertSelective(message);
@@ -131,12 +136,16 @@ public class PhoneServiceImpl  implements PhoneService{
     public Message checkPhoneCode(String phone, String templateparam){
         Map<String,Object> map=new HashMap();
         map.put("phone",phone);
-        map.put("templateparam",templateparam);
+        //map.put("templateparam",templateparam);
         map.put("page",0);
         map.put("pageSize",1); //选择出最新的验证码
         List<Message> message=messageMapper.selectPhoneCode(map);
-        if (message==null || message.isEmpty())
+        if (message==null || message.isEmpty()){
             return null;
+        }
+        if ( !message.get(0).getTemplateparam().equals(templateparam)){
+            return null;
+        }
         //选择出最新的验证码，而且这个验证码还不能超过5分钟
         return  message.get(0);
     }
@@ -221,16 +230,18 @@ public class PhoneServiceImpl  implements PhoneService{
         }
         // 走到这里说明存手机号和验证码匹配，应该进行注册,需要继续完善
         User userRegister = new User();
-        userRegister.setUseruuid(UUID.randomUUID().toString()); //用户的UUID
+        userRegister.setUseruuid(UUID.randomUUID().toString()); //用户的UUID,固定长度36位
+
         userRegister.setUsernickname(phone); //葡萄互助，手机号是默认昵称
-        userRegister.setUserphone(phone);
-        userRegister.setUserpassword(passmd5);
-        userRegister.setUserphoto("http://www.geilove.org/path/geilove.png"); //默认头像地址
-        userRegister.setPhotoupload((byte) 1);
-        userRegister.setNotsay((byte) 1);
-        userRegister.setCertificatetype((byte) 1);
-        userRegister.setUsertype((byte) 1);
-        userRegister.setNotsay((byte) 1);
+        userRegister.setUserphone(phone); // 手机号唯一，主键
+        userRegister.setUserpassword(passmd5); //用户密码，md5加密后的
+        userRegister.setUserphoto("http://ozjjsoxd9.bkt.clouddn.com/putaohuzhuphoto.png"); //默认头像地址
+        userRegister.setPhonebind("yes"); //只要有手机号就是yes，当且仅当只有微信登录的时候才是no
+        userRegister.setPhotoupload((byte) 1); //这里无意义，统一用远程服务器的
+        userRegister.setCertificatetype((byte) 0); //0无认证申请，1申请中，2申请通过
+        userRegister.setUsertype((byte) 0); //0 是普通用户，1是企业用户
+        userRegister.setRegisterdate(new Date());
+
         try{
             int registerTag= userMapper.insert(userRegister);
             if (registerTag!=1){
@@ -244,13 +255,14 @@ public class PhoneServiceImpl  implements PhoneService{
             return  commonRsp;
         }
         //开启线程，如果是通过分享注册的，就加入红包
-        if (shareUserUUID!=null || shareUserUUID.length()>32 ){
+        if (shareUserUUID!=null && shareUserUUID.length()>32 ){
             try { //防止抛出异常，无法进行下一步
                 new BornRedMoney(shareUserUUID,userRegister.getUseruuid()).start();
             }catch (Exception e){
-
+                logger.info( shareUserUUID +"@"+e.getMessage() );
             }
         }
+
         commonRsp.setMsg("注册成功");
         commonRsp.setRetcode(2000);
         return commonRsp;

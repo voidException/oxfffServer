@@ -20,7 +20,8 @@
     select
     <include refid="Base_Column_List" />
     from message
-    where phonenumbers= #{phone} AND templateparam = #{templateparam}
+    where phonenumbers= #{phone}
+    order by senddate  desc
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
 

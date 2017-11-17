@@ -48,12 +48,19 @@ public class SelRedMoneyServiceImpl implements SelRedMoneyService {
     public void bornRedMony( String  shareUserUUID, String  newUserUUID){
 
         //1.先查询数据库红包表，是否存在此人加入时生成的红包
-        RedMoney  redMoney=redMoneyMapper.selectByUserUUIDClick(newUserUUID);
-        if ( redMoney!=null){
+        try{
+            RedMoney  redMoney=redMoneyMapper.selectByUserUUIDClick(newUserUUID);
+            if ( redMoney!=null){
+                return;
+            }
+        }catch (Exception e){
             return;
         }
+
+
         RedMoney  redMoney1=new RedMoney();
         redMoney1.setRedmoneyuuid(UUID.randomUUID().toString());
+        redMoney1.setRedmoney(new Long(5));
         redMoney1.setRedmoneydate(new Date());
         redMoney1.setUseruuid(shareUserUUID);
         redMoney1.setUseruuidclick(newUserUUID);
@@ -61,8 +68,11 @@ public class SelRedMoneyServiceImpl implements SelRedMoneyService {
 
         try{
             redMoneyMapper.insert(redMoney1);
+            return;
         }catch (Exception e){
+
          //记录下日志
+            return;
         }
 
     }
