@@ -239,7 +239,7 @@ public class PhoneServiceImpl  implements PhoneService{
         userRegister.setPhonebind("yes"); //只要有手机号就是yes，当且仅当只有微信登录的时候才是no
         userRegister.setPhotoupload((byte) 1); //这里无意义，统一用远程服务器的
         userRegister.setCertificatetype((byte) 0); //0无认证申请，1申请中，2申请通过
-        userRegister.setUsertype((byte) 0); //0 是普通用户，1是企业用户
+        userRegister.setUsertype((byte) 1); //1 是普通用户，2是企业用户
         userRegister.setRegisterdate(new Date());
 
         try{

@@ -1,5 +1,7 @@
 package org.geilove.dao;
 
+import org.geilove.pojo.Companyputao;
+import org.geilove.pojo.UserAccount;
 import org.geilove.pojo.UserStaff;
 import org.geilove.requestParam.StuffsUserUUID;
 
@@ -25,4 +27,11 @@ public interface UserStaffMapper {
 
     int updateforConfirmStuff(StuffsUserUUID stuffsUserUUID);
 
+    UserStaff selectByparam(Map<String,Object> map);
+
+    List<UserStaff> getSumInfo(Map<String,Object> map); //根据互助计划，获得所有参与该计划的员工
+
+    List<UserStaff> getMainSumInfo(Map<String,Object> map); //hlptype，affirm确认
+
+    int getTotalStaff();
 }

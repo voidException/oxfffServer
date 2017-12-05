@@ -20,20 +20,23 @@ public class PutaoFindController {
     @Resource
     private PutaoFindService putaoFindService;
 
-    @RequestMapping(value="/newslist.do",method= RequestMethod.GET)
+    @RequestMapping(value="/newslist.do",method= RequestMethod.POST)
     @ResponseBody
     public  Object getNewsList(HttpServletRequest request){
         NewssRsp newssRsp=new NewssRsp();
-        String publishdate=request.getParameter("publishdate"); //时间
+//        String publishdate=request.getParameter("publishdate"); //时间
+        String pageStr=request.getParameter("page"); //时间
+        int page=Integer.valueOf(pageStr);
+        int pageSize=200;
+        page=pageSize*(page-1);
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("publishdate",publishdate); //时间
-        map.put("page",0);
-        map.put("pageSize",50);
+        map.put("page",page);
+        map.put("pageSize",pageSize);
         List<News> newss;
         try{
             newss=putaoFindService.getNewss(map);
             if (newss!=null){
-                newssRsp.setNewss(newss);
+                newssRsp.setResult(newss);
                 newssRsp.setRetcode(2000);
                 newssRsp.setMsg("成功");
                 return newssRsp;

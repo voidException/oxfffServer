@@ -1,4 +1,4 @@
-/**
+ /**
  获取验证码服务
  */
 
@@ -15,17 +15,21 @@ function timeDown() {
             maxTime=60;
             document.getElementById('timeId').innerHTML='获取验证码'
             document.getElementById('timeId').disabled=false
-            document.getElementById('timeId').style.backgroundColor='#00BB3B'
+            // document.getElementById('timeId').style.backgroundColor='#00BB3B'
 
         }
     }, 1000)
 }
 function getCode() {
+    let phone= document.getElementById('phone').value;
+    if(phone==null||phone==''){
+        alert("手机号格式不正确")
+        return
+    }
     timeDown();//首先调用定时器，开始倒计时
     document.getElementById('timeId').disabled=true
-    document.getElementById('timeId').style.backgroundColor='#CCCCCC'
+    // document.getElementById('timeId').style.backgroundColor='#CCCCCC'
     let userAccount = new FormData();
-    let phone= document.getElementById('phone').value;
 
     userAccount.append('phone',phone);
     //接下来发送注册请求,后台接口需要写

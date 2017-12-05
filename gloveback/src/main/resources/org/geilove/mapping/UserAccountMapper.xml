@@ -28,6 +28,17 @@
         remainFee
     </sql>
 
+    <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from userAccount
+        where categoryType = #{helptype}
+    </select>
+
+    <select id="getTotalUserAccount" resultType="java.lang.Integer" >
+        select count(*) from userAccount
+    </select>
+
     <!--自定义，-->
     <select id="selectByBreakIf" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
         select
@@ -41,11 +52,18 @@
         select
         <include refid="Base_Column_List" />
         from userAccount
-        where userUUID= #{userUUID} AND buildRelationDescription =#{buildrelationdescription} AND breakIf=#{breakIf}
+        where userUUID= #{userUUID}  AND breakIf=#{breakIf}
         order by buildRelationDate  desc
         limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
     </select>
 
+<!--selectByuserIdentity-->
+    <select id="selectByuserIdentity" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+        select
+        <include refid="Base_Column_List" />
+        from userAccount
+        where accountUUID = #{account} AND categoryType = #{helptype}
+    </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
         select
@@ -54,18 +72,29 @@
         where userAccountID = #{useraccountid,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByUserAndUserAccount" parameterType="Map" resultMap="BaseResultMap">
+    <select id="selectByUserAndUserAccount"  resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List"/>
         from userAccount
         where accountUUID=#{accountUUID,jdbcType=VARCHAR} AND categoryType=#{categoryType,jdbcType=VARCHAR}
     </select>
-    <select id="selectByUUID" resultMap="BaseResultMap" parameterType="Map" >
+    <select id="selectByUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
         SELECT
         <include refid="Base_Column_List"/>
         FROM userAccount
         WHERE userUUID=#{userUUID,jdbcType=VARCHAR} AND accountUUID=#{accountUUID,jdbcType=VARCHAR} AND categoryType=#{categorytype,jdbcType=VARCHAR}
     </select>
+
+    <!--selectByaccountUUID-->
+    <select id="selectByaccountUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM userAccount
+        WHERE accountUUID=#{accountUUID,jdbcType=VARCHAR} AND categoryType=#{categorytype,jdbcType=VARCHAR}
+    </select>
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
         delete from userAccount
         where userAccountID = #{useraccountid,jdbcType=BIGINT}

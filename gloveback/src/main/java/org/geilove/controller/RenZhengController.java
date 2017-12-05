@@ -42,8 +42,6 @@ public class RenZhengController {
 	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{	
 		CommonRsp commonRsp=new CommonRsp();
 
-		String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
-
 		String token=request.getParameter("token");		
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32); //取得userid部分		
@@ -66,8 +64,8 @@ public class RenZhengController {
             /*System.out.println(multiRequest.getParameterNames().nextElement()); */
             Iterator<String> iter = multiRequest.getFileNames();
             //在本次上传中，这个部分路径是常量,必须到Tomcat目录下启动，才能看到效果
-            String constDirectory="/huzhuguanjia/renZhengPhoto"; //tomcat配置的常量路径+weiboPhoto
-            String timeDirectory=new TimeUtil().getNyDay(); //每天创建一个文件夹,时间路径
+            String constDirectory="/Users/aihaitao/staticImage"; //tomcat配置的常量路径+weiboPhoto
+             String timeDirectory=new TimeUtil().getNyDay(); //每天创建一个文件夹,时间路径
             String directory=constDirectory+timeDirectory+'/'+useridStr+'/';
             while(iter.hasNext()){  
                 //记录上传过程起始时的时间，用来计算上传时间  
@@ -88,11 +86,9 @@ public class RenZhengController {
                         //这里面方法更安全，待测试
                         if(CreateFileUtil.createDirectory(directory)==1){//目录已经存在或创建成功                
                         	  File localFile = new File(path);  
-                              file.transferTo(localFile); 
-                              //System.out.println(directory);
-							 String needPath= ipAndport+"path/weiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png"; //测试使用的
-							 // String needPath="http://www.geilove.org/path/renZhengPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png";
-                              imgPathArray.add(needPath);                             
+                              file.transferTo(localFile);  //把图片存入到磁盘上
+                              System.out.println(directory);
+                              imgPathArray.add(path);
                         }else{
                         	commonRsp.setMsg("创建磁盘目录失败");
                         	commonRsp.setRetcode(2001);

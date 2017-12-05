@@ -51,6 +51,9 @@ public interface UserMapper {
     //////////////---------根据unionid 选择出用户--------////////////////////////////////
     User getUserByunionid(String  unionid); //通过微信的unionid选择出用户
     User selectByNicknameOrPhone(Map<String,Object> map); //根据用户的昵称或者邮箱选择出一个用户，用于注册时检查是否已有注册用户
+    int deleteUserByUnionid(String unionid);
+
+    int updateByUserUUID(User user);
 
 }
 

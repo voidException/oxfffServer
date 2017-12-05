@@ -4,10 +4,7 @@ import org.geilove.dao.CompanyputaoMapper;
 import org.geilove.dao.NotificationMapper;
 import org.geilove.dao.PutaoauthMapper;
 import org.geilove.dao.UserStaffMapper;
-import org.geilove.pojo.Companyputao;
-import org.geilove.pojo.Notification;
-import org.geilove.pojo.Putaoauth;
-import org.geilove.pojo.UserStaff;
+import org.geilove.pojo.*;
 import org.geilove.requestParam.StuffsUserUUID;
 import org.geilove.service.CompanyputaoService;
 import org.geilove.vov.CompanyBaseInfo;
@@ -79,11 +76,7 @@ public class CompanyputaoServiceImpl implements CompanyputaoService {
 
         return  companyBaseInfo;
     }
-    @Override
-    public int updateConfirmStuff(StuffsUserUUID stuffsUserUUID){
-         int updateTag=userStaffMapper.updateforConfirmStuff(stuffsUserUUID);
-         return  updateTag;
-    }
+
     @Override
     public  List<Notification> getNotifications(Map<String,Object> map){
            List<Notification> notificationList=notificationMapper.getNotifications(map);
@@ -113,6 +106,11 @@ public class CompanyputaoServiceImpl implements CompanyputaoService {
         return  updateValue;
     }
 
+    @Override
+    public  UserStaff selectUserStaff(Map<String,Object> map){
+        UserStaff userStaff=userStaffMapper.selectByparam(map);
+        return  userStaff;
+    }
 }
 
 

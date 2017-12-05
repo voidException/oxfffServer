@@ -10,7 +10,6 @@ import java.util.List;
 public class NewssRsp {
     private Integer retcode ;
     private String msg;
-    private List<News> newss;
 
     public Integer getRetcode() {
         return retcode;
@@ -28,11 +27,15 @@ public class NewssRsp {
         this.msg = msg;
     }
 
-    public List<News> getNewss() {
-        return newss;
+    public List<News> getResult() {
+        return result;
     }
 
-    public void setNewss(List<News> newss) {
-        this.newss = newss;
+    public void setResult(List<News> result) {
+        this.result = result;
     }
+
+    private List<News> result;
+
+
 }

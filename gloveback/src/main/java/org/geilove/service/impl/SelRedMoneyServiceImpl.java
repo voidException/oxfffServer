@@ -6,10 +6,8 @@ import org.geilove.service.SelRedMoneyService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class SelRedMoneyServiceImpl implements SelRedMoneyService {
@@ -33,6 +31,13 @@ public class SelRedMoneyServiceImpl implements SelRedMoneyService {
         RedMoney redMoney=redMoneyMapper.selectByPrimaryKey(redmoneyid);
         return  redMoney;
     }
+
+    @Override
+    public RedMoney selectByRedUUID(String redmoneyuuid){
+        RedMoney redMoney=redMoneyMapper.selectByRedUUID(redmoneyuuid);
+        return  redMoney;
+    }
+
 
     @Override
     public int updateByPrimaryKeySelective(RedMoney redMoney) {
@@ -66,6 +71,10 @@ public class SelRedMoneyServiceImpl implements SelRedMoneyService {
         redMoney1.setUseruuidclick(newUserUUID);
         redMoney1.setRedmoneystate("unactive"); //未激活
 
+        Calendar calendar   =  Calendar.getInstance();
+        calendar.add(Calendar.DATE, 30);
+        redMoney1.setLosefuncdate(calendar.getTime());
+
         try{
             redMoneyMapper.insert(redMoney1);
             return;
@@ -74,6 +83,20 @@ public class SelRedMoneyServiceImpl implements SelRedMoneyService {
          //记录下日志
             return;
         }
+    }
+    public  static void main(String[]arg){
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //当前日期
+        System.out.println("增加天数以后的日期：" + format.format(new Date()));
+
+        Calendar calendar   =  Calendar.getInstance();
+        calendar.add(Calendar.DATE, 30);
+
+        //增加后的日期
+        Date d = calendar.getTime();
+        String enddate = format.format(d);
+        System.out.println("增加天数以后的日期：" + enddate);
 
     }
 }

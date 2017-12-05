@@ -123,7 +123,7 @@ public class RegisterLoginController {
         String userEmail = userRegisterVo.getUserEmail();
         String userPassword = userRegisterVo.getUserPassword();
         String userNickName = userRegisterVo.getUserNickName();
-        if (userEmail.length() < 10 || userEmail.length() > 30 || userPassword.length() < 6 || userPassword.length() > 18 || userNickName.length() < 2 || userNickName.length() > 30) {
+        if (userEmail.length() < 10 || userEmail.length() > 30 || userPassword.length() < 6 || userPassword.length() > 18 || userNickName.length() < 2 || userNickName.length() > 10) {
             commonRsp.setMsg("长度不合法");
             commonRsp.setRetcode(2001);
             return commonRsp;

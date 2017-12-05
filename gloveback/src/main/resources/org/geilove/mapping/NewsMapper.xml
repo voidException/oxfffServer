@@ -27,7 +27,6 @@
     select
     <include refid="Base_Column_List" />
     from news
-    where publishdate &lt; #{publishdate}
     order by publishdate  desc
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>

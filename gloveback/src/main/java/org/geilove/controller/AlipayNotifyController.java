@@ -1,13 +1,16 @@
 package org.geilove.controller;
 
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 import org.geilove.pojo.PayMoney;
 import org.geilove.service.AlipayNotifyService;
 import org.geilove.service.AlipayService;
+import org.geilove.utilAlipay.config.AlipayConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +55,9 @@ public class AlipayNotifyController {
 
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value="/notify.do",method= RequestMethod.POST)
+
     public void alipayNotify(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
-        response.setContentType("text/plain; charset=utf-8");
+        response.setContentType("text/plain; charset=UT");
         PrintWriter out = response.getWriter();
         //  获取支付宝POST过来反馈信息
         //logger.debug("支付宝异步回调");
@@ -72,14 +76,13 @@ public class AlipayNotifyController {
             params.put(name, valueStr);
         }
 
-        /*
+
         boolean flag = AlipaySignature.rsaCheckV1(params,
                 AlipayConfig.alipay_public_key,
                 AlipayConfig.charset,
                 AlipayConfig.sign_type);
-                */
-        // if (flag) {
-        if (true) {
+
+         if (flag) {
             if ("TRADE_SUCCESS".equals(params.get("trade_status"))) {
                 //trade_status
                 String trade_status="TRADE_SUCCESS"; //交易状态号
@@ -101,12 +104,11 @@ public class AlipayNotifyController {
                 String  userUUID=params.get("body");
                 //passback_params 包含accountUUID和userName
                 String  passback_params=params.get("passback_params");
-                //accountUUID
-                String  accountUUID=passback_params.substring(0,18);
                 //seller_id
                 String  seller_id=params.get("seller_id");
                 // 买家支付宝用户号
                 String buyer_id = params.get("buyer_id");
+
                 // 交易创建时间 格式为yyyy-MM-dd HH:mm:ss
                 String gmt_create = params.get("gmt_create");
 
@@ -120,21 +122,33 @@ public class AlipayNotifyController {
                 payMoney.setCategorytype(categorytype); //互助的类别
                 payMoney.setUseruuid(userUUID); //用户的uuid
                 payMoney.setPassbackParams(passback_params);
-                payMoney.setAccountuuid(accountUUID); //账号的UUID
+                //payMoney.setAccountuuid(accountUUID); //
                 payMoney.setSellerId(seller_id); //卖家的id
                 payMoney.setBuyerId(buyer_id); //买家的支付宝账号
 
+                //此处应该先查询订单是否处理过，如果处理过，不开线程
                 //用线程的方法更新,先查询数据库确认是否有此次交易，校验通过后，更新相应的数据库表
-                AlipayNotifyThread  alipayNotifyThread=new AlipayNotifyThread(payMoney);
-                alipayNotifyThread.start();
+                try{
+                    AlipayNotifyThread  alipayNotifyThread=new AlipayNotifyThread(payMoney);
+                    alipayNotifyThread.start();
+                }catch (Exception e){
+                    out.print("failure");
+                    out.close();
+                }
                 out.print("success");
+                out.close();
+
+
                 //logger.debug("-----支付宝异步通知成功----");
             } else {
                 //logger.debug("-----支付宝异步通知，订单未成功付款----");
                 out.print("failure");
+                out.close();
             }
         }
         //logger.debug("-----支付宝异步通知，订单验证错误----");
         out.print("failure");
+        out.close();
+
     } //notify
 }

@@ -27,5 +27,8 @@ public interface CompanyputaoMapper {
     //获得一公司参与的某互助计划信息，useruuid、helptype
     Companyputao getCompanyputaoInfo(Map<String,Object> map);
 
+    List<Companyputao> getSumInfo(String helptype);
+
+    int getTotalCompany();
 
 }

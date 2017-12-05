@@ -2,15 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>员工加入</title>
+    <title>用户分享注册</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no" />
-    <%--<link rel="stylesheet" href="<%=contextPath%>/resources/css/putEmail.css">--%>
-    <%--<link rel="stylesheet" href="<%=contextPath%>/resources/css/register.css">--%>
-    <%--<script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>--%>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -21,34 +18,27 @@
 </div>
 
 <!--这里是注册-->
-<div  id="staffjoin" class="MaxDiv">
-
+<div  id="joinByShare" class="MaxDiv">
     <div class="peopleMessage">
-        <div  style="width: 30%;font-size: 13px;text-align: center">手  机  号</div>
+        <div  style="width: 30%;font-size: 13px;text-align: center">手   机   号</div>
         <input  id="phone"  class="MessageInput"   name="phone"  type="text" value="" placeholder="输入11位手机号"/>
     </div>
 
     <div class="peopleMessage">
-        <div style="width: 30%;font-size: 13px;text-align: center">验  证  码</div>
-        <input  id="verifycode"  class="MessageInput" style="width: 35%"   name="newPass"  type="text" value="" placeholder="验证码"/>
+        <div style="width: 30%;font-size: 13px;text-align: center">验   证    码</div>
+        <input  id="verifycode"  class="MessageInput" style="width: 35%"   name="newPass"  type="text" value="" placeholder="输入验证码"/>
         <button onclick="getCode()" id="timeId"  style="font-size: 12px;width: 35%;color:#1296db" >
             获取验证码
         </button>
     </div>
 
     <div class="peopleMessage">
-        <div  style="width: 30%;font-size: 13px;text-align: center">身  份  证  号</div>
-        <input  id="account" class="MessageInput"  placeholder="身份证号"/>
-    </div>
-
-    <div class="peopleMessage">
-        <div  style="width: 30%;font-size: 13px;text-align: center">姓       名</div>
-        <input  id="nickName" class="MessageInput" placeholder="昵称"/>
+        <div  style="width: 30%;font-size: 13px;text-align: center">密   码</div>
+        <input  id="userPass" class="MessageInput"  placeholder="请输入您的密码"/>
     </div>
 
 
-
-    <button class="MessageButton"    v-on:click="doregister" >加  入</button>
+    <button class="MessageButton"    v-on:click="doregister" >注  册</button>
 </div>
 
 
@@ -195,16 +185,14 @@
         });
 
     }
-
-
-
 </script>
 <script>
-    //let publicurl="http://localhost:8080"
-    //线上
-    let publicurl = "http://geilove.org";
+    /**
+     * Created by songshifeng on 20/11/2017.
+     */
+
     new Vue({
-        el: '#staffjoin',
+        el: '#joinByShare',
         data: {
             "userProfile": {},
         },
@@ -215,8 +203,8 @@
                 //设置3个布尔变量，校验通过为true，否则false
                 let phone = obj.phone;
                 let verifycode = obj.verifycode;
-                let account = obj.account;
-                let nickName = obj.nickName;
+                let userPass = obj.userPass;
+                let useruuid = obj.useruuid;
 
                 let regx = /^[1][3,4,5,7,8][0-9]{9}$/;
                 let regP = /^[0-9|a-z|A-Z]\w{5,17}$/; //6-18w位数字和字母组成的密码
@@ -229,19 +217,14 @@
                     return 0;
                 }
 
-                if (nickName.length < 2 || nickName.length > 10) {
-                    alert("昵称长度不对");
+
+                if (userPass!==null && userPass.length>5 && userPass.length<19 && !regP.test(userPass)) {
+                    alert("密码不对");
                     return 0;
-                }
-                ;
+                };
 
                 if (verifycode.length !== 4) {
                     alert("验证码不对");
-                    return 0;
-                }
-                ;
-                if (account.length !== 18) {
-                    alert("身份证号不对");
                     return 0;
                 }
                 ;
@@ -258,17 +241,13 @@
             doregister: function (event) {
                 var phone = document.getElementById("phone").value;   //手机号
                 let verifycode = document.getElementById("verifycode").value; //验证码
-                var account = document.getElementById("account").value;   //密码
-                var nickName = document.getElementById("nickName").value; //昵称
-                var uuid=this.GetQueryString("useruuid")
-                var helptype=this.GetQueryString("helptype")
+                var userPass = document.getElementById("userPass").value;   //密码
+                var useruuid=this.GetQueryString("useruuid")
                 let param = {
                     phone: phone,
                     verifycode: verifycode,
-                    account: account,
-                    nickName: nickName,
-                    uuid:uuid,
-                    helptype:helptype,
+                    userPass: userPass,
+                    useruuid:useruuid,
                 };
                 if (this.verify(param) == 0) {
                     return;
@@ -276,21 +255,19 @@
 
                 var userAccount = new FormData();
                 userAccount.append('phone', phone);
-                userAccount.append('account', account);
-                userAccount.append("verifyCode", verifycode);
-                userAccount.append("staffName", nickName);
-                userAccount.append("uuid", uuid);
-                userAccount.append("helptype", helptype);
+                userAccount.append('userPassword', userPass);
+                userAccount.append("verifycode", verifycode);
+                userAccount.append("shareUserUUID", useruuid);
 
                 //接下来发送注册请求,后台接口需要写
-                axios.post('/glove/grape/addstaff.do', userAccount, {
+                axios.post('/glove/phone/register.do', userAccount, {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then(response => {
 
                     if (response.data.retcode == 2000) {
-                        alert("填写信息成功，请等待公司审核");
+                        alert("注册成功");
                     } else {
                         alert(response.data.msg);
                     }

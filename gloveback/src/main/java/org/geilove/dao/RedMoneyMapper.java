@@ -14,6 +14,8 @@ public interface RedMoneyMapper {
 
     RedMoney selectByPrimaryKey(Long redmoneyid);
 
+    RedMoney selectByRedUUID(String redmoneyuuid);//通过红包uuid选择出红包
+
     int updateByPrimaryKeySelective(RedMoney record);
 
     int updateByPrimaryKey(RedMoney record);

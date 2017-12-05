@@ -10,7 +10,7 @@ import java.util.List;
 public class UserAccountRsp {
     private Integer retcode ;
     private String msg;
-    private List<UserAccount> lp; //员工列表
+    private List<UserAccount> result; //员工列表
 
     public Integer getRetcode() {
         return retcode;
@@ -28,11 +28,11 @@ public class UserAccountRsp {
         this.msg = msg;
     }
 
-    public List<UserAccount> getLp() {
-        return lp;
+    public List<UserAccount> getResult() {
+        return result;
     }
 
-    public void setLp(List<UserAccount> lp) {
-        this.lp = lp;
+    public void setResult(List<UserAccount> result) {
+        this.result = result;
     }
 }

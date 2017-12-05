@@ -30,14 +30,59 @@
 			</value>
 		</property>
 	</bean>
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
+
+	<!-- Jackson转换器，新添加 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
 			<list>
-				<bean
-					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+				<value>application/json;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value>
 			</list>
 		</property>
 	</bean>
+	<!-- 启动Spring MVC的注解功能，完成请求和返回的POJO-json/xml自动转换 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<!-- json转换器 -->
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+    <!--解决方案-->
+	<!-- String转换器（为配合APP支付异步通知） -->
+	<bean id="stringHttpMessageConverter"
+		  class="org.springframework.http.converter.StringHttpMessageConverter">
+		<constructor-arg value="UTF-8" index="0"></constructor-arg><!--避免出现乱码 -->
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+				<value>text/xml;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 启动Spring MVC的注解功能，完成请求和返回的POJO-json/xml自动转换 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<!-- json转换器 -->
+				<ref bean="mappingJacksonHttpMessageConverter" />
+				<ref bean="stringHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+<!--新添加结束-->
+	<!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+		<!--<property name="messageConverters">-->
+			<!--<list>-->
+				<!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+
 	<!-- 定义跳转的文件的前后缀 ，视图模式配置-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->

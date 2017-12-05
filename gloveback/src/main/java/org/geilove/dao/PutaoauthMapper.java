@@ -11,6 +11,9 @@ public interface PutaoauthMapper {
 
     Putaoauth selectByPrimaryKey(Long id);
 
+
+    Putaoauth selectByUserUUID(String useruuid);
+
     int updateByPrimaryKeySelective(Putaoauth record);
 
     int updateByPrimaryKey(Putaoauth record);

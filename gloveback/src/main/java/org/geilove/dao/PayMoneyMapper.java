@@ -22,4 +22,6 @@ public interface PayMoneyMapper {
 
     List<PayMoney> getPaymoneyList(String  useruuid);
 
+    List<PayMoney> getPaymoneys(Map<String,Object> map);//根据useruuid helptype选择出
+
 }

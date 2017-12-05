@@ -37,7 +37,6 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             tag=payMoneyMapper.insertSelective(payMoney);
         } catch (Exception e) {
-            e.printStackTrace();
             return 0;
         }
         return tag;
@@ -50,26 +49,27 @@ public class AlipayServiceImpl implements AlipayService {
         try{
             int insertTag=payMoneyMapper.insert(payMoney);
         }catch (Exception e){
-
+             //这个应该记录日志
         }
         // 2.遍历alipayOrderUsers，等数量的Payaddset记录，插入到数据库中
         for(AlipayOrderUser aou: alipayOrderUsers){
             Payaddset payaddset=new Payaddset();
-            payaddset.setPayadduuid(payMoney.getAccountuuid());
-            payaddset.setAccountuuid(aou.getAccountuuid());
-            payaddset.setUseruuid(payMoney.getUseruuid());
-            payaddset.setCategorytype(payMoney.getCategorytype());
+
+            payaddset.setPayadduuid(payMoney.getOutTradeNo()); //
+            payaddset.setAccountuuid(aou.getAccountuuid()); //被充值人的身份证号
+            payaddset.setUseruuid(payMoney.getUseruuid()); //注册用户的userUUID
+            payaddset.setCategorytype(payMoney.getCategorytype()); //互助计划
             payaddset.setNotifyTime(new Date());
             // payaddset.setTradeNo(payMoney.getTradeNo());
-            payaddset.setOutTradeNo(payMoney.getOutTradeNo());
+            payaddset.setOutTradeNo(payMoney.getOutTradeNo()); //通过此字段和payoney关联起来
             payaddset.setTotalAmount(aou.getMoney()); //给该用户充值的金额
             payaddset.setTradeStatus("WAIT_BUYER_PAY");
-            payaddset.setPassbackParams(aou.getUsername());
+            payaddset.setPassbackParams(aou.getUsername()); //被充值人的姓名
             // 插入这条记录
             try{
                 int insertTag=payaddsetMapper.insertSelective(payaddset);
             }catch (Exception e){
-
+                 // 有可能某一个会出错。记录日志
             }
 
         }

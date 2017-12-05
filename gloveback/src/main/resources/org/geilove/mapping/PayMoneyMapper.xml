@@ -20,10 +20,19 @@
         <result column="passback_params" property="passbackParams" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    payMoneyID, payMoneyUUID, accountUUID, userUUID, categoryType, wechatPay, notify_time,
-    app_id, sign_type, trade_no, out_trade_no, buyer_id, seller_id, total_amount, trade_status,
-    passback_params
-  </sql>
+     payMoneyID, payMoneyUUID, accountUUID, userUUID, categoryType, wechatPay, notify_time,
+     app_id, sign_type, trade_no, out_trade_no, buyer_id, seller_id, total_amount, trade_status,
+     passback_params
+    </sql>
+    <!--getPaymoneys-->
+    <select id="getPaymoneys" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from payMoney
+        where
+        userUUID= #{useruuid} AND categoryType = #{helptype}
+    </select>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
@@ -31,22 +40,22 @@
         where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from payMoney
-    where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
-  </delete>
+      delete from payMoney
+      where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
+    </delete>
     <insert id="insert" parameterType="org.geilove.pojo.PayMoney">
-    insert into payMoney (payMoneyID, payMoneyUUID, accountUUID,
-    userUUID, categoryType, wechatPay,
-    notify_time, app_id, sign_type,
-    trade_no, out_trade_no, buyer_id,
-    seller_id, total_amount, trade_status,
-    passback_params)
-    values (#{paymoneyid,jdbcType=BIGINT}, #{paymoneyuuid,jdbcType=VARCHAR}, #{accountuuid,jdbcType=VARCHAR},
-    #{useruuid,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{wechatpay,jdbcType=DECIMAL},
-    #{notifyTime,jdbcType=DATE}, #{appId,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR},
-    #{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{buyerId,jdbcType=VARCHAR},
-    #{sellerId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR},
-    #{passbackParams,jdbcType=VARCHAR})
+        insert into payMoney (payMoneyID, payMoneyUUID, accountUUID,
+        userUUID, categoryType, wechatPay,
+        notify_time, app_id, sign_type,
+        trade_no, out_trade_no, buyer_id,
+        seller_id, total_amount, trade_status,
+        passback_params)
+        values (#{paymoneyid,jdbcType=BIGINT}, #{paymoneyuuid,jdbcType=VARCHAR}, #{accountuuid,jdbcType=VARCHAR},
+        #{useruuid,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{wechatpay,jdbcType=DECIMAL},
+        #{notifyTime,jdbcType=DATE}, #{appId,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR},
+        #{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{buyerId,jdbcType=VARCHAR},
+        #{sellerId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR},
+        #{passbackParams,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="org.geilove.pojo.PayMoney">
         insert into payMoney

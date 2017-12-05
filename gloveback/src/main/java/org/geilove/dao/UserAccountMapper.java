@@ -32,4 +32,12 @@ public interface UserAccountMapper {
     int updateByPrimaryKeySelectiveAndBusiness(UserAccount userAccount);
 
     UserAccount  selectByUUID(Map<String,Object> map);
+
+    UserAccount selectByaccountUUID(Map<String,Object> map);
+
+    UserAccount selectByuserIdentity(Map<String,Object> map); //根据用户的身份证号选择出用户
+
+    List<UserAccount> getSumInfo(String helptype); //
+
+    int getTotalUserAccount ();
 }

@@ -22,12 +22,125 @@
     id, renzhenguuid, name, numberid, phone, address, email, confirmif, comment, imgone, 
     imgtwo, imgthree, authtype, legalperson, useruuid
   </sql>
+
+  <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from putaoauth
+    where useruuid = #{useruuid}
+  </select>
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from putaoauth
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="checkIfauth" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    from putaoauth
+    where useruuid = #{useruuid,jdbcType=BIGINT}
+  </select>
+  <insert id="addPutaoauth" parameterType="org.geilove.pojo.Putaoauth">
+    insert into putaoauth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="renzhenguuid != null" >
+        renzhenguuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="numberid != null" >
+        numberid,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="confirmif != null" >
+        confirmif,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="imgone != null" >
+        imgone,
+      </if>
+      <if test="imgtwo != null" >
+        imgtwo,
+      </if>
+      <if test="imgthree != null" >
+        imgthree,
+      </if>
+      <if test="authtype != null" >
+        authtype,
+      </if>
+      <if test="legalperson != null" >
+        legalperson,
+      </if>
+      <if test="useruuid != null" >
+        useruuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="renzhenguuid != null" >
+        #{renzhenguuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="numberid != null" >
+        #{numberid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmif != null" >
+        #{confirmif,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="imgone != null" >
+        #{imgone,jdbcType=VARCHAR},
+      </if>
+      <if test="imgtwo != null" >
+        #{imgtwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgthree != null" >
+        #{imgthree,jdbcType=VARCHAR},
+      </if>
+      <if test="authtype != null" >
+        #{authtype,jdbcType=VARCHAR},
+      </if>
+      <if test="legalperson != null" >
+        #{legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from putaoauth
     where id = #{id,jdbcType=BIGINT}

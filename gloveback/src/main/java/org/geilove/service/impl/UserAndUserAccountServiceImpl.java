@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Songshifeng on 2017/9/21
@@ -25,13 +26,13 @@ public class UserAndUserAccountServiceImpl implements UserAndUserAccountService 
 
     /**
      * 通过 身份证号 去数据库查询到对应的account
-     * @param userIdentity
+     * @param
      * @return
      */
     @Override
-    public Account selectByuserIdentity(String userIdentity) {
-        Account account=accountMapper.selectByuserIdentity(userIdentity);
-        return account;
+    public UserAccount selectByuserIdentity(Map<String,Object> map) {
+        UserAccount userAccount=userAccountMapper.selectByuserIdentity(map);
+        return userAccount;
     }
 
     @Override

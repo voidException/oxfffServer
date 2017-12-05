@@ -7,6 +7,7 @@ package org.geilove.controller;
 import org.geilove.dao.UserMapper;
 import org.geilove.pojo.Companyputao;
 import org.geilove.pojo.Message;
+import org.geilove.pojo.RedMoney;
 import org.geilove.pojo.User;
 import org.geilove.response.CommonRsp;
 import org.geilove.response.UserProfileRsp;
@@ -44,7 +45,8 @@ public class PhoneLoginRController {
     private PhoneService phoneService;
     @Resource
     private RegisterLoginService registerLoginService;
-
+    @Resource
+    private RegisterLoginService rlService;
     //**************获取验证码*****************/
     @RequestMapping(value="/getCode.do",method=RequestMethod.POST)
     @ResponseBody
@@ -127,7 +129,7 @@ public class PhoneLoginRController {
             map.put("passmd5",passmd5);
             user=userMapper.getUserByPhonePass(map);
             if (user==null){
-                userProfileRsp.setMsg("用户不存在");
+                userProfileRsp.setMsg("账号和密码不匹配");
                 userProfileRsp.setRetcode(2001);
                 return userProfileRsp;
             }
@@ -220,7 +222,6 @@ public Object mobileRegister(HttpServletRequest  request){
 
         User user = new User();
         user.setUserphone(phone);
-       // user.setUserid(new Long(135));
         String passmd5 = Md5Util.getMd5(userPassword); //对密码进行加密
         user.setUserpassword(passmd5); //密码要加密
         try {
@@ -242,12 +243,71 @@ public Object mobileRegister(HttpServletRequest  request){
         return commonRsp;
     }
 
+    // 修改用户名称
+    @RequestMapping(value="/modifyusername.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object modifyUserame(HttpServletRequest  request) {
+        Response<Object> resp = new Response<Object>();
+        String  token=request.getParameter("token");
+        String  phone=request.getParameter("phone");
+        String  userName=request.getParameter("userName");
+        // 1.验证token
+
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32);
+
+        // 1.验证token
+        Long userid=Long.valueOf(useridStr).longValue();
+        try{
+            String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+            if(!userPassword.equals(passwdTrue)){
+                resp.failByNoInputData("认证失败，密码不对");
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+
+        //2.验证昵称是否合法
+        if (userName.length()<2 || userName.length()>30){
+            resp.failByNoInputData("昵称长度不合法");
+            return resp;
+        }
+        // 3. 先查询是否有此手机号
+        User user=null;
+        try {
+            user=userMapper.getUserByPhone(phone);
+            if (user==null){
+                resp.failByNoInputData("用户没注册");
+                return  resp;
+            }
+        }catch (Exception e){
+                resp.failByException();
+                return  resp;
+        }
+
+        try {
+            user.setUsernickname(userName);
+           int upTag= userMapper.updateByPhone(user);
+           if (upTag!=1){
+               resp.failByNoInputData("更新失败");
+               return  resp;
+           }
+        }catch (Exception e){
+                resp.failByException();
+                return resp;
+        }
+        resp.success("更新成功");
+        return resp;
+
+    }
 
 
 
-    /**
-     * 大陆号码或香港号码均可
-     */
+        /**
+         * 大陆号码或香港号码均可
+         */
     public static boolean isPhoneLegal(String str)throws PatternSyntaxException {
         return isChinaPhoneLegal(str) || isHKPhoneLegal(str);
     }

@@ -22,4 +22,7 @@ public interface SelRedMoneyService {
 
     public void bornRedMony( String  shareUserUUID, String  newUserUUID);
 
+    public RedMoney selectByRedUUID(String redmoneyuuid);  //根据红包的uuid，获取红包
+
+
 }

@@ -9,6 +9,16 @@ public class ConfirmStuffsParam {
 
     private String  token ;
     private String  useruuid;
+    private String helptype;
+
+    public String getHelptype() {
+        return helptype;
+    }
+
+    public void setHelptype(String helptype) {
+        this.helptype = helptype;
+    }
+
     private List<StuffsUserUUID> stuffsUserUUIDList;
 
     public String getToken() {

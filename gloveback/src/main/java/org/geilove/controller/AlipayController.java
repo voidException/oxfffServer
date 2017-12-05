@@ -25,16 +25,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/alipay")
@@ -72,29 +65,39 @@ public class AlipayController {
             alipayOrderRsp.setOderStr(null);
             return  alipayOrderRsp;
         }
+        String  token=httpRequest.getToken(); //仅仅用于本地校验，不用于生成订单
+        String  payType=httpRequest.getPayType();//red--红包充值，company-公司充值，person--个人补充充钱
         String  body=httpRequest.getUserUUID();     //对交易或商品的描述。httpequest传输过来 userUUID
         String  subject=httpRequest.getCategoryType();  //商品的标题/交易标题/.  httpequest传输过来(互助类别)categoryType
-        String  out_trade_no=getOutTradeNo();           // 商户订单号，本地生成 payMoneyUUID
         String  total_amount=httpRequest.getAmount(); //App传来的总金额
+        String  accountName=httpRequest.getAccountName(); //对于红包充值，这个是被充值人的姓名，userName是充值人的姓名
+        String  userName=httpRequest.getUserName(); //对于公司集体充值，不需要传值
+        String  accountUUID=httpRequest.getAccountUUID(); //对于个人充值，是身份证号，对于公司是固定值company
+        String  out_trade_no=getOutTradeNo();           // 商户订单号，本地生成 payMoneyUUID
         String  seller_id="2088911776278734";        //合作者账号，PID，非必须
 
-        String  userName=httpRequest.getUserName();
-        String  accountUUID=httpRequest.getAccountUUID();
-        String  passback_params="";
-        if ("company".equals(accountUUID)){
-            passback_params=accountUUID;  //公司充值
-        }else {
-            passback_params=accountUUID+userName;//公众回传参数，个人充值这里我放进去App传过来的accountUUID和userName，
+        String  passback_params="";                 //回传参数
+
+        if ("company".equals(payType)){
+            passback_params= "company";  //公司充值
+        }else if ("red".equals(payType)){
+            passback_params="$$$"+accountUUID+'@'+accountName+'@'+userName;
+        }else if ("person".equals(payType)){
+            passback_params="@@@"+accountUUID+userName;
         }
 
 
+        // 缴纳充值记录表
         PayMoney payMoney=new PayMoney();
-        payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
-        payMoney.setUseruuid(body); //userUUID
+        payMoney.setPaymoneyuuid(out_trade_no);
         payMoney.setAccountuuid(accountUUID); //被充值用户的身份证号
+        payMoney.setPassbackParams(passback_params); //冗余 可不要
+        payMoney.setUseruuid(body); //userUUID
         payMoney.setCategorytype(subject); //互助类型
-        payMoney.setOutTradeNo(out_trade_no); //商户订单号
+        payMoney.setNotifyTime(new Date());
         payMoney.setTotalAmount(total_amount); //充值的金额
+        payMoney.setOutTradeNo(out_trade_no); //商户订单号
+        payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
         payMoney.setSellerId(seller_id); //卖家支付宝用户号2088开头
 
         OrderThread  orderThread=new OrderThread(payMoney);
@@ -110,6 +113,7 @@ public class AlipayController {
                 AlipayConfig.format, AlipayConfig.charset,
                 AlipayConfig.alipay_public_key, AlipayConfig.sign_type
         );
+
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
         model.setBody(URLEncoder.encode(body));
@@ -141,14 +145,7 @@ public class AlipayController {
 
 
     private static String getOutTradeNo() {
-        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
-        Date date = new Date();
-        String key = format.format(date);
-
-        Random r = new Random();
-        key = key + r.nextInt();
-        key = key.substring(0, 15);
-        key="putao"+key;
+        String key="putao"+ UUID.randomUUID().toString();
         return key;
     }
 

@@ -20,6 +20,37 @@
     staffid, staffuuid, useruuid, account, staffname, staffphone, helptype, affirm, joinDate, 
     effectiveDate, stopDate, nowState, applyhelptimes
   </sql>
+
+  <select id="getTotalStaff" resultType="java.lang.Integer" >
+    select count(*) from userstaff
+  </select>
+  <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where  helptype=#{helptype} AND affirm=#{affirm}
+
+  </select>
+
+
+<!--selectTotalStaff-->
+  <select id="selectTotalStaff" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where useruuid = #{uuid} AND helptype=#{helptype} AND affirm=#{affirm}
+    limit 0, 1000
+  </select>
+
+  <!--查询员工是否加入了公司的某一互助计划selectByparam-->
+  <select id="selectByparam" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where useruuid = #{useruuid}  AND helptype=#{helptype} AND  account=#{account}
+  </select>
+
+
   <!--获取公司所有员工getAllStuffs-->
   <select id="getAllStuffs" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
@@ -185,6 +216,8 @@
     </set>
     where staffid = #{staffid,jdbcType=BIGINT}
   </update>
+
+
   <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.UserStaff" >
     update userstaff
     set staffuuid = #{staffuuid,jdbcType=VARCHAR},

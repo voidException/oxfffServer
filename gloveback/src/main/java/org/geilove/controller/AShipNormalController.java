@@ -127,25 +127,20 @@ public class AShipNormalController {
     //获得我的家人
     @RequestMapping(value="/getMyEmployee.do",method=RequestMethod.POST)
     @ResponseBody
-    public Object getMyEmployee(@RequestBody MyEmployeeParam myEmployeeParam, HttpServletRequest  getMyEmployeeParam){//这个是获取我的员工列表
-       /*   userUUID:用户的uuid
-       *    userType:person 或者business
-       */
-        UserAccountRsp  userAccountRsp=new UserAccountRsp();
-        //1.直接从userAccount表根据userUUID 和breakIf 和buildRelationDescription 来查看我的员工
+    public Object getMyEmployee(HttpServletRequest request){//这个是获取我的员工列表
 
-//        String  userUUID=getMyEmployeeParam.getParameter("userUUID");
-//        String buildrelationdescription= getMyEmployeeParam.getParameter("buildrelationdescription");
-        String userUUID=myEmployeeParam.getUserUUID();
-        String buildrelationdescription=myEmployeeParam.getBuildrelationdescription();
+        UserAccountRsp  userAccountRsp=new UserAccountRsp();
+        String uuid=request.getParameter("uuid");
+        String token=request.getParameter("token");
+        String buildrelationdescription="home";
 
         Map<String,Object> map=new HashMap<>();
-        map.put("userUUID",userUUID);
+        map.put("userUUID",uuid);
         map.put("breakIf","no");
-        map.put("buildrelationdescription",buildrelationdescription); //用户和公司建立关联的时间
+        //map.put("buildrelationdescription",buildrelationdescription);
         map.put("page",0);
-        map.put("pageSize",10);
-        //map.put("和buildRelationDescription",buildRelationDescription);
+        map.put("pageSize",30);
+
         List<UserAccount> userAccountList=null;
         try{
             userAccountList=ashipService.getUserAccountList(map);
@@ -160,7 +155,7 @@ public class AShipNormalController {
             return  userAccountRsp;
         }
         //userAccountList不为空，有员工或者家人
-        userAccountRsp.setLp(userAccountList);
+        userAccountRsp.setResult(userAccountList);
         userAccountRsp.setMsg("成功");
         userAccountRsp.setRetcode(2000);
         return userAccountRsp;
@@ -173,10 +168,10 @@ public class AShipNormalController {
         List<Public> publicList=null;
         Map<String,Object> map=new HashMap<>();
         map.put("page",0);
-        map.put("pageSize",10);
+        map.put("pageSize",39);
         try{
             publicList=ashipService.getPublicList(map);
-            if (publicList==null){
+            if (publicList==null ||publicList.isEmpty()){
                 publicListRsp.setRetcode(2001);
                 publicListRsp.setMsg("还未有人申请救助");
                 return  publicListRsp;
@@ -191,7 +186,7 @@ public class AShipNormalController {
         publicListRsp.setMsg("成功");
         return publicListRsp;
     }
-    // 公司认证接口
+    //
     @RequestMapping(value="/multiUpload",method=RequestMethod.POST)
     @ResponseBody
     public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException {

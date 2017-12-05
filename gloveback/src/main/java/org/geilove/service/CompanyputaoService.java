@@ -21,7 +21,7 @@ public interface CompanyputaoService {
 
     public  CompanyBaseInfo   delResult(Map<String,Object> map); //删除一名员工后，返回公司的余额，员工总数，平均余额
 
-    public int updateConfirmStuff(StuffsUserUUID stuffsUserUUID);//传入StuffsUserUUID，更新userstuff表
+
 
     public  List<Notification> getNotifications(Map<String,Object> map);
 
@@ -32,5 +32,7 @@ public interface CompanyputaoService {
     public int  addPutaoauth(Putaoauth putaoauth); //加入一条待认证的用户信息
 
     public  int updatePutaoauth(Putaoauth putaoauth); //后台管理员 ，更新认证信息
+    //查询员工是否已经加入一个互助计划
+    public  UserStaff selectUserStaff(Map<String,Object> map);
 
 }
