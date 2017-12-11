@@ -32,6 +32,7 @@ public interface CompanyputaoService {
     public int  addPutaoauth(Putaoauth putaoauth); //加入一条待认证的用户信息
 
     public  int updatePutaoauth(Putaoauth putaoauth); //后台管理员 ，更新认证信息
+
     //查询员工是否已经加入一个互助计划
     public  UserStaff selectUserStaff(Map<String,Object> map);
 

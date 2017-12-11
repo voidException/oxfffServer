@@ -14,6 +14,8 @@ public interface PhoneService {
 
   public CommonRsp phoneRegister(String phone, String userPassword, String verifycode,String shareUserUUID);
 
-  public    CommonRsp getVerifyCode(String  phone)throws ClientException;
+  public    CommonRsp getVerifyCode2(String  phone)throws ClientException;
+
+  public  CommonRsp getVerifyCode(String  phone);
 
 }

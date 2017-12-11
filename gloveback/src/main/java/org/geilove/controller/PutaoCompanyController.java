@@ -1,6 +1,7 @@
 package org.geilove.controller;
 
 
+import org.geilove.dao.PutaoauthMapper;
 import org.geilove.dao.UserMapper;
 import org.geilove.dao.UserStaffMapper;
 import org.geilove.pojo.*;
@@ -44,6 +45,8 @@ public class PutaoCompanyController {
     private UserStaffMapper  userStaffMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private PutaoauthMapper putaoauthMapper;
 
     //1.获取公司参与的所有互助计划
     @RequestMapping(value="/getcompanyhelp.do",method=RequestMethod.POST)
@@ -349,7 +352,6 @@ public class PutaoCompanyController {
         userStaff.setJoindate(new Date()); //加入时间
         userStaff.setApplyhelptimes(0); //在本公司申请互助的次数
         Map<String,Object> map=new HashMap<>();
-
         map.put("useruuid",uuid); //公司的uuid
         map.put("account",account); //员工的身份证号
         map.put("helptype",helptype); //员工参与的互助计划
@@ -379,14 +381,11 @@ public class PutaoCompanyController {
         commonRsp.setRetcode(2000);
         return commonRsp;
     }
-
     //7.公司认证
     @RequestMapping(value="/companyforreal.do",method=RequestMethod.POST)
     @ResponseBody
     public Object renZheng( HttpServletRequest request) throws IOException {
         Response<Object> resp = new Response<Object>();
-        String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
-
         String token=request.getParameter("token");
 
         String useruuid=request.getParameter("useruuid");
@@ -413,20 +412,27 @@ public class PutaoCompanyController {
         }
         // 2. 校验其它字段
         try{
+
             if (useruuid.length()<32 ||name.length()>30 ||numberid.length()!=18 ||phone.length()!=11  ||
                     email.length()>60 ||legalPerson.length()>10 ||verifyCode.length()!=4){
                 resp.failByNoInputData("请检查输入字段");
                 return  resp;
             }
-
         }catch (Exception e){
             resp.failByException();
             return resp;
 
         }
+        // 1.先查询是否是首次提交申请
+        Putaoauth putaoauth=null;
+        try {
+            putaoauth=putaoauthMapper.selectByUserUUID(useruuid);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
 
         List<String> imgPathArray=new ArrayList<String>();
-
         //创建一个通用的多部分解析器
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         //判断 request 是否有文件上传,即多部分请求
@@ -443,7 +449,6 @@ public class PutaoCompanyController {
 
             while(iter.hasNext()){
                 //记录上传过程起始时的时间，用来计算上传时间
-                //int pre = (int) System.currentTimeMillis();
                 //取得上传文件
                 MultipartFile file = multiRequest.getFile(iter.next());
                 if(file != null){
@@ -453,7 +458,7 @@ public class PutaoCompanyController {
                     if(myFileName.trim() !=""){ //
                         //System.out.println(myFileName);
                         //重命名上传后的文件名
-                        String originfileName = file.getOriginalFilename();
+                        String originfileName = file.getOriginalFilename();//imageThree
                         String millisFileName=new TimeUtil().getMil().toString();
                         String fileName=millisFileName+originfileName; //文件名，包含时间戳与原始文件名，确保不重复
                         String path = directory+fileName+".png"; //需要修改
@@ -471,58 +476,78 @@ public class PutaoCompanyController {
                         }
                     }//if
                 }//if
-                //记录上传该文件后的时间
-                //int finaltime = (int) System.currentTimeMillis();
             }//while
         }
         /***以下将传递过来的文本信息存入数据库***/
-        Putaoauth putaoauth=new Putaoauth();
-        putaoauth.setRenzhenguuid(UUID.randomUUID().toString());
-        putaoauth.setUseruuid(useruuid);
-        putaoauth.setName(name);
-        putaoauth.setNumberid(numberid);
-        putaoauth.setPhone(phone);
-        putaoauth.setEmail(email);
-        putaoauth.setConfirmif("unhandle");
-        putaoauth.setImgone(imgPathArray.get(0));
-        putaoauth.setImgtwo(imgPathArray.get(1));
-        putaoauth.setImgthree(imgPathArray.get(2));
-        putaoauth.setAuthtype(authtype);
-        putaoauth.setLegalperson(legalPerson);
-        try{
-            //先查询是不是已经认证了
-            Putaoauth putaoauth1=companyputaoService.checkIfauth(useruuid);
-            if (putaoauth1!=null){
-                resp.failByNoInputData("已经认证过了");
-                return  resp;
+        if (putaoauth!=null){
+            putaoauth.setName(name);
+            putaoauth.setNumberid(numberid);
+            putaoauth.setPhone(phone);
+            putaoauth.setEmail(email);
+            putaoauth.setConfirmif("unhandle");
+            putaoauth.setAuthtype(authtype);
+            putaoauth.setLegalperson(legalPerson);
+            for (String str:imgPathArray){
+                if(str.indexOf("imageOne")!=-1){
+                    putaoauth.setImgone(str);
+                }
+                if (str.indexOf("imageTwo")!=-1){
+                    putaoauth.setImgtwo(str);
+                }
+                if (str.indexOf("imageThree")!=-1){
+                    putaoauth.setImgthree(str);
+                }
             }
-        }catch (Exception e){
-            resp.failByException();
-            return  resp;
-        }
-        try{
-            //如果没有认证，就插入这条认证
-            int tag=companyputaoService.addPutaoauth(putaoauth);
-            //将用户类型变为3  即 审核中
-
-            if (tag==1){
-                User user=new User();
-                user.setUseruuid(useruuid);
-                byte usertype=3;
-                user.setUsertype(usertype);
-                int tagUpdateUser=userMapper.updateByUserUUID(user);
-                if(tagUpdateUser==1){
-                    resp.success("认证提交成功");
+            // 对数据库进行更新
+            try{
+                int updateTag=companyputaoService.updatePutaoauth(putaoauth);
+                if (updateTag==1){
+                    resp.success("认证成功");
+                    return resp;
+                }else {
+                    resp.failByNoInputData("认证更新失败");
                     return resp;
                 }
 
+            }catch (Exception e){
+                resp.failByException();
+                return  resp;
             }
 
-        }catch (Exception e){
-            resp.failByException();
-            return  resp;
+        }else {
+            putaoauth=new Putaoauth();
+            putaoauth.setRenzhenguuid(UUID.randomUUID().toString());
+            putaoauth.setUseruuid(useruuid);
+            putaoauth.setName(name);
+            putaoauth.setNumberid(numberid);
+            putaoauth.setPhone(phone);
+            putaoauth.setEmail(email);
+            putaoauth.setConfirmif("unhandle");
+            putaoauth.setAuthtype(authtype);
+            putaoauth.setLegalperson(legalPerson);
+            for (String str:imgPathArray){
+                if(str.indexOf("imageOne")!=-1){
+                    putaoauth.setImgone(str);
+                }
+                if (str.indexOf("imageTwo")!=-1){
+                    putaoauth.setImgtwo(str);
+                }
+                if (str.indexOf("imageThree")!=-1){
+                    putaoauth.setImgthree(str);
+                }
+            }
+            //插入认证
+            try{
+                int tag=companyputaoService.addPutaoauth(putaoauth);
+                if (tag==1){
+                    resp.success("提交成功");
+                    return resp;
+                }
+            }catch (Exception e){
+                resp.failByException();
+                return  resp;
+            }
         }
-
         resp.failByNoInputData("认证提交失败");
         return resp;
     }

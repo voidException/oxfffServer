@@ -30,6 +30,17 @@
     <div class="sidebar">
         <ul class="">
             <li>
+                <a href="#">资料审核</a>
+                <ul>
+                    <li><a target="Conframe" href="/glove/shenhelist.do">审核列表</a></li>
+                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
+                    <li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
+                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="">
+            <li>
                 <a href="#">用户管理</a>
                 <ul>
                     <li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>

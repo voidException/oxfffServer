@@ -24,6 +24,15 @@
      app_id, sign_type, trade_no, out_trade_no, buyer_id, seller_id, total_amount, trade_status,
      passback_params
     </sql>
+    <!--selectByMapKeys-->
+    <select id="selectByMapKeys" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from payMoney
+        where
+        out_trade_no= #{outTradeNo,jdbcType=VARCHAR} and total_amount = #{totalAmount,jdbcType=VARCHAR}
+    </select>
+
     <!--getPaymoneys-->
     <select id="getPaymoneys" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
@@ -230,60 +239,60 @@
     passback_params = #{passbackParams,jdbcType=VARCHAR}
     where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
   </update>
-    <select id="selectByMapKeys" parameterType="java.util.Map" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from payMoney
-        <where>
-            1=1
-            <if test="payMoneyID!=null">
-                and payMoneyID=#{payMoneyID,jdbcType=BIGINT}
-            </if>
-            <if test="payMoneyUUID!=null">
-                and payMoneyUUID=#{payMoneyUUID,jdbcType=VARCHAR}
-            </if>
-            <if test="accountUUID!=null">
-                and accountUUID=#{accountUUID,jdbcType=VARCHAR}
-            </if>
-            <if test="userUUID!=null">
-                and userUUID=#{userUUID,jdbcType=VARCHAR}
-            </if>
-            <if test="categoryType!=null">
-                and categoryType=#{categoryType,jdbcType=DECIMAL}
-            </if>
-            <if test="notifyTime!=null">
-                and notify_time=#{notifyTime,jdbcType=DATE}
-            </if>
-            <if test="appId!=null">
-                and app_id=#{appId,jdbcType=VARCHAR}
-            </if>
-            <if test="signType!=null">
-                and sign_type=#{signType,jdbcType=VARCHAR}
-            </if>
-            <if test="tradeNo!=null">
-                and trade_no=#{tradeNo,jdbcType=VARCHAR}
-            </if>
-            <if test="outTradeNo!=null">
-                and out_trade_no=#{outTradeNo,jdbcType=VARCHAR}
-            </if>
-            <if test="buyerId!=null">
-                and buyer_id=#{buyerId,jdbcType=VARCHAR}
-            </if>
-            <if test="sellerId!=null">
-                and seller_id=#{sellerId,jdbcType=VARCHAR}
-            </if>
-            <if test="totalAmount!=null">
-                and total_amount=#{totalAmount,jdbcType=VARCHAR}
-            </if>
-            <if test="tradeStatus!=null">
-                and trade_status=#{tradeStatus,jdbcType=VARCHAR}
-            </if>
-            <if test="passbackParams!=null">
-                and passback_params=#{passbackParams,jdbcType=VARCHAR}
-            </if>
-            <if test="notifyTimeStr!=null">
-                and notify_timeStr=#{notifyTimeStr,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
+    <!--<select id="selectByMapKeys" parameterType="java.util.Map" resultMap="BaseResultMap">-->
+        <!--select-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--from payMoney-->
+        <!--<where>-->
+            <!--1=1-->
+            <!--<if test="payMoneyID!=null">-->
+                <!--and payMoneyID=#{payMoneyID,jdbcType=BIGINT}-->
+            <!--</if>-->
+            <!--<if test="payMoneyUUID!=null">-->
+                <!--and payMoneyUUID=#{payMoneyUUID,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="accountUUID!=null">-->
+                <!--and accountUUID=#{accountUUID,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="userUUID!=null">-->
+                <!--and userUUID=#{userUUID,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="categoryType!=null">-->
+                <!--and categoryType=#{categoryType,jdbcType=DECIMAL}-->
+            <!--</if>-->
+            <!--<if test="notifyTime!=null">-->
+                <!--and notify_time=#{notifyTime,jdbcType=DATE}-->
+            <!--</if>-->
+            <!--<if test="appId!=null">-->
+                <!--and app_id=#{appId,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="signType!=null">-->
+                <!--and sign_type=#{signType,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="tradeNo!=null">-->
+                <!--and trade_no=#{tradeNo,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="outTradeNo!=null">-->
+                <!--and out_trade_no=#{outTradeNo,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="buyerId!=null">-->
+                <!--and buyer_id=#{buyerId,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="sellerId!=null">-->
+                <!--and seller_id=#{sellerId,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="totalAmount!=null">-->
+                <!--and total_amount=#{totalAmount,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="tradeStatus!=null">-->
+                <!--and trade_status=#{tradeStatus,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="passbackParams!=null">-->
+                <!--and passback_params=#{passbackParams,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="notifyTimeStr!=null">-->
+                <!--and notify_timeStr=#{notifyTimeStr,jdbcType=VARCHAR}-->
+            <!--</if>-->
+        <!--</where>-->
+    <!--</select>-->
 </mapper>

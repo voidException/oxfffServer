@@ -82,7 +82,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM userAccount
-        WHERE userUUID=#{userUUID,jdbcType=VARCHAR} AND accountUUID=#{accountUUID,jdbcType=VARCHAR} AND categoryType=#{categorytype,jdbcType=VARCHAR}
+        WHERE   accountUUID=#{accountUUID,jdbcType=VARCHAR} AND categoryType=#{categorytype,jdbcType=VARCHAR}
     </select>
 
     <!--selectByaccountUUID-->

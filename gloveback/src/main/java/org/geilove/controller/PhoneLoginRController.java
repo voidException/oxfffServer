@@ -5,36 +5,25 @@ package org.geilove.controller;
  */
 
 import org.geilove.dao.UserMapper;
-import org.geilove.pojo.Companyputao;
 import org.geilove.pojo.Message;
-import org.geilove.pojo.RedMoney;
 import org.geilove.pojo.User;
 import org.geilove.response.CommonRsp;
 import org.geilove.response.UserProfileRsp;
 import org.geilove.service.PhoneService;
 import org.geilove.service.RegisterLoginService;
-import org.geilove.util.MD5;
 import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/phone")
 public class PhoneLoginRController {
@@ -144,6 +133,7 @@ public class PhoneLoginRController {
         user.setUsertoken(userToken);
         user.setToken(oldToken);
         user.setBackupfour(oldToken);
+        user.setUserpassword(""); //设置为空
         userProfileRsp.setMsg("成功");
         userProfileRsp.setRetcode(2000);
         userProfileRsp.setData(user);
@@ -218,6 +208,18 @@ public Object mobileRegister(HttpServletRequest  request){
             commonRsp.setMsg("查询验证码抛出异常");
             commonRsp.setRetcode(2001);
             return commonRsp;
+        }
+
+        // 1.先查询是否有此账号，待加上
+        try{
+            User  user=userMapper.getUserByPhone(phone);
+            if (user==null){
+                commonRsp.setMsg("用户不存在");
+                commonRsp.setRetcode(2001);
+                return commonRsp;
+            }
+        }catch (Exception e){
+
         }
 
         User user = new User();
@@ -302,9 +304,6 @@ public Object mobileRegister(HttpServletRequest  request){
         return resp;
 
     }
-
-
-
         /**
          * 大陆号码或香港号码均可
          */

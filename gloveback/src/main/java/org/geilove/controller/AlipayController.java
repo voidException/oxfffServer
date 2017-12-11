@@ -83,7 +83,7 @@ public class AlipayController {
         }else if ("red".equals(payType)){
             passback_params="$$$"+accountUUID+'@'+accountName+'@'+userName;
         }else if ("person".equals(payType)){
-            passback_params="@@@"+accountUUID+userName;
+            passback_params="@@@"+accountUUID+'@'+userName;
         }
 
 
@@ -95,7 +95,7 @@ public class AlipayController {
         payMoney.setUseruuid(body); //userUUID
         payMoney.setCategorytype(subject); //互助类型
         payMoney.setNotifyTime(new Date());
-        payMoney.setTotalAmount(total_amount); //充值的金额
+        payMoney.setTotalAmount(total_amount.concat(".00")); //充值的金额
         payMoney.setOutTradeNo(out_trade_no); //商户订单号
         payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
         payMoney.setSellerId(seller_id); //卖家支付宝用户号2088开头

@@ -20,7 +20,8 @@ import org.geilove.service.RegisterByShareService;
 import org.geilove.service.SelRedMoneyService;
 import org.geilove.util.Md5Util;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
+import com.github.qcloudsms.*;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -62,9 +63,9 @@ public class PhoneServiceImpl  implements PhoneService{
             selRedMoneyService.bornRedMony(shareUserUUID,newUserUUID);
         }
     }
-    //获取验证码服务
+    //获取验证码服务--来自阿里云
     @Override
-    public  CommonRsp  getVerifyCode(String  phone) throws ClientException {
+    public  CommonRsp  getVerifyCode2(String  phone) throws ClientException {
         //初始化acsClient,暂不支持region化
         CommonRsp commonRsp=new CommonRsp();
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
@@ -127,6 +128,62 @@ public class PhoneServiceImpl  implements PhoneService{
         return commonRsp;
 
     }
+
+    //获取验证码服务--来自腾讯云
+    @Override
+    public  CommonRsp  getVerifyCode(String  phone)  {
+        //初始化acsClient,暂不支持region化
+        CommonRsp commonRsp=new CommonRsp();
+        //生成4位数字随机数验证码
+        Random random = new Random();
+        String fourRandom = random.nextInt(10000) + "";
+        int randLength = fourRandom.length();
+        if(randLength<4){
+            for(int i=1; i<=4-randLength; i++)
+                fourRandom = "0" + fourRandom  ;
+        }
+        try{
+            SmsSingleSender sender = new SmsSingleSender(1400053434,"5ea3d86f854fb6121a7b3cb92c1b1e9e");
+            ArrayList<String> params = new ArrayList<String>();
+            //params.add("指定模板单发");
+            params.add("您的"); //
+            params.add(fourRandom); //这里换成验证码
+            SmsSingleSenderResult   result = sender.sendWithParam("86", phone, 64781, params, "", "", "");
+
+        }catch (Exception e){
+
+        }
+
+        String code=fourRandom;
+
+        Message message=new Message();
+        message.setMsguuid(UUID.randomUUID().toString());
+        message.setPhonenumbers(phone);
+        message.setTemplateparam(fourRandom);
+        message.setCode(code);
+
+        message.setSenddate(new Date());
+        try {
+            int insertTag= messageMapper.insertSelective(message);
+            if (insertTag!=1){
+                commonRsp.setMsg("验证码入库出现错误");
+                commonRsp.setRetcode(2001);
+                return commonRsp;
+            }
+        }catch (Exception e){
+            //记录日志
+            commonRsp.setMsg("验证码入库出现异常");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        commonRsp.setMsg(code);
+        commonRsp.setRetcode(2000);
+        return commonRsp;
+
+    }
+
+
+
 
 
 

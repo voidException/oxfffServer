@@ -46,7 +46,7 @@ public class AlipayNotifyController {
         }
         public  void  run(){
             // aliNotify这里面完成所有逻辑
-            System.out.println("新线程开启成功---------------------------------------");
+            //System.out.println("新线程开启成功---------------------------------------");
             alipayNotifyService.aliNotify(this.payMoney);//这个是获得通知后进一步处理业务
             // System.out.print(moneySource.getMoneynum());
         }
@@ -137,6 +137,7 @@ public class AlipayNotifyController {
                 }
                 out.print("success");
                 out.close();
+                return;
 
 
                 //logger.debug("-----支付宝异步通知成功----");
@@ -144,11 +145,13 @@ public class AlipayNotifyController {
                 //logger.debug("-----支付宝异步通知，订单未成功付款----");
                 out.print("failure");
                 out.close();
+                return;
             }
         }
         //logger.debug("-----支付宝异步通知，订单验证错误----");
         out.print("failure");
         out.close();
+        return;
 
     } //notify
 }

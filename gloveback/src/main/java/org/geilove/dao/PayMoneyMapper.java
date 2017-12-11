@@ -18,7 +18,7 @@ public interface PayMoneyMapper {
 
     int updateByPrimaryKey(PayMoney record);
 
-    PayMoney selectByMapKeys(Map<String,String> map);
+    PayMoney selectByMapKeys(Map<String,Object> map);
 
     List<PayMoney> getPaymoneyList(String  useruuid);
 

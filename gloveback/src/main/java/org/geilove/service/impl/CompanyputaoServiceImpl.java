@@ -102,7 +102,7 @@ public class CompanyputaoServiceImpl implements CompanyputaoService {
     }
     @Override
     public  int updatePutaoauth(Putaoauth putaoauth){
-        int updateValue=putaoauthMapper.updatePutaoauth(putaoauth);
+        int updateValue=putaoauthMapper.updateByPrimaryKeySelective(putaoauth);
         return  updateValue;
     }
 

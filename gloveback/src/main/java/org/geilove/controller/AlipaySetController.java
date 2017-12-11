@@ -88,7 +88,7 @@ public class AlipaySetController {
              BigDecimal singleMoneyBd=new BigDecimal(singleMoneyStr);
              totalMoney=totalMoney.add(singleMoneyBd);
         }
-        total_amount=totalMoney.toString(); //总金额转化成字符串类型
+        total_amount=totalMoney.toString().concat(".00"); //总金额转化成字符串类型
 
         //通过out_trade_no 在回调中，将本次批量充值的人联系起来。
         PayMoney payMoney=new PayMoney();

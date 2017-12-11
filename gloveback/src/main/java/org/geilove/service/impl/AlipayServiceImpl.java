@@ -77,7 +77,7 @@ public class AlipayServiceImpl implements AlipayService {
 
     //根据tradeNo, totalMoney, sellerid,appid等验证订单是否来自于支付宝
     @Override
-    public  PayMoney  selectByTradeNoandTotalMoney(Map<String,String> map){
+    public  PayMoney  selectByTradeNoandTotalMoney(Map<String,Object> map){
 
         PayMoney payMoney= null;
         try {

@@ -42,7 +42,7 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
             //判断app_id 或者seller_id正确
         }
 
-        Map<String,String> map=new HashMap<String,String>();
+        Map<String,Object> map=new HashMap<String,Object>();
         map.put("outTradeNo",payMoney.getOutTradeNo());  //交易订单号
         map.put("totalAmount",payMoney.getTotalAmount()); //金额
         try {
@@ -62,6 +62,19 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
         }catch (Exception e){
             //记录日志
         }
+
+        //在这里，对红包表进行查询，激活红包
+        try{
+            String  userUUID=payMoney.getUseruuid();
+            RedMoney redMoney=redMoneyMapper.selectByUserUUIDClick(userUUID);
+            if (redMoney!=null && "unactive".equals(redMoney.getRedmoneystate())){
+                redMoney.setRedmoneystate("active");
+                redMoneyMapper.updateByPrimaryKeySelective(redMoney);
+            }
+        }catch (Exception e){
+            //记录日志
+        }
+
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //根据公共回传参数passback_params 判断是哪种类型的充值，更新相应的表，最后统一判断是否要激活红包
         //#############$$$$$$$$$$$**********%%%%%%%
@@ -92,7 +105,7 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
                 String  userName=pas.getPassbackParams(); //被充值用户的姓名
                 String  totalAmount=pas.getTotalAmount(); //金额
                 String  useraccountuuid=pas.getPayadduuid();
-                map2.put("userUUID",userUUID);
+                //map2.put("userUUID",userUUID);
                 map2.put("accountUUID",accountUUID);
                 map2.put("categorytype",helpType);
 
@@ -176,6 +189,7 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
                     continue;
                 }
             }//for
+            return;
 
         }
         if (passback_params.equals("company")){ //公司充值
@@ -431,8 +445,8 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
             String  categorytype=payMoney.getCategorytype();//互助的类别
             String  totalAmount=payMoney.getTotalAmount(); //
 
-            Map<String,Object> map3=new HashMap<>();
-            map3.put("userUUID",userUUID);
+              Map<String,Object> map3=new HashMap<>();
+//            map3.put("userUUID",userUUID);
             map3.put("accountUUID",accountUUID);
             map3.put("categorytype",categorytype);
             UserAccount userAccount=null;
@@ -446,12 +460,10 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
                 String  useraccountuuid= payMoney.getOutTradeNo();  //uuid
 
                 Date effectiveDate=new  Date();//取时间
-                System.out.println(effectiveDate.toString());
                 Calendar calendar   =   new   GregorianCalendar();
                 calendar.setTime(effectiveDate);
                 calendar.add(calendar.DAY_OF_MONTH, 180);//日期往后增加180天
                 effectiveDate=calendar.getTime();   // 生效时间
-                System.out.println(effectiveDate.toString());
 
                 //把所有的字段放入到userAccount
                 // userAccount.setAccountuuid(useraccountuuid);
@@ -472,9 +484,8 @@ public class AlipayNotifyServiceImpl implements AlipayNotifyService {
 
                 try {
                     int insertTag=userAccountMapper.insertSelective(userAccount);
-                    System.out.println(insertTag);
                 }catch (Exception e){
-                    System.out.println("加入计划失败");
+
                 }
                 //加入计划成功之后，将用户添加到Account表中
                 Account account=new Account();

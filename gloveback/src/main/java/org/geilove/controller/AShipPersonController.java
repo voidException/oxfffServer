@@ -148,12 +148,12 @@ public class AShipPersonController {
         if (userAccount==null){
             //这个用户没有加入任何非企业互助计划，加入互助计划，本账户发message
             Date effectiveDate=new  Date();//取时间
-            System.out.println(effectiveDate.toString());
+            //System.out.println(effectiveDate.toString());
             Calendar calendar   =   new   GregorianCalendar();
             calendar.setTime(effectiveDate);
             calendar.add(calendar.DAY_OF_MONTH, 180);//日期往后增加180天
             effectiveDate=calendar.getTime();   // 生效时间
-            System.out.println(effectiveDate.toString());
+            //System.out.println(effectiveDate.toString());
 
             userAccount=new UserAccount();
             userAccount.setUseraccountuuid(UUID.randomUUID().toString());
@@ -195,11 +195,9 @@ public class AShipPersonController {
         if (userAccount.getCategorytype().equals(categorytype) && userAccount.getUseruuid().equals(useruuid)){
             //用户加入了计划且在该账户下面，充钱，然后本账户发message
             String moneyStr=userAccount.getPaytotalmoney();
-
             BigDecimal oldMoney=new BigDecimal(moneyStr);
             BigDecimal redmoney = new BigDecimal("5");
             oldMoney= oldMoney.add(redmoney);
-
             userAccount.setPaytotalmoney(oldMoney.toString());
             try {
                 int upTag=userAccountMapper.updateByPrimaryKey(userAccount);
