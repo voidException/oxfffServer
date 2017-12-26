@@ -61,6 +61,17 @@
         <result column="unionid" property="unionid" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--getUserList-->
+    <select id="getUserList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where 1=1
+        order by
+        registerDate desc
+        limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+
 
     <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
     <select id="getUserByPhonePass" resultMap="BaseResultMap" parameterType="java.util.HashMap">
@@ -69,7 +80,6 @@
         from user
         where
         userPhone= #{phone} AND userPassword = #{passmd5}
-
     </select>
 
     <select id="getUserByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -174,7 +184,8 @@
             #{item}
         </foreach>
     </select>
-    <!--自定义返回用户头像的结束 -->
+
+
 
     <!--根据用户的UUId 选择用户，-->
     <select id="selectByUUID" resultMap="BaseResultMap" parameterType="java.lang.String">

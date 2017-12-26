@@ -1,8 +1,4 @@
 
-//let publicurl="http://localhost:8080"
-//线上
-//let publicurl="http://geilove.org";
-
 new Vue({
     el: '#putEmial',
     data: {
@@ -10,11 +6,7 @@ new Vue({
     },
     methods: {
         doSubmit: function () {
-            // if(this.stopTag==1){
-            //     //console.log("stopTag")
-            //     return;
-            // }
-            // this.stopTag=1;
+
             let email=document.getElementById("phone").value;
             let verifycode=document.getElementById("verifycode").value;
             let password=document.getElementById("userPassword").value;

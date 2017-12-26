@@ -1,5 +1,6 @@
 package org.geilove.dao;
 
+import org.geilove.pojo.Account;
 import org.geilove.pojo.User;
 import org.geilove.pojo.UserAccount;
 import java.lang.Object;
@@ -40,4 +41,9 @@ public interface UserAccountMapper {
     List<UserAccount> getSumInfo(String helptype); //
 
     int getTotalUserAccount ();
+
+    List<UserAccount>  getAccountsByuserUUID(Map<String,Object> map);
+
+    // 获得加入不同互助计划的用户统计
+    int getCountByhelpType(Map<String,Object> map);
 }

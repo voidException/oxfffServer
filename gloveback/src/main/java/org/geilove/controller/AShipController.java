@@ -150,13 +150,19 @@ public class AShipController {
 
         map.put("useruuid",useruuid);
         map.put("helptype",helptype);
+        map.put("paystatus","TRADE_SUCCESS");
+        List<PayMoney> payMoneys=null;
         try {
-           List<PayMoney> payMoneys=payMoneyMapper.getPaymoneys(map);
-           if (payMoneys!=null || payMoneys.isEmpty()){
+            payMoneys=payMoneyMapper.getPaymoneys(map);
+
+
+           if (payMoneys==null || payMoneys.isEmpty()){
                resp.success(true);
                return resp;
            }
+
         }catch (Exception e){
+             //System.out.print(e.getMessage());
              resp.failByException();
              return resp;
         }

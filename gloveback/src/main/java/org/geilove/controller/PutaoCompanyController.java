@@ -484,7 +484,7 @@ public class PutaoCompanyController {
             putaoauth.setNumberid(numberid);
             putaoauth.setPhone(phone);
             putaoauth.setEmail(email);
-            putaoauth.setConfirmif("unhandle");
+             putaoauth.setConfirmif("unhandle");
             putaoauth.setAuthtype(authtype);
             putaoauth.setLegalperson(legalPerson);
             for (String str:imgPathArray){

@@ -16,12 +16,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
-    <link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">
+    <%--<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">--%>
 </head>
-<body>
+<body style="height: 3000px">
 <div class="header" style="height:50px;padding-left: 30px;padding-right: 30px">
     <div class="headertxt">葡萄互助</div>
-    <div class="headertxt">葡萄众筹</div>
+    <%--<div class="headertxt">葡萄众筹</div>--%>
     <div id="userToken"  style="display: none">${userToken}</div>
     <div id="userName" class="headertxt">欢迎您！${userName } </div>
 </div>
@@ -30,65 +30,72 @@
     <div class="sidebar">
         <ul class="">
             <li>
-                <a href="#">资料审核</a>
+                <a href="#" style="font-weight: bolder">资料审核</a>
                 <ul>
-                    <li><a target="Conframe" href="/glove/shenhelist.do">审核列表</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-                    <li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
-                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=unhandle" style="font-size: smaller">待审核</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=refused"  style="font-size: smaller">已拒绝</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass"  style="font-size: smaller">审核通过</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass"  style="font-size: smaller">检索</a></li>
                 </ul>
             </li>
         </ul>
         <ul class="">
             <li>
-                <a href="#">用户管理</a>
+                <a href="#" style="font-weight: bolder">家庭用户</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-                    <li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
-                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userInfoTongji.do" style="font-size: smaller">用户统计</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">用户列表</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userSearch.do" style="font-size: smaller">检索</a></li>
                 </ul>
             </li>
         </ul>
         <ul class="">
             <li>
-                <a href="#">资金管理</a>
+                <a href="#" style="font-weight: bolder">公司用户</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-                    <li><a target="Conframe" href="<%=basePath%>resources/putaohelp/test.html">本地test.html</a></li>
-                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">公司统计</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">公司列表</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">检索</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="">
+            <li>
+                <a href="#" style="font-weight: bolder">资金管理</a>
+                <ul>
+                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">资金概览</a></li>
+
                 </ul>
             </li>
         </ul>
         <ul class="">
             <li>
-                <a href="#">红包管理</a>
+                <a href="#" style="font-weight: bolder">红包管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-                    <li><a target="Conframe" href="<%=basePath%>resources/test.html">本地test.html</a></li>
-                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">红包金额统计</a></li>
+                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">已使用红包</a></li>
+                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">未使用红包</a></li>
+                    <li><a target="Conframe" href="gon.html" style="font-size: smaller">待激活红包</a></li>
                 </ul>
             </li>
         </ul>
         <ul class="">
             <li>
-                <a href="#">认证管理</a>
+                <a href="#" style="font-weight: bolder">资讯管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/">测试外部链接</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do">测试Servlet跳转</a></li>
-                    <li><a target="Conframe" href="<%=basePath%>resources/test.html">本地test.html</a></li>
-                    <li><a target="Conframe" href="gon.html">分离的链接</a></li>
+                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">资讯列表</a></li>
+                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">增加资讯</a></li>
+                    <li><a target="Conframe" href="gon.html" style="font-size: smaller">分离的链接</a></li>
                 </ul>
             </li>
         </ul>
     </div>
     <div class="content">
-        <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/putaohelp/test.html"
+        <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/putaohelp/html/test.html"
                 class="page-ifream"
                 frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                width="100%" height="700">
+                width="100%" height="2900">
         </iframe>
     </div>
 </div>
@@ -101,7 +108,40 @@
 <%--<br>--%>
 <%--<div>登录成功</div>--%>
 
+<style>
+    a{
+        text-decoration: none;
+    }
+    ul{
+        list-style:none
+    }
+    .header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        background-color: #4EB160;
+    }
+    .headertxt{
+        color: #FFFFFF;
+    }
 
+    .middle{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .sidebar{
+        width: 20%;
+        height: 700px;
+        border-right: rgba(42,255,48,0.82) 1px dashed;
+    }
+    .content{
+        width: 80%;
+        height: 90%;
+    }
+</style>
 
 </body>
 </html>

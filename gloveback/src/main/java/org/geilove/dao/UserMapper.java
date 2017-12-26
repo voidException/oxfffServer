@@ -55,6 +55,10 @@ public interface UserMapper {
 
     int updateByUserUUID(User user);
 
+    //每次选择一批人，每次200人，用于葡萄互助后台管理系统
+    List<User> getUserList(Map<String,Object> map);
+
+
 }
 
 

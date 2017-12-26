@@ -31,9 +31,9 @@
     <div class="peopleMessage">
         <div style="width: 30%;font-size: 13px;text-align: center">验  证  码</div>
         <input  id="verifycode"  class="MessageInput" style="width: 35%"   name="newPass"  type="text" value="" placeholder="验证码"/>
-        <button onclick="getCode()" id="timeId"  style="font-size: 12px;width: 35%;color:#1296db" >
+        <div onclick="getCode()" id="timeId"  style="font-size: 12px;width: 35%;color:#1296db" >
             获取验证码
-        </button>
+        </div>
     </div>
 
     <div class="peopleMessage">
@@ -43,10 +43,8 @@
 
     <div class="peopleMessage">
         <div  style="width: 30%;font-size: 13px;text-align: center">姓       名</div>
-        <input  id="nickName" class="MessageInput" placeholder="昵称"/>
+        <input  id="nickName" class="MessageInput" placeholder="请输入你的姓名"/>
     </div>
-
-
 
     <button class="MessageButton"    v-on:click="doregister" >加  入</button>
 </div>
@@ -58,7 +56,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         width: 100%;
         height: 350px;
     }
@@ -66,6 +64,7 @@
     .peopleMessage {
         display: flex;
         flex-direction: row;
+        justify-content: flex-start;
         align-items: center;
         margin-top: 10px;
         width: 90%;

@@ -39,7 +39,7 @@
         <include refid="Base_Column_List"/>
         from payMoney
         where
-        userUUID= #{useruuid} AND categoryType = #{helptype}
+        userUUID= #{useruuid} AND categoryType = #{helptype} AND trade_status=#{paystatus}
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">

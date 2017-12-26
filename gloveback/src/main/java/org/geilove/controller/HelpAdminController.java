@@ -63,11 +63,6 @@ public class HelpAdminController {
         return "putaohelp/admin";
     }
 
-    @RequestMapping("/shenhelist.do")
-    public String shenhelist(){
-        return "putaohelp/shenhelist" ;
-    }
-
 
     @RequestMapping("/helpindex.do")
     public String helpindex(){

@@ -1,11 +1,10 @@
 <%  String contextPath = request.getContextPath(); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-    <title>审核列表</title>
+    <title>用户列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,48 +14,37 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
 </head>
-<body style="height: 2900px">
-<script>
-</script>
-<div id="shenhelist">
+<body>
+<div class="wrapper">
+<div class="itemDetail">
+    <c:forEach items="${data}" var="arr">
+        <div  class="item">
 
-    <div class="pageNext" style="display: flex;flex-direction: row;width: 200px;justify-content: space-around">
-        <div>上一页</div>
-        <div>下一页</div>
-    </div>
-
-    <div class="wrapper">
-        <!--
-        <div class="itemDetail">
-            <template  class="temp" v-for="item in data">
-                <div class="item">
-                    <div style="margin-right: 10px ;color: red">{{item.name}}</div>
-                    <a target="shenheDetail" :href=" '/glove/grapeAdmin/detail.do?useruuid='+item.useruuid" >详情>></a>
+            <div>
+                <div class="zoo">
+                    <div>姓名：</div>
+                    <div><c:out value="${arr.usernickname}"></c:out></div>
                 </div>
-            </template>
-        </div>
-        -->
-        <div class="itemDetail">
-            <c:forEach items="${data}" var="arr">
-                <div  class="item">
-                    <div style="margin-right: 10px ;color: red">
-                        <c:out value="${arr.name}"></c:out>
-                    </div>
-                    <a target="shenheDetail" href="/glove/grapeAdmin/detail.do?useruuid=<c:out value="${arr.useruuid}"></c:out>" >详情>></a>
+                <div class="zoo">
+                    <div>手机号：</div>
+                    <div><c:out  value="${arr.userphone}"></c:out></div>
                 </div>
-            </c:forEach>
+
+                <div class="zoo">
+                    <div>注册时间：</div>
+                    <div><fmt:formatDate value="${arr.registerdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
+                </div>
+            </div>
+            <a target="accountlist" href="/glove/grapeAdmin/accountlist.do?useruuid=<c:out value="${arr.useruuid}"></c:out>" >详情>></a>
         </div>
-
-        <iframe  class="page-ifream" name="shenheDetail" id="shenheDetail"
-                 src="<%=contextPath%>/resources/putaohelp/html/test.html"
-                frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                width="100%" height="2500">
-        </iframe>
-    </div>
-
+    </c:forEach>
 </div>
-<script src="<%=contextPath%>/resources/putaohelp/js/shenhelist.js"></script>
-
+<iframe  class="page-ifream" name="accountlist" id="accountlist"
+         src="<%=contextPath%>/resources/putaohelp/html/test.html"
+         frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
+         width="100%" height="2500">
+</iframe>
+</div>
 </body>
 <style>
     a{
@@ -90,7 +78,16 @@
         padding-right: 20px;
         padding-left: 10px;
         border-bottom: #00BB3B 1px solid;
+        //height: 30px;
+    }
+    .zoo{
+        display: flex;
+        flex-direction: row;
         height: 30px;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 1px;
+        //background-color: #999999;
     }
     .itemDetail{
         display: flex;

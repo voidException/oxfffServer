@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -147,7 +148,8 @@ public class WechatLoginController {
             user = new User(); //存入数据库一份，返回给前端一份
             user.setUseruuid(UUID.randomUUID().toString());
             user.setUserphoto(userPhoto);
-            user.setUsernickname(nickname);
+            String nickNameCode= URLEncoder.encode(nickname,"UTF-8");
+            user.setUsernickname(nickNameCode);
             user.setSex(sex);
             user.setCityname(city);
             user.setAddress(province);

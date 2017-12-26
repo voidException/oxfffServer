@@ -17,10 +17,9 @@ new Vue({
         let helpType=this.getQueryString("helpType");
         let urlfinal=baseurl+'?'+"lastUpdate="+update+"&&helpType="+helpType;
 
-        console.log(urlfinal)
         var that=this;
         this.$http.get(urlfinal).then(response => {
-            console.log(response.body);
+
             //存储或者改变相应的值
             if (response.body.retcode==2000){
                 that.$nextTick(function(){
