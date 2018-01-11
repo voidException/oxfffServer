@@ -8,9 +8,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no" />
+    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
 </head>
-<body style="height: 2900px">
-<div  class="shenheDetail"  style="padding: 20px">
+<body style="height: 2000px">
+<div   id="shenheDetail" class="shenheDetail"  style="padding: 20px">
+
+    <div id="useruuid" style="display: none">${data.useruuid}</div>
+
+    <div class="puding">
+        <div class="companyName">状态：</div>
+        <div  id="confirmif">${data.confirmif}</div>
+    </div>
+
+
     <div class="puding">
         <div class="companyName">公司名字：</div>
         <div>${data.name}</div>
@@ -42,11 +53,11 @@
         <img src="http://101.200.33.138/staticImage/${data.imgthree}" style="height: 300px;width: 300px" />
     </div>
 
-    <div class="passrefused">
-        <textarea  class="text-area" rows="10" cols="60">请输入拒绝或通过的理由</textarea>
+    <div id="passrefused"  class="passrefused">
+        <textarea  id="comment" class="text-area" rows="10" cols="60" placeholder="请输入通过或拒绝的理由"></textarea>
         <div class="dopassRefused" >
-            <div  class="pass" >通过</div>
-            <div  class="pass" >拒绝</div>
+            <div  v-on:click="pass"  class="pass" >通过</div>
+            <div  v-on:click="refused"  class="pass" >拒绝</div>
         </div>
 
     </div>
@@ -111,7 +122,7 @@
         display: flex;
         width: 49%;
         height: 50px;
-        background-color: #0070FF;
+        background-color: #1ab394;
         color: white;
         margin: 10px;
         justify-content:center ;

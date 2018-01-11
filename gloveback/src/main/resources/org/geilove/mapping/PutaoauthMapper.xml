@@ -35,7 +35,7 @@
     <include refid="Base_Column_List" />
     from putaoauth
     where confirmIf = #{confirmIf}
-    limit 0,200
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
 
 

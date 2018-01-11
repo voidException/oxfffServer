@@ -106,6 +106,7 @@
      </property> 
    </bean> 
     -->
+
 	<!-- 配置自定义Realm -->
 	<bean id="myRealm" class="org.geilove.shiro.MyRealm"/>
 
@@ -126,6 +127,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				<!--anon 表示匿名访问，不需要认证以及授权-->
+				/glove*=anon
 				/admin/login.do=anon
 				<!--authc表示需要认证 没有进行身份认证是不能进行访问的-->
 				/admin*=authc

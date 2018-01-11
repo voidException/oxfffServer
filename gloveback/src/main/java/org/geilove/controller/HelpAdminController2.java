@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -67,24 +66,48 @@ public class HelpAdminController2 {
         }
     }
 
+    // 资料审核列表，路由和传递参数
     @RequestMapping(value="/shenhelist.do",method = RequestMethod.GET)
     public ModelAndView shenhelist( HttpServletRequest request){
         String confirmIf=request.getParameter("confirmIf");
 
+        ModelAndView mav=new ModelAndView("putaohelp/shenhelist","data",confirmIf);
+        return mav ;
+    }
+
+    @RequestMapping(value="/shenhelistdata.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object shenhelistdata( HttpServletRequest request){
+
+        Response< List<Putaoauth>> resp = new Response<>();
+        String confirmIf=request.getParameter("confirmIf");
+        String page=request.getParameter("page");
+        int pageInt=0;
+        try {
+            pageInt = Integer.valueOf(page).intValue();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resp.failByException();
+            return resp;
+        }
+        pageInt=(pageInt-1)*30;
+
         Map<String,Object>  map =new HashMap<String,Object>();
         map.put("confirmIf",confirmIf);
-        map.put("page",0);
-        map.put("pageSize",1000);
-
+        map.put("page",pageInt);
+        map.put("pageSize",30);
         List<Putaoauth> putaoauths=null;
+
         try{
             putaoauths=putaoauthMapper.getPutaoauths(map); //获得公司的列表
+            if (putaoauths==null){
+                resp.failByNoInputData("数据为空");
+            }
         }catch (Exception e){
-
+            resp.failByException(); //抛出异常
         }
-        //System.out.print(putaoauths);
-        ModelAndView mav=new ModelAndView("putaohelp/shenhelist","data",putaoauths);
-        return mav ;
+        resp.success(putaoauths);
+        return resp ;
     }
 
     // 这个是点击审核列表的详情
@@ -104,12 +127,13 @@ public class HelpAdminController2 {
     @RequestMapping("/shenhe.do")
     @ResponseBody
     public Object confirmIf(HttpServletRequest request ){
-        Response<String> resp = new Response<>();
-        String  token=request.getParameter("token");
+
+        String  token=request.getParameter("token"); //暂时没用
         String  useruuid=request.getParameter("useruuid"); //企业或个人的userUUID
         String  confirmif=request.getParameter("confirmif"); //是否通过
         String  comment=request.getParameter("comment") ; // 拒绝或者通过的原因
 
+        Response<String> resp = new Response<>();
         Putaoauth putaoauth=null;
         try {
              putaoauth=putaoauthMapper.selectByUserUUID(useruuid);
@@ -122,7 +146,8 @@ public class HelpAdminController2 {
             return  resp;
         }
         putaoauth.setConfirmif(confirmif);
-        if ("refused".equals(confirmif)){ //拒绝了就只更新putaoaut
+        putaoauth.setComment(comment);
+        if ("refused".equals(confirmif)){ //拒绝了就只更新putaoauth
             try{
                 int tag=putaoauthMapper.updateByPrimaryKeySelective(putaoauth);
                 if (tag!=1){
@@ -169,7 +194,8 @@ public class HelpAdminController2 {
                 companyputaos=companyputaoMapper.getCompanyputao(map);
 
             }catch (Exception e){
-
+                resp.failByException();
+                return resp;
             }
             if (companyputaos==null || companyputaos.size()!=2){
                 //之前没有计划，那就生成2个互助计划
@@ -197,7 +223,8 @@ public class HelpAdminController2 {
 
                     int tagYiWai=companyputaoMapper.insertSelective(companyputaoYiWai);
                 }catch (Exception e){
-
+                    resp.failByException();
+                    return resp;
                 }
 
             }

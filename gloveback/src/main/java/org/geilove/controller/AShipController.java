@@ -18,7 +18,11 @@ import org.geilove.vo.SumInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +69,9 @@ public class AShipController {
     @RequestMapping(value="/getSumInfo.do",method=RequestMethod.POST)
     @ResponseBody
     public Object getSumInfo( HttpServletRequest request){
+
         Response<SumInfo> resp = new Response<>();
+
         String helptype=request.getParameter("helptype");
 
           if ("staff".equals(helptype) || "employee".equals(helptype)){//公司的互助计划

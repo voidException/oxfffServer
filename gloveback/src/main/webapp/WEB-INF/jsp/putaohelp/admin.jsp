@@ -18,7 +18,7 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
     <%--<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">--%>
 </head>
-<body style="height: 3000px">
+<body style="height: 1600px">
 <div class="header" style="height:50px;padding-left: 30px;padding-right: 30px">
     <div class="headertxt">葡萄互助</div>
     <%--<div class="headertxt">葡萄众筹</div>--%>

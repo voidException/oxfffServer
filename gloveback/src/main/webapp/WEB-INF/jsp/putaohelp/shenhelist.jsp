@@ -1,6 +1,6 @@
-<%  String contextPath = request.getContextPath(); %>
+<%   String contextPath = request.getContextPath(); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
 
 <html>
@@ -15,18 +15,20 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
 </head>
-<body style="height: 2900px">
+<body style="height: 1600px">
 <script>
 </script>
 <div id="shenhelist">
+    <div id="confirmIf" style="display: none">${data}</div>
 
     <div class="pageNext" style="display: flex;flex-direction: row;width: 200px;justify-content: space-around">
-        <div>上一页</div>
-        <div>下一页</div>
+        <!--  上一页下一下，这个用ajax实现，点击下一页时隐藏<div class="itemDetail">，-->
+        <div   v-on:click="goUpPage" >上一页</div>
+        <div  v-on:click="goNextPage">下一页</div>
     </div>
 
     <div class="wrapper">
-        <!--
+
         <div class="itemDetail">
             <template  class="temp" v-for="item in data">
                 <div class="item">
@@ -34,17 +36,6 @@
                     <a target="shenheDetail" :href=" '/glove/grapeAdmin/detail.do?useruuid='+item.useruuid" >详情>></a>
                 </div>
             </template>
-        </div>
-        -->
-        <div class="itemDetail">
-            <c:forEach items="${data}" var="arr">
-                <div  class="item">
-                    <div style="margin-right: 10px ;color: red">
-                        <c:out value="${arr.name}"></c:out>
-                    </div>
-                    <a target="shenheDetail" href="/glove/grapeAdmin/detail.do?useruuid=<c:out value="${arr.useruuid}"></c:out>" >详情>></a>
-                </div>
-            </c:forEach>
         </div>
 
         <iframe  class="page-ifream" name="shenheDetail" id="shenheDetail"
