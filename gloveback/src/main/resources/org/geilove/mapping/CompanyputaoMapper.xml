@@ -21,6 +21,16 @@
     needtips, tipstimes, tipsdate, updatedate, createdate
   </sql>
 
+  <select id="getCompanyList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List"/>
+    from companyputao
+    where 1=1
+    order by
+    createdate desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
   <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
@@ -41,6 +51,16 @@
     order by createdate  desc
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
+<!---getCompanyputaoHelptype -->
+  <select id="getCompanyputaoHelptype" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from companyputao
+    where useruuid = #{useruuid} AND helptype= #{helptype}
+    order by createdate  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
 
   <select id="getCompanyputaoInfo" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select

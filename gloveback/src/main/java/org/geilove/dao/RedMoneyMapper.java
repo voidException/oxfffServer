@@ -24,6 +24,8 @@ public interface RedMoneyMapper {
 
     List<RedMoney> selectAllUserRedMoney(HashMap<String,Object> hashMap);
 
+    int countByState(HashMap<String,Object> hashMap); //根据unactive used  active 统计相应的红包个数
+
 
 }
 

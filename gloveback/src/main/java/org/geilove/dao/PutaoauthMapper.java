@@ -27,4 +27,6 @@ public interface PutaoauthMapper {
     public  int updatePutaoauth(Putaoauth putaoauth); //后台管理员 ，更新认证信息
 
     List<Putaoauth>  getPutaoauths(Map<String,Object> map); //获取已认证，未认证，或者被拒绝的公司
+
+    List<Putaoauth>  getPutaoauthSearch(Map<String,Object> map); //根据企业的名字获得企业的认证信息
 }

@@ -24,6 +24,13 @@
   <select id="getTotalStaff" resultType="java.lang.Integer" >
     select count(*) from userstaff
   </select>
+
+  <!--getTotalInfo-->
+  <select id="getTotalInfo" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from userstaff
+    WHERE  helptype=#{helpType}
+  </select>
+
   <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
     <include refid="Base_Column_List" />
@@ -31,7 +38,14 @@
     where  helptype=#{helptype} AND affirm=#{affirm}
 
   </select>
-
+<!--getUserStaffByUserUUID-->
+  <select id="getUserStaffByUserUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where useruuid = #{useruuid}
+    limit #{page, jdbcType=INTEGER}, 30
+  </select>
 
 <!--selectTotalStaff-->
   <select id="selectTotalStaff" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
@@ -39,7 +53,7 @@
     <include refid="Base_Column_List" />
     from userstaff
     where useruuid = #{uuid} AND helptype=#{helptype} AND affirm=#{affirm}
-    limit 0, 1000
+    limit 0, 100
   </select>
 
   <!--查询员工是否加入了公司的某一互助计划selectByparam-->

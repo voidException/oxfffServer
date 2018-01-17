@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CompanyputaoMapper {
+
     int deleteByPrimaryKey(Integer companyid);
 
     int insert(Companyputao record);
@@ -30,5 +31,7 @@ public interface CompanyputaoMapper {
     List<Companyputao> getSumInfo(String helptype);
 
     int getTotalCompany();
+
+    List<Companyputao> getCompanyList(Map<String,Object> map);
 
 }

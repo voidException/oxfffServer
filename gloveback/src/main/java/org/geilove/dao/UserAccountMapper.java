@@ -36,6 +36,8 @@ public interface UserAccountMapper {
 
     UserAccount selectByaccountUUID(Map<String,Object> map);
 
+    List<UserAccount> selectByAccount(Map<String,Object> map); //根据这个人的身份证号，获取这个人参与的所有个人互助计划
+
     UserAccount selectByuserIdentity(Map<String,Object> map); //根据用户的身份证号选择出用户
 
     List<UserAccount> getSumInfo(String helptype); //

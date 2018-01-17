@@ -32,7 +32,6 @@
     <select id="getCountByhelpType" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
         select count(*) from userAccount
         WHERE  categoryType=#{helpType}
-
     </select>
 
 
@@ -74,7 +73,15 @@
         limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
     </select>
 
-<!--selectByuserIdentity-->
+    <!--selectByAccount-->
+    <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+        select
+        <include refid="Base_Column_List" />
+        from userAccount
+        where accountUUID = #{account}
+    </select>
+
+     <!--selectByuserIdentity-->
     <select id="selectByuserIdentity" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
         select
         <include refid="Base_Column_List" />

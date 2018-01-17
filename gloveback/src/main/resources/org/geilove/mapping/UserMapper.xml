@@ -61,6 +61,16 @@
         <result column="unionid" property="unionid" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--获取公司列表-->
+    <select id="getCompanyList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where userType =#{userType,jdbcType=TINYINT}
+        order by
+        registerDate desc
+        limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
     <!--getUserList-->
     <select id="getUserList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
@@ -71,7 +81,6 @@
         registerDate desc
         limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
     </select>
-
 
     <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
     <select id="getUserByPhonePass" resultMap="BaseResultMap" parameterType="java.util.HashMap">

@@ -11,6 +11,7 @@ import org.geilove.pojo.*;
 import org.geilove.service.T_userService;
 import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
+import org.geilove.vo.RedBaoInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,13 +29,15 @@ import java.util.*;
 public class HelpAdminController2 {
 
     @Resource
-    private PutaoauthMapper putaoauthMapper;
+    private  PutaoauthMapper putaoauthMapper;
     @Resource
-    private UserMapper  userMapper;
+    private  UserMapper  userMapper;
     @Resource
-    private CompanyputaoMapper companyputaoMapper;
+    private  CompanyputaoMapper companyputaoMapper;
     @Resource
-    private UserAccountMapper userAccountMapper;
+    private  UserAccountMapper userAccountMapper;
+    @Resource
+    private  UserStaffMapper userStaffMapper ;
 
 
     // 1.获得用户提交的认证的资料列表
@@ -233,6 +236,38 @@ public class HelpAdminController2 {
         resp.success("提交成功");
         return  resp;
     }
+    // 资料审核搜索页面
+    @RequestMapping(value="/shenheSearch.do",method = RequestMethod.GET)
+    public ModelAndView shenheSearch( HttpServletRequest request) {
+        ModelAndView mav=new ModelAndView("putaohelp/shenheSearch","data","");
+        return mav;
+    }
+    //根据给定的公司名，搜索出企业信息。--模糊查询
+    @RequestMapping(value="/doshenheSearch.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doshenheSearch( HttpServletRequest request) {
+        Response<List<Putaoauth>> resp = new Response<>(); //返回的是一个列表
+        String  name=request.getParameter("name"); // 企业的名字
+        List<Putaoauth> putaoauths=null;
+        Map<String,Object> map=new HashMap<>();
+
+        map.put("name",name); //企业的名字
+        map.put("page",0);
+        map.put("pageSize",5); //
+        try{
+            putaoauths=putaoauthMapper.getPutaoauthSearch(map); //map
+            if (putaoauths==null || putaoauths.isEmpty() ){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(putaoauths);
+        return resp;
+    }
+
 
     //***********************用户列表*******************************
     @RequestMapping(value="/userlist.do",method = RequestMethod.GET)
@@ -247,7 +282,7 @@ public class HelpAdminController2 {
         try {
             users=userMapper.getUserList(map);
         }catch (Exception e){
-          System.out.print(e.getMessage());
+            System.out.print(e.getMessage());
         }
 
         ModelAndView mav=new ModelAndView("putaohelp/userlist","data",users);
@@ -264,7 +299,7 @@ public class HelpAdminController2 {
         map.put("pageSize",50);
         List<UserAccount> accountList=null;
         try {
-           //
+            //
             accountList=userAccountMapper.getAccountsByuserUUID(map);
         }catch (Exception e){
             System.out.print(e.getMessage());
@@ -341,24 +376,322 @@ public class HelpAdminController2 {
 
 
 
-    //*********检索用户
+    //*********检索用户，路由
     @RequestMapping(value="/userSearch.do",method = RequestMethod.GET)
     public String userSearch( HttpServletRequest request) {
         return "putaohelp/userSearch" ;
     }
 
-    //*********检索用户
+    //*********检索用户，返回用的基本信息和其家人加入的互助信息
     @RequestMapping(value="/douserSearch.do",method = RequestMethod.POST)
     @ResponseBody
     public Object douserSearch( HttpServletRequest request) {
         Response<User> resp = new Response<>();
-        String info=request.getParameter("info"); //这个是身份证号或者手机号
-        String typeTag=request.getParameter("typeTag"); //这个是区分标志。phone 或者id
+        String token=request.getParameter("token"); //
+        String phone=request.getParameter("phone"); //根据这个查找用户
+        User user=null;
 
-
-
+        try{
+            user=userMapper.getUserByPhone(phone); //获取注册用户
+            if (user==null){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(user);
         return  resp;
     }
+
+    //*********根据useruuid检索其互助家人
+    @RequestMapping(value="/doAccountListSearch.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doAccountListSearch( HttpServletRequest request) {
+        Response<List<UserAccount>> resp = new Response<>();
+
+        String useruuid=request.getParameter("useruuid");
+        Map<String,Object> map=new HashMap<>();
+        map.put("usruuid",useruuid);
+        map.put("page",0);
+        map.put("pageSize",50);
+        List<UserAccount> accountList=null;
+        try {
+            accountList=userAccountMapper.getAccountsByuserUUID(map);
+            if (accountList==null ||accountList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByNoData();
+            return  resp;
+        }
+        resp.success(accountList);
+        return  resp;
+    }
+
+    //*********检索用户，根据身份证号返回有关的互助信息
+    @RequestMapping(value="/doAccountSearch.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doAccountSearch( HttpServletRequest request) {
+        Response<List<UserAccount>> resp = new Response<>();
+        String account=request.getParameter("account"); //
+        List<UserAccount> userAccounts=null;
+        Map<String,Object> map=new HashMap<>();
+        map.put("account",account);
+        try{
+            userAccounts=userAccountMapper.selectByAccount(map);
+            if(userAccounts==null){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(userAccounts);
+        return  resp;
+    }
+
+    //*******************--公司有关的信息-*********************************//
+    @RequestMapping(value="/companyInfoTongji.do",method = RequestMethod.GET)
+    public ModelAndView companyInfoTongji( HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("putaohelp/companyTongji"); //返回的文件名
+
+        try{
+            int companyTotal=companyputaoMapper.getTotalCompany(); //公司总数
+            mav.addObject("companyTotal",companyTotal);
+
+        }catch (Exception e){
+
+        }
+        try{
+            //所有参与公司大病互助的员工总数
+            Map<String,Object> map=new HashMap<>();
+            map.put("helpType","staff");
+            int totalDaBingInfo=userStaffMapper.getTotalInfo(map);
+            mav.addObject("staff",totalDaBingInfo);
+        }catch (Exception e){
+
+        }
+        try{
+            //所有参与公司大病互助的员工总数
+            Map<String,Object> map=new HashMap<>();
+            map.put("helpType","employee");
+            int totalDaBingInfo=userStaffMapper.getTotalInfo(map);
+            mav.addObject("employee",totalDaBingInfo);
+        }catch (Exception e){
+
+        }
+
+        return  mav;
+    }
+
+    // 路由，跳转到公司列表
+    @RequestMapping(value="/companylist.do",method = RequestMethod.GET)
+    public ModelAndView companylist( HttpServletRequest request){
+
+        ModelAndView mav=new ModelAndView("putaohelp/companylist");
+        return mav ;
+    }
+    //获得公司列表
+    @RequestMapping(value="/getCompanyList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getCompanyList( HttpServletRequest request) {
+        Response<List<User>> resp = new Response<>();
+
+        String pageStr=request.getParameter("page");
+        //获得公司的
+        List<User> userList=null;
+        try{
+            int page=Integer.valueOf(pageStr);
+            page=(page-1)*30;
+
+            Map<String,Object> map=new HashMap<>();
+            map.put("userType",(byte)2);
+            map.put("page",page);
+            map.put("pageSize",30);
+
+            userList=userMapper.getCompanyList(map);
+            if (userList==null){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+
+        resp.success(userList);
+        return resp;
+    }
+
+    // 根据公司的uuid获取员工列表
+    @RequestMapping(value="/getUserStaffList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getUserStaffList( HttpServletRequest request) {
+        Response<List<UserStaff>> resp = new Response<>();
+        String  useruuid=request.getParameter("useruuid"); // 公司的useruuid
+        String  pageStr=request.getParameter("page"); //
+        List<UserStaff> userStaffs=null;
+        try{
+            int page=Integer.valueOf(pageStr);
+            page=(page-1)*30;
+            Map<String,Object> map=new HashMap<>();
+            // 暂不区分互助的种类
+            map.put("useruuid",useruuid);
+            map.put("page",page);
+            map.put("pageSize",30);
+            userStaffs=userStaffMapper.getUserStaffByUserUUID(map);
+            if (userStaffs==null || userStaffs.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(userStaffs);
+        return resp;
+    }
+    @RequestMapping(value="/aadetail.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object detail( HttpServletRequest request) {
+        Response<List<Companyputao>> resp = new Response<>();
+        //
+        String useruuid=request.getParameter("useruuid"); //获得用户的useruuid
+        List<Companyputao>  companyputaos=null;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("uuid",useruuid);
+            map.put("page",0);
+            map.put("pageSize",2);
+            companyputaos=companyputaoMapper.getCompanyputao(map);
+            if (companyputaos==null){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+
+        }
+        resp.success(companyputaos);
+        return  resp;
+    }
+    // 路由，跳转到公司检索
+    @RequestMapping(value="/companySearch.do",method = RequestMethod.GET)
+    public ModelAndView companySearch( HttpServletRequest request){
+
+        ModelAndView mav=new ModelAndView("putaohelp/companySearch");
+        return mav ;
+    }
+
+    // 根据手机号检索这个公司的互助情况
+    @RequestMapping(value="/doCompanySearch.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doCompanySearch( HttpServletRequest request) {
+        Response<List<Companyputao>> resp = new Response<>();
+        String  phone=request.getParameter("phone"); // 根据手机号进行检索
+        String  useruuid="";
+
+        List<Companyputao> companyputaos=null;
+        //1. 先到User表用手机号搜索user信息
+        try{
+            User user=userMapper.getUserByPhone(phone);
+            if (user==null){
+                resp.failByNoInputData("此用户没有注册");
+                return  resp ;
+            }
+            useruuid=user.getUseruuid();
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("uuid",useruuid); //用户的useruuid
+            map.put("page",0);
+            map.put("pageSize",2);
+            companyputaos=companyputaoMapper.getCompanyputao(map);
+            if (companyputaos==null || companyputaos.size()==0){
+                resp.failByNoInputData("没有数据");
+                return  resp;
+            }
+
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(companyputaos);
+        return resp;
+    }
+
+    // 根据公司的uuid获取员工列表
+    @RequestMapping(value="/getUserStaffListHelpType.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getUserStaffListHelpType( HttpServletRequest request) {
+        Response<List<UserStaff>> resp = new Response<>();
+        String  useruuid=request.getParameter("useruuid"); // 公司的useruuid
+        String  pageStr=request.getParameter("page"); //
+        String  helptype=request.getParameter("helptype");
+
+        List<UserStaff> userStaffs=null;
+        try{
+            int page=Integer.valueOf(pageStr);
+            page=(page-1)*30;
+            Map<String,Object> map=new HashMap<>();
+            // 暂不区分互助的种类
+            map.put("uuid",useruuid);
+            map.put("helptype",helptype);
+            map.put("affirm","yes");
+            map.put("page",page);
+            map.put("pageSize",30);
+            userStaffs=userStaffMapper.selectTotalStaff(map);
+            if (userStaffs==null || userStaffs.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(userStaffs);
+        return resp;
+    }
+    // 路由，跳转资金统计
+    @RequestMapping(value="/zijinTongji.do",method = RequestMethod.GET)
+    public ModelAndView zijinTongji( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/zijinTongji");
+        return mav ;
+    }
+    // 路由，红包金额统计
+    @RequestMapping(value="/redBaoTongji.do",method = RequestMethod.GET)
+    public ModelAndView redBaoTongji( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/redBaoTongji");
+        return mav ;
+    }
+    // 根据公司的uuid获取员工列表
+    @RequestMapping(value="/getRedBaoInfo.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRedBaoInfo( HttpServletRequest request) {
+        Response<RedBaoInfo> resp = new Response<>();
+        RedBaoInfo redBaoInfo=new RedBaoInfo();
+        try{
+
+        }catch (Exception e){
+
+        }
+
+        return resp;
+    }
+
 
 }
 

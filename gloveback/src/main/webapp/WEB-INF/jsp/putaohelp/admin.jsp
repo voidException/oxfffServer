@@ -35,7 +35,7 @@
                     <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=unhandle" style="font-size: smaller">待审核</a></li>
                     <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=refused"  style="font-size: smaller">已拒绝</a></li>
                     <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass"  style="font-size: smaller">审核通过</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass"  style="font-size: smaller">检索</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/shenheSearch.do"  style="font-size: smaller">检索</a></li>
                 </ul>
             </li>
         </ul>
@@ -53,9 +53,9 @@
             <li>
                 <a href="#" style="font-weight: bolder">公司用户</a>
                 <ul>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">公司统计</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">公司列表</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">检索</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/companyInfoTongji.do" style="font-size: smaller">公司统计</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/companylist.do" style="font-size: smaller">公司列表</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/companySearch.do" style="font-size: smaller">检索</a></li>
                 </ul>
             </li>
         </ul>
@@ -64,7 +64,8 @@
             <li>
                 <a href="#" style="font-weight: bolder">资金管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">资金概览</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do" style="font-size: smaller">资金统计</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do" style="font-size: smaller">对账</a></li>
 
                 </ul>
             </li>
@@ -73,10 +74,7 @@
             <li>
                 <a href="#" style="font-weight: bolder">红包管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">红包金额统计</a></li>
-                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">已使用红包</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">未使用红包</a></li>
-                    <li><a target="Conframe" href="gon.html" style="font-size: smaller">待激活红包</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do" style="font-size: smaller">红包金额统计</a></li>
                 </ul>
             </li>
         </ul>
@@ -86,7 +84,15 @@
                 <ul>
                     <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">资讯列表</a></li>
                     <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">增加资讯</a></li>
-                    <li><a target="Conframe" href="gon.html" style="font-size: smaller">分离的链接</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="">
+            <li>
+                <a href="#" style="font-weight: bolder">互助管理</a>
+                <ul>
+                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">增加一个求助人</a></li>
+                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">执行扣钱</a></li>
                 </ul>
             </li>
         </ul>

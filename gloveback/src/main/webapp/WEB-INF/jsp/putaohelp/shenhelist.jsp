@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
-
 <html>
 <head>
     <title>审核列表</title>
@@ -21,7 +20,7 @@
 <div id="shenhelist">
     <div id="confirmIf" style="display: none">${data}</div>
 
-    <div class="pageNext" style="display: flex;flex-direction: row;width: 200px;justify-content: space-around">
+    <div class="pageNext" style="display: flex;flex-direction: row;width: 300px;justify-content: space-around;margin-bottom: 20px">
         <!--  上一页下一下，这个用ajax实现，点击下一页时隐藏<div class="itemDetail">，-->
         <div   v-on:click="goUpPage" >上一页</div>
         <div  v-on:click="goNextPage">下一页</div>

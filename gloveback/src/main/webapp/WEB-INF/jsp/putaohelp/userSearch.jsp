@@ -22,6 +22,19 @@
             flex-direction: row;
 
         }
+        .itemWrapper{
+
+        }
+        .item{
+            display: flex;
+            flex-direction: row;
+            width: 400px;
+            justify-content: flex-start;
+        }
+        .detail{
+            cursor:pointer;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -33,14 +46,52 @@
         </div>
 
         <div class="seachUser">
-            <input id="identity" name="identity" type="text" placeholder="请输入身份证号"/>
-            <button>检索注册用户</button>
+            <input id="account" name="identity" type="text" placeholder="请输入身份证号"/>
+            <button   v-on:click="doAccountSearch">检索互助信息</button>
         </div>
     </div>
     <%--下面展示用户--%>
-    <div>
-        <div>这里是注册用户</div>
-        <div>这里加入互助的人</div>
+    <div id="left">
+        <div class="itemWrapper">
+            <div class="item">
+                <div>用户ID：</div>
+                <div id="useruuid">{{dataUser.useruuid}}</div>
+            </div>
+            <div class="item">
+                <div>用户姓名：</div>
+                <div>{{dataUser.usernickname}}</div>
+            </div>
+            <div class="item">
+                <div>用户手机号：</div>
+                <div>{{dataUser.userphone}}</div>
+            </div>
+        </div>
+        <div v-on:click="getAccountList" class="detail"> 详情>> </div>
+        <div>
+            <template v-for="item in accountList">
+                <div class="item">
+                    <div>用户姓名：</div>
+                    <div style="margin-right: 10px ;color: red">{{item.username}}</div>
+                </div>
+                <div class="item">
+                    <div>用户身份证号：</div>
+                    <div style="margin-right: 10px ;color: red">{{item.accountuuid}}</div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <!---根据身份证号直接搜索--->
+    <div id="right">
+        <template v-for="item in userAccount">
+            <div class="item">
+                <div>用户身份证号：</div>
+                <div style="margin-right: 10px ;color: red">{{item.accountuuid}}</div>
+            </div>
+            <div class="item">
+                <div>用户姓名：</div>
+                <div style="margin-right: 10px ;color: red">{{item.username}}</div>
+            </div>
+        </template>
     </div>
 
 

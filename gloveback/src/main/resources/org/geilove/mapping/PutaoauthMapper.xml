@@ -29,6 +29,15 @@
     from putaoauth
     where useruuid = #{useruuid}
   </select>
+  <!--getPutaoauthSearch-->
+  <select id="getPutaoauthSearch" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from putaoauth
+    where name = #{name}
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
 <!--getPutaoauths-->
   <select id="getPutaoauths" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
@@ -37,8 +46,6 @@
     where confirmIf = #{confirmIf}
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
-
-
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
