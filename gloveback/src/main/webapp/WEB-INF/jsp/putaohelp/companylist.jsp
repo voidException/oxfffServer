@@ -44,6 +44,7 @@
             flex-direction: row;
             width: 300px;
             justify-content: space-around;
+            border-bottom: #2FAC4C 1px  solid;
         }
         .right{
             margin-left: 10px;
@@ -51,14 +52,18 @@
         .stafflist{
             display: none;
         }
+        .pageUp{
+            cursor: pointer;
+            color: #0070FF;
+        }
     </style>
 </head>
-<body>
+<body style="height: 3000px">
 <div id="companylist">
     <div class="left">
         <div class="page">
-            <div v-on:click="goUpPage">上一页</div>
-            <div v-on:click="goNextPage">下一页</div>
+            <div v-on:click="goUpPage" class="pageUp"  >上一页</div>
+            <div v-on:click="goNextPage" class="PageUp">下一页</div>
         </div>
         <template  class="temp" v-for="item in data">
             <div class="contain">
@@ -73,8 +78,8 @@
                     </div>
                 </div>
                 <div class="itemWrapperRight">
-                    <div v-on:click="aadetail"  v-bind:data-uuid="item.useruuid"> 详情>></div>
-                    <div v-on:click="getStaffList" v-bind:data-uuid="item.useruuid" > 员工>></div>
+                    <div v-on:click="aadetail"  v-bind:data-uuid="item.useruuid" class="pageUp"> 详情>></div>
+                    <div v-on:click="getStaffList" v-bind:data-uuid="item.useruuid"  class="pageUp"> 员工>></div>
                 </div>
             </div>
         </template>
@@ -106,10 +111,10 @@
             </template>
         </div>
         <div class="stafflist" id="stafflist">
-            <%--<div class="page">--%>
-                <%--<div v-on:click="goUpPage">上一页</div>--%>
-                <%--<div v-on:click="goNextPage">下一页</div>--%>
-            <%--</div>--%>
+            <div class="page">
+                <div v-on:click="goStaffUpPage"  class="pageUp">上一页</div>
+                <div v-on:click="goStaffNextPage"  class="pageUp">下一页</div>
+            </div>
             <template  class="temp" v-for="item in staffList">
                 <div class="contain">
                     <div class="itemWrapper">

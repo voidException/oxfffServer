@@ -4,9 +4,9 @@ package org.geilove.vo;
  * Created by aihaitao on 17/1/2018.
  */
 public class RedBaoInfo {
-    private  String   unactive;
-    private  String   active;
-    private  String   used;
+    private  String   unactive="0";
+    private  String   active="0";
+    private  String   used="0";
 
     public String getUnactive() {
         return unactive;

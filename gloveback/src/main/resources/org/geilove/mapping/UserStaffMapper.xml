@@ -44,7 +44,7 @@
     <include refid="Base_Column_List" />
     from userstaff
     where useruuid = #{useruuid}
-    limit #{page, jdbcType=INTEGER}, 30
+    limit #{page, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
 
 <!--selectTotalStaff-->
@@ -54,6 +54,14 @@
     from userstaff
     where useruuid = #{uuid} AND helptype=#{helptype} AND affirm=#{affirm}
     limit 0, 100
+  </select>
+  <!--selectTotalStaff2-->
+  <select id="selectTotalStaff2" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    where useruuid = #{uuid} AND helptype=#{helptype} AND affirm=#{affirm}
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
 
   <!--查询员工是否加入了公司的某一互助计划selectByparam-->

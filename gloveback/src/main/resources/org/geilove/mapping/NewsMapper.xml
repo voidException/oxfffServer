@@ -44,6 +44,12 @@
     delete from news
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+  <delete id="deleteByNewsUUID" parameterType="java.lang.String" >
+    delete from news
+    where newsuuid = #{newsuuid}
+  </delete>
+
   <insert id="insert" parameterType="org.geilove.pojo.News" >
     insert into news (id, newsuuid, author, 
       publishdate, title, vicetitle, 

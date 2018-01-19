@@ -38,7 +38,10 @@ public class HelpAdminController2 {
     private  UserAccountMapper userAccountMapper;
     @Resource
     private  UserStaffMapper userStaffMapper ;
-
+    @Resource
+    private  RedMoneyMapper redMoneyMapper; //
+    @Resource
+    private  NewsMapper newsMapper;
 
     // 1.获得用户提交的认证的资料列表
     @RequestMapping("/getPutaoauths.do")
@@ -288,6 +291,13 @@ public class HelpAdminController2 {
         ModelAndView mav=new ModelAndView("putaohelp/userlist","data",users);
         return mav;
     }
+
+
+
+
+
+
+
     //*************用户列表下的accountlist列表
     @RequestMapping(value="/accountlist.do",method = RequestMethod.GET)
     public ModelAndView accountlist( HttpServletRequest request) {
@@ -296,7 +306,7 @@ public class HelpAdminController2 {
         Map<String,Object> map=new HashMap<>();
         map.put("usruuid",useruuid);
         map.put("page",0);
-        map.put("pageSize",50);
+        map.put("pageSize",10);
         List<UserAccount> accountList=null;
         try {
             //
@@ -463,7 +473,7 @@ public class HelpAdminController2 {
 
         try{
             int companyTotal=companyputaoMapper.getTotalCompany(); //公司总数
-            mav.addObject("companyTotal",companyTotal);
+            mav.addObject("companyTotal",companyTotal/2);
 
         }catch (Exception e){
 
@@ -508,12 +518,12 @@ public class HelpAdminController2 {
         List<User> userList=null;
         try{
             int page=Integer.valueOf(pageStr);
-            page=(page-1)*30;
+            page=(page-1)*20;
 
             Map<String,Object> map=new HashMap<>();
             map.put("userType",(byte)2);
             map.put("page",page);
-            map.put("pageSize",30);
+            map.put("pageSize",20);
 
             userList=userMapper.getCompanyList(map);
             if (userList==null){
@@ -539,12 +549,12 @@ public class HelpAdminController2 {
         List<UserStaff> userStaffs=null;
         try{
             int page=Integer.valueOf(pageStr);
-            page=(page-1)*30;
+            page=(page-1)*10;
             Map<String,Object> map=new HashMap<>();
             // 暂不区分互助的种类
             map.put("useruuid",useruuid);
             map.put("page",page);
-            map.put("pageSize",30);
+            map.put("pageSize",20);
             userStaffs=userStaffMapper.getUserStaffByUserUUID(map);
             if (userStaffs==null || userStaffs.isEmpty()){
                 resp.failByNoData();
@@ -644,15 +654,16 @@ public class HelpAdminController2 {
         List<UserStaff> userStaffs=null;
         try{
             int page=Integer.valueOf(pageStr);
-            page=(page-1)*30;
+            page=(page-1)*20;
             Map<String,Object> map=new HashMap<>();
             // 暂不区分互助的种类
             map.put("uuid",useruuid);
             map.put("helptype",helptype);
             map.put("affirm","yes");
             map.put("page",page);
-            map.put("pageSize",30);
-            userStaffs=userStaffMapper.selectTotalStaff(map);
+            map.put("pageSize",20);
+
+            userStaffs=userStaffMapper.selectTotalStaff2(map);
             if (userStaffs==null || userStaffs.isEmpty()){
                 resp.failByNoData();
                 return resp;
@@ -683,14 +694,151 @@ public class HelpAdminController2 {
     public Object getRedBaoInfo( HttpServletRequest request) {
         Response<RedBaoInfo> resp = new Response<>();
         RedBaoInfo redBaoInfo=new RedBaoInfo();
-        try{
 
+        try{
+            Map<String,Object> map =new HashMap<>(); //
+            map.put("redMoneyState","unactive");
+            int unactive= redMoneyMapper.countByState(map);
+            int unactiveMoney=unactive*5;
+            redBaoInfo.setUnactive(String.valueOf(unactiveMoney));
+        }catch (Exception e){
+
+        }
+        try{
+            Map<String,Object> map =new HashMap<>(); //
+            map.put("redMoneyState","active");
+            int active= redMoneyMapper.countByState(map);
+            int activeMoney=active*5;
+            redBaoInfo.setActive(String.valueOf(activeMoney));
         }catch (Exception e){
 
         }
 
+        try{
+            Map<String,Object> map =new HashMap<>(); //
+            map.put("redMoneyState","used");
+            int used= redMoneyMapper.countByState(map);
+            int usedMoney=used*5;
+            redBaoInfo.setUsed(String.valueOf(usedMoney));
+        }catch (Exception e){
+
+        }
+         resp.success(redBaoInfo);
         return resp;
     }
+    // 路由，跳转到新闻资讯
+    @RequestMapping(value="/newsList.do",method = RequestMethod.GET)
+    public ModelAndView newsList( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/newsList");
+        return mav ;
+    }
+
+    @RequestMapping(value="/getNewsList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getNewsList( HttpServletRequest request) {
+        Response<List<News>> resp = new Response<>();
+
+        String pageStr=request.getParameter("page"); //时间
+        int page=Integer.valueOf(pageStr);
+        int pageSize=200;
+        page=pageSize*(page-1);
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("page",page);
+        map.put("pageSize",pageSize);
+        List<News> newss=null;
+        try{
+            newss=newsMapper.getNewss(map);
+            if (newss==null || newss.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(newss);
+        return  resp;
+    }
+    //增加资讯-路由
+    @RequestMapping(value="/addNews.do",method = RequestMethod.GET)
+    public ModelAndView addNews( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/addNews");
+        return mav ;
+    }
+    //增加资讯
+    @RequestMapping(value="/doAddNews.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doAddNews( HttpServletRequest request) {
+        Response<String> resp = new Response<>();
+        String title = request.getParameter("title");
+        String vicetitle = request.getParameter("vicetitle");
+        String author = request.getParameter("author");
+        String source = request.getParameter("source");
+        String imageone = request.getParameter("imageone");
+        String newsurl = request.getParameter("newsurl");
+        String newstype = request.getParameter("newstype");
+        News news=new News();
+        news.setTitle(title);
+        news.setVicetitle(vicetitle);
+        news.setAuthor(author);
+        news.setSource(source);
+        news.setImageone(imageone);
+        news.setNewsurl(newsurl);
+        news.setNewstype(newstype);
+        news.setNewsuuid(UUID.randomUUID().toString());
+        news.setPublishdate(new Date());
+        try {
+            int addTag=newsMapper.insertSelective(news);
+            if (addTag!=1){
+                resp.failByNoInputData("发布新闻资讯失败");
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success("发布成功");
+        return  resp; //
+    }
+
+
+    //删除资讯
+    @RequestMapping(value="/deleteNews.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteNews( HttpServletRequest request){
+        Response<String> resp = new Response<>();
+        String newsuuid=request.getParameter("datauuid");
+        try{
+            int tag=newsMapper.deleteByNewsUUID(newsuuid);
+            if (tag!=1){
+                resp.failByNoInputData("删除失败");
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success("删除成功");
+        return resp ;
+    }
+    //增加一个公示-路由
+    @RequestMapping(value="/addHelpMan.do",method = RequestMethod.GET)
+    public ModelAndView addHelpMan( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/addHelpMan");
+        return mav ;
+    }
+
+    @RequestMapping(value="/doAddHelpMan.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doAddHelpMan( HttpServletRequest request){
+        Response<String> resp = new Response<>();
+        //获取提交的信息
+
+
+
+
+        return resp ;
+    }
+
 
 
 }

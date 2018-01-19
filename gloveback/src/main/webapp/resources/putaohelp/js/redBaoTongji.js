@@ -11,14 +11,14 @@ new Vue({
 
         getSumInfo:function () {
             let param=new FormData();
-            axios.post('/glove/ship/getSumInfo.do',param,{
+            axios.post('/glove/grapeAdmin/getRedBaoInfo.do',param,{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }}).then(response => {
 
-                //console.log(response.data);
+                console.log(response.data);
                 if (response.data.retcode==2000){
-
+                     this.redBaoTongji=response.data.result;
                 }else {
                     //没有数据或出现错误
                 }

@@ -4,6 +4,7 @@ import org.geilove.pojo.RedMoney;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface RedMoneyMapper {
     int deleteByPrimaryKey(Long redmoneyid);
@@ -24,7 +25,7 @@ public interface RedMoneyMapper {
 
     List<RedMoney> selectAllUserRedMoney(HashMap<String,Object> hashMap);
 
-    int countByState(HashMap<String,Object> hashMap); //根据unactive used  active 统计相应的红包个数
+    int countByState(Map<String,Object> hashMap); //根据unactive used  active 统计相应的红包个数
 
 
 }

@@ -18,7 +18,7 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
     <%--<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">--%>
 </head>
-<body style="height: 1600px">
+<body style="height: 2600px">
 <div class="header" style="height:50px;padding-left: 30px;padding-right: 30px">
     <div class="headertxt">葡萄互助</div>
     <%--<div class="headertxt">葡萄众筹</div>--%>
@@ -82,8 +82,8 @@
             <li>
                 <a href="#" style="font-weight: bolder">资讯管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">资讯列表</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">增加资讯</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/newsList.do" style="font-size: smaller">资讯列表</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/addNews.do"  style="font-size: smaller">增加资讯</a></li>
                 </ul>
             </li>
         </ul>
@@ -91,8 +91,8 @@
             <li>
                 <a href="#" style="font-weight: bolder">互助管理</a>
                 <ul>
-                    <li><a target="Conframe" href="https://www.baidu.com/" style="font-size: smaller">增加一个求助人</a></li>
-                    <li><a target="Conframe"  href="/glove/user/putEmail.do" style="font-size: smaller">执行扣钱</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do" style="font-size: smaller">增加一个求助人</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/costMoney.do" style="font-size: smaller">执行扣钱</a></li>
                 </ul>
             </li>
         </ul>
@@ -101,7 +101,7 @@
         <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/putaohelp/html/test.html"
                 class="page-ifream"
                 frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                width="100%" height="2900">
+                width="100%" height="3900">
         </iframe>
     </div>
 </div>

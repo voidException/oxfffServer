@@ -8,6 +8,8 @@ import java.util.Map;
 public interface NewsMapper {
     int deleteByPrimaryKey(Long id);
 
+    int deleteByNewsUUID(String  newsuuid); //根据newsuuid删除新闻
+
     int insert(News record);
 
     int insertSelective(News record);

@@ -41,5 +41,7 @@ public interface UserStaffMapper {
     //
     List<UserStaff> selectTotalStaff(Map<String,Object> map);
 
+    List<UserStaff> selectTotalStaff2(Map<String,Object> map);
+
     int getTotalStaff();
 }

@@ -41,7 +41,7 @@
         <include refid="Base_Column_List" />
         from userAccount
         where userUUID= #{usruuid}
-        limit 0,50
+        limit 0,10
     </select>
 
     <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >

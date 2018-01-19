@@ -15,8 +15,16 @@
     redMoneyID, redMoneyUUID, userUUID, redMoney, redMoneyDate, userUUIDClick, redMoneyState, 
     loseFuncDate
   </sql>
+
+  <!--countByState-->
+  <select id="countByState" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from redMoney
+    where  redMoneyState= #{redMoneyState}
+  </select>
+
+
   <!--and <![CDATA[redMoneyDate< #{redMoneyDate}]]>-->
-  <select id="selectAllUserRedMoney" resultMap="BaseResultMap" parameterType="Map">
+  <select id="selectAllUserRedMoney" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     SELECT
     <include refid="Base_Column_List" />
     from redMoney

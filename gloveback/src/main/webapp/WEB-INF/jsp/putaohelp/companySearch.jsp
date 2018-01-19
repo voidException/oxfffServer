@@ -33,6 +33,7 @@
             width: 80px;
             background-color: #00BB3B;
             color: #ffffff;
+            border-radius: 3px; ;
         }
         .item{
             display: flex;
@@ -68,6 +69,23 @@
             display: flex;
             flex-direction: row;
         }
+        .left{
+            width: 400px;
+        }
+        .stafflist{
+            display: none;
+        }
+        .page{
+            display: flex;
+            flex-direction: row;
+            width: 300px;
+            justify-content: space-around;
+            border-bottom: #2FAC4C 1px  solid;
+        }
+        .pageUp{
+              cursor: pointer;
+              color: #0070FF;
+          }
     </style>
 </head>
 <body>
@@ -78,7 +96,7 @@
     </div>
     <div class="wrap">
         <!--左边-->
-        <div>
+        <div class="left">
             <template  class="temp" v-for="item in data">
              <div class="contain">
                  <div class="itemWrapper">
@@ -106,17 +124,20 @@
                  </div>
 
                 <div class="itemWrapperRight">
-                    <div  class="staff"  v-on:click="getStaffList"  v-bind:data-helptype="item.helptype"    v-bind:data-uuid="item.useruuid">员工>></div>
+                    <div  class="staff"  v-on:click="getStaffList"
+                          v-bind:data-helptype="item.helptype"
+                          v-bind:data-uuid="item.useruuid">
+                        员工>></div>
                 </div>
              </div>
             </template>
         </div>
         <!--右边-->
         <div class="stafflist" id="stafflist">
-            <%--<div class="page">--%>
-            <%--<div v-on:click="goUpPage">上一页</div>--%>
-            <%--<div v-on:click="goNextPage">下一页</div>--%>
-            <%--</div>--%>
+            <div class="page">
+                <div  v-on:click="goStaffUpPage"   class="pageUp">上一页</div>
+                <div  v-on:click="goStaffNextPage"   class="pageUp">下一页</div>
+            </div>
             <template  class="temp" v-for="item in staffList">
                 <div class="contain">
                     <div class="itemWrapper">
@@ -143,6 +164,7 @@
                     </div>
                 </div>
             </template>
+
         </div>
     </div>
 

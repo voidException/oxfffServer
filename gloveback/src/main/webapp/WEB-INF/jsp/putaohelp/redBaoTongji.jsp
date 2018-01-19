@@ -36,15 +36,15 @@
 <div class="contain">
     <div class="item">
         <div class="kongxi">未激活红包金额</div>
-        <div>1000（元）</div>
+        <div>{{redBaoTongji.unactive}}（元）</div>
     </div>
     <div class="item">
         <div class="kongxi">已激活红包金额</div>
-        <div>1000（元）</div>
+        <div>{{redBaoTongji.active}}（元）</div>
     </div>
     <div class="item">
         <div class="kongxi">已使用红包金额</div>
-        <div>1000（元）</div>
+        <div>{{redBaoTongji.used}}（元）</div>
     </div>
 </div>
 </div>
