@@ -16,29 +16,69 @@
             justify-content: flex-start;
             align-items: center;
             padding-left: 10px;
-            width: 460px;
-            border-bottom: #00BB3B 1px solid;
+            height: 50px;
+        }
+        .itemBig{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 10px;
+            height: 70px;
         }
         .itemLeft{
-            width: 160px;
-            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            float: left;
+            font-size: 14px;
+            color: #48576a;
+            line-height: 1;
+            padding: 11px 12px 11px 0;
+            box-sizing: border-box;
+            width: 100px;
+        }
+        .common{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid #bfcbd9;
+            box-sizing: border-box;
+            color: #1f2d3d;
+            display: block;
+            font-size: inherit;
+            height: 36px;
+            line-height: 1;
+            outline: 0;
+            padding: 3px 10px;
+            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            width: 200px;
         }
 
-        textarea{
-            width: 300px;
-            height: 60px;
-            border-top: #ffffff ;
-            border-bottom: #ffffff;
-            border-left:#00BB3B 1px solid;
-            border-right: #00BB3B 1px solid;
+        .eltextarea {
+            display: block;
+            resize: vertical;
+            padding: 5px 7px;
+            line-height: 1.5;
+            color: #1f2d3d;
+            background-color: #fff;
+            width: 400px;
+            border: 1px solid #bfcbd9;
+            border-radius: 4px;
+            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
         }
         .submit{
-            width: 300px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
             height: 30px;
-            text-align: center;
-            vertical-align:middle;
             background-color: #00BB3B;
             color: #ffffff;
+            font-size: 18px;
         }
         .submitCon{
             display: flex;
@@ -53,87 +93,90 @@
 <div  id="addHelpMan">
 
     <div class="item">
-        <div class="itemLeft">受助人姓名：</div>
-        <textarea  id="name" placeholder=""></textarea>
+        <div class="itemLeft">姓名：</div>
+        <input id="name"  class="common" type="text"  autocomplete="off"  min="0" max="200" placeholder="" />
     </div>
     <div class="item">
-        <div class="itemLeft">受助人身份证号：</div>
-        <textarea  id="userIdentity" placeholder=""></textarea>
+        <div class="itemLeft">身份证号：</div>
+        <input  id="userIdentity"  class="common"  type="text"  autocomplete="off"  min="0" max="200"placeholder="" />
     </div>
     <div class="item">
-        <div class="itemLeft">互助计划类别：</div>
-        <textarea  id="categoryType" placeholder=""></textarea>
+        <div class="itemLeft">互助计划：</div>
+        <select id="ide" style="width: 200px">
+            <option value="staff" >企业员工大病互助计划</option>
+            <option value="employee">企业员工意外伤害互助计划</option>
+            <option value="little">少儿健康互助</option>
+            <option value="young">中青年抗癌互助计划</option>
+            <option value="old">中老年抗癌互助计划</option>
+            <option value="zonghe">综合意外互助计划</option>
+        </select>
     </div>
     <div class="item">
-        <div class="itemLeft">所需要的钱数：</div>
-        <textarea  id="needMoney" placeholder=""></textarea>
+        <div class="itemLeft">所需钱数：</div>
+        <input  class="common" type="text"  autocomplete="off"  min="0" max="200" placeholder="" />
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">事件概况：</div>
-        <textarea  id="description" placeholder="七牛云图片url粘贴在这里"></textarea>
+        <textarea  id="description"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">调查过程1：</div>
-        <textarea  id="diaoChaProcess1"  placeholder="文章的url粘贴在这里"></textarea>
+        <textarea  id="diaoChaProcess1"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">调查过程2：</div>
-        <textarea  id="diaoChaProcess2"  placeholder="1或者2"></textarea>
+        <textarea  id="diaoChaProcess2"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">调查过程3：</div>
-        <textarea  id="diaoChaProcess3"  placeholder="1或者2"></textarea>
+        <textarea  id="diaoChaProcess3"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">调查过程4：</div>
-        <textarea  id="diaoChaProcess4"  placeholder="1或者2"></textarea>
+        <textarea  id="diaoChaProcess4"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">互助详情1：</div>
-        <textarea  id="helpDetailOne"  placeholder="1或者2"></textarea>
+        <textarea  id="helpDetailOne"   class="eltextarea" rows="3"></textarea>
     </div>
 
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">互助详情2：</div>
-        <textarea  id="helpDetailTwo"  placeholder="1或者2"></textarea>
+        <textarea  id="helpDetailTwo"   class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片1：</div>
-        <textarea  id="imag1"  placeholder="1或者2"></textarea>
+        <textarea  id="img1"   class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片2：</div>
-        <textarea  id="imag2"  placeholder="1或者2"></textarea>
+        <textarea  id="img2"   class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片3：</div>
-        <textarea  id="imag3"  placeholder="1或者2"></textarea>
+        <textarea  id="imag3" class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片4：</div>
-        <textarea  id="imag4"  placeholder="1或者2"></textarea>
+        <textarea  id="imag4"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片5：</div>
-        <textarea  id="imag5"  placeholder="1或者2"></textarea>
+        <textarea  id="imag5"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片6：</div>
-        <textarea  id="imag6"  placeholder="1或者2"></textarea>
+        <textarea  id="imag6"  class="eltextarea" rows="3"></textarea>
     </div>
 
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片7：</div>
-        <textarea  id="imag7"  placeholder="1或者2"></textarea>
+        <textarea  id="imag7"  class="eltextarea" rows="3"></textarea>
     </div>
-    <div class="item">
+    <div class="itemBig">
         <div class="itemLeft">图片8：</div>
-        <textarea  id="imag8"  placeholder="1或者2"></textarea>
+        <textarea  id="imag8"  class="eltextarea" rows="3"></textarea>
     </div>
-
-
-
-
     <div class="submitCon">
         <div  v-on:click="addNews"  class="submit">提交</div>
     </div>

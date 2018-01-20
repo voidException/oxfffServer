@@ -13,87 +13,86 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/shenhelist.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
+    <style>
+        .page{
+            display: flex;
+            flex-direction: row;
+            width: 260px;
+            justify-content: space-around;
+        }
+        .pageUp{
+            cursor: pointer;
+            color: #0070FF;
+        }
+        .item{
+            display: flex;
+            flex-direction: row;
+            width: 260px;
+            justify-content: flex-start;
+        }
+        .itemWrapper{
+            display: flex;
+            flex-direction: row;
+            border-bottom: #00BB3B  1px solid;
+            border-right: #00BB3B  1px solid;
+            width: 300px;
+            padding: 10px;
+        }
+        #userlist{
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
 </head>
 <body>
-<div class="wrapper">
-<div class="itemDetail">
-    <c:forEach items="${data}" var="arr">
-        <div  class="item">
+<div id="userlist">
 
-            <div>
-                <div class="zoo">
-                    <div>姓名：</div>
-                    <div><c:out value="${arr.usernickname}"></c:out></div>
-                </div>
-                <div class="zoo">
-                    <div>手机号：</div>
-                    <div><c:out  value="${arr.userphone}"></c:out></div>
-                </div>
-
-                <div class="zoo">
-                    <div>注册时间：</div>
-                    <div><fmt:formatDate value="${arr.registerdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
-                </div>
-            </div>
-            <a target="accountlist" href="/glove/grapeAdmin/accountlist.do?useruuid=<c:out value="${arr.useruuid}"></c:out>" >详情>></a>
+    <div class="left">
+        <div class="page">
+            <div v-on:click="goUpPage"    class="pageUp">上一页</div>
+            <div v-on:click="goNextPage"  class="pageUp">下一页</div>
         </div>
-    </c:forEach>
-</div>
-<iframe  class="page-ifream" name="accountlist" id="accountlist"
-         src="<%=contextPath%>/resources/putaohelp/html/test.html"
-         frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-         width="100%" height="2500">
-</iframe>
+        <template  class="temp" v-for="item in data">
+            <div class="itemWrapper">
+                <div>
+                    <div class="item">
+                        <div>用户昵称：</div>
+                        <div style="margin-right: 10px ;color: red">{{item.usernickname}}</div>
+                    </div>
+                    <div class="item">
+                        <div>手机号：</div>
+                        <div style="margin-right: 10px ;color: red">{{item.userphone}}</div>
+                    </div>
+                    <div class="item">
+                        <div>注册时间：</div>
+                        <div style="margin-right: 10px ;color: red">{{item.registerdate}}</div>
+                    </div>
+                </div>
+                <div   v-on:click="getAccounts"  v-bind:data-uuid="item.useruuid"    style="cursor: pointer;color: #00BB3B">成员</div>
+            </div>
+        </template>
+    </div>
+    <div class="right">
+        <div class="page">
+            <div v-on:click="goUpPageAccount"    class="pageUp">上一页</div>
+            <div v-on:click="goNextPageAccount"  class="pageUp">下一页</div>
+        </div>
+        <template  class="temp" v-for="item in dataAccount">
+            <div class="itemWrapper">
+                <div>
+                    <div class="item">
+                        <div>用户昵称：</div>
+                        <div style="margin-right: 10px ;color: red">{{item.username}}</div>
+                    </div>
+                    <div class="item">
+                        <div>手机号：</div>
+                        <div style="margin-right: 10px ;color: red">{{item.categorytype}}</div>
+                    </div>
+            </div>
+        </template>
+    </div>
+
 </div>
 </body>
-<style>
-    a{
-        text-decoration: none;
-        color: #00BB3B;
-    }
-    .waitCheck{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 30px;
-        width: 100px;
-        background-color: #0000FF;
-        color: white;
-        border-radius: 5px;
-    }
-    .wrapper{
-        display: flex;
-        flex-direction: row;
-    }
-    .temp{
-        display: flex;
-        flex-direction: column;
-    }
-    .item{
-        display: flex;
-        flex-direction: row;
-        width: 350px;
-        justify-content: space-between;
-        padding-right: 20px;
-        padding-left: 10px;
-        border-bottom: #00BB3B 1px solid;
-        //height: 30px;
-    }
-    .zoo{
-        display: flex;
-        flex-direction: row;
-        height: 30px;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 1px;
-        //background-color: #999999;
-    }
-    .itemDetail{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-
-</style>
+<script src="<%=contextPath%>/resources/putaohelp/js/userlist.js"></script>
 </html>

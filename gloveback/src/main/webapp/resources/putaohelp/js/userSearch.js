@@ -11,12 +11,13 @@ new Vue({
     data: {
         dataUser:{},
         accountList:[],
-        userAccount:[]
+        userAccount:[],
+        lookDetail:{},
+        page:1
     },
     mounted: function () {
     },
     methods: {
-
         doAccountSearch:function () {
             //根据身份证检索这个人的互助信息account
             let account=document.getElementById("account").value;
@@ -52,8 +53,10 @@ new Vue({
                 }}).then(response => {
                 //存储或者改变相应的值
                 if (response.data.retcode==2000){
-                    //console.log(response.data);
-                    this.dataUser=response.data.result;
+
+                     document.getElementById("userBodyContain").style.display='flex'
+                     this.dataUser=response.data.result;
+                    this.useruuid=this.dataUser.useruuid;
                 }
 
             }, err => {
@@ -61,11 +64,12 @@ new Vue({
             });
         },
         getAccountList:function(){
-            let useruuid=document.getElementById("useruuid").innerText;
 
             var param = new FormData();
             param.append('token',"token");
-            param.append('useruuid',useruuid);
+            param.append('useruuid',this.useruuid);
+            param.append("page",1);
+            param.append("pageSize",20)
 
             axios.post('/glove/grapeAdmin/doAccountListSearch.do',param,{
                 headers: {
@@ -80,6 +84,74 @@ new Vue({
 
             });
         },
+        getlookDetail:function (event) {
+
+            let accountuuid=event.target.getAttribute("data-accountuuid");
+            let categorytype=event.target.getAttribute("data-categorytype");
+            document.getElementById("modal").style.display='flex'
+            // 在accountList 列表中查找
+            for (var i=0;i<this.accountList.length;i++){
+                if (accountuuid==this.accountList[i].accountuuid && categorytype==this.accountList[i].categorytype){
+                    this.lookDetail=this.accountList[i];
+                }
+            }
+        },
+        doClose:function () {
+            document.getElementById("modal").style.display='none'
+        },
+        pageNext:function () {
+            //下一页
+            if (this.accountList.length<20){
+                return
+            }
+            this.page++ ;
+            var param = new FormData();
+            param.append('token',"token");
+            param.append('useruuid',this.useruuid);
+            param.append("page",this.page);
+            param.append("pageSize",20)
+
+            axios.post('/glove/grapeAdmin/doAccountListSearch.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    this.accountList=response.data.result;
+                }
+
+            }, err => {
+
+            });
+
+
+        },
+        pageUp:function () {
+            //上一页
+            if (this.page<=1){
+                return
+            }
+            this.page-- ;
+            var param = new FormData();
+            param.append('token',"token");
+            param.append('useruuid',this.useruuid);
+            param.append("page",this.page);
+            param.append("pageSize",20)
+
+            axios.post('/glove/grapeAdmin/doAccountListSearch.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    this.accountList=response.data.result;
+                }
+
+            }, err => {
+
+            });
+
+        }
 
     },
 

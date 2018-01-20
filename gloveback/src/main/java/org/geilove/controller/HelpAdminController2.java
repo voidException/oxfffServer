@@ -271,52 +271,73 @@ public class HelpAdminController2 {
         return resp;
     }
 
+    //************用户列表--路由
+    @RequestMapping(value="/gouserlist.do",method = RequestMethod.GET)
+    public ModelAndView gouserlist( HttpServletRequest request) {
+        ModelAndView mav=new ModelAndView("putaohelp/userlist");
+        return mav;
+    }
+    //*******用户列表-获得数据
+    @RequestMapping(value="/getUseList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getUserList( HttpServletRequest request) {
+        Response<List<User>> resp=new Response<>(); //
 
-    //***********************用户列表*******************************
-    @RequestMapping(value="/userlist.do",method = RequestMethod.GET)
-    public ModelAndView userlist( HttpServletRequest request) {
-        String pagestr = request.getParameter("page");
+        String token=request.getParameter("token");
+        String pageStr = request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
 
-        Integer page=Integer.valueOf(pagestr);
+        Integer page=Integer.valueOf(pageStr);
+        Integer pageSize=Integer.valueOf(pageSizeStr);
+
         Map<String,Object> map=new HashMap<>();
         map.put("page",page);
-        map.put("pageSize",200);
+        map.put("pageSize",pageSize);
         List<User> users=null;
         try {
             users=userMapper.getUserList(map);
+            if (users==null ||users.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            resp.failByException();
+            return resp;
         }
-
-        ModelAndView mav=new ModelAndView("putaohelp/userlist","data",users);
-        return mav;
+        resp.success(users);
+        return resp;
     }
 
-
-
-
-
-
-
     //*************用户列表下的accountlist列表
-    @RequestMapping(value="/accountlist.do",method = RequestMethod.GET)
-    public ModelAndView accountlist( HttpServletRequest request) {
+    @RequestMapping(value="/accountlist.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object accountlist( HttpServletRequest request) {
+        Response<List<UserAccount>> resp=new Response<>(); //
+
         String useruuid = request.getParameter("useruuid");
+        String pageStr=request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
+        int page=Integer.valueOf(pageStr);
+        int pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize; //必须这么做
 
         Map<String,Object> map=new HashMap<>();
         map.put("usruuid",useruuid);
-        map.put("page",0);
-        map.put("pageSize",10);
+        map.put("page",page);
+        map.put("pageSize",pageSize);
         List<UserAccount> accountList=null;
         try {
-            //
             accountList=userAccountMapper.getAccountsByuserUUID(map);
+            if (accountList==null ||accountList.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            resp.failByException();
+            return resp;
         }
-
-        ModelAndView mav=new ModelAndView("putaohelp/useraccountlist","data",accountList);
-        return mav;
+        resp.success(accountList);
+        return resp;
     }
     //*********用户信息统计
     @RequestMapping(value="/userInfoTongji.do",method = RequestMethod.GET)

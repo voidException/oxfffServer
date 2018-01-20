@@ -44,7 +44,7 @@
                 <a href="#" style="font-weight: bolder">家庭用户</a>
                 <ul>
                     <li><a target="Conframe"  href="/glove/grapeAdmin/userInfoTongji.do" style="font-size: smaller">用户统计</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userlist.do?page=0" style="font-size: smaller">用户列表</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/gouserlist.do" style="font-size: smaller">用户列表</a></li>
                     <li><a target="Conframe"  href="/glove/grapeAdmin/userSearch.do" style="font-size: smaller">检索</a></li>
                 </ul>
             </li>
