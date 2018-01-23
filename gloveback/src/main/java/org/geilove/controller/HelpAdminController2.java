@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -42,7 +43,8 @@ public class HelpAdminController2 {
     private  RedMoneyMapper redMoneyMapper; //
     @Resource
     private  NewsMapper newsMapper;
-
+    @Resource
+    private PublicMapper publicMapper;
     // 1.获得用户提交的认证的资料列表
     @RequestMapping("/getPutaoauths.do")
     @ResponseBody
@@ -703,6 +705,23 @@ public class HelpAdminController2 {
         ModelAndView mav=new ModelAndView("putaohelp/zijinTongji");
         return mav ;
     }
+    // 路由，跳转到对账
+    @RequestMapping(value="/goDuizhang.do",method = RequestMethod.GET)
+    public ModelAndView goDuizhang( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/duizhang");
+        return mav ;
+    }
+    //对账-个人对账，总金额对账
+    @RequestMapping(value="/duizhang.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object duizhuang( HttpServletRequest request) {
+        Response<String> resp = new Response<>();
+
+        return resp;
+    }
+
+
+
     // 路由，红包金额统计
     @RequestMapping(value="/redBaoTongji.do",method = RequestMethod.GET)
     public ModelAndView redBaoTongji( HttpServletRequest request){
@@ -853,11 +872,91 @@ public class HelpAdminController2 {
     public Object doAddHelpMan( HttpServletRequest request){
         Response<String> resp = new Response<>();
         //获取提交的信息
+        String name=request.getParameter("name");
+        String userIdentity=request.getParameter("userIdentity");
+        String helpType=request.getParameter("helpType");
+        String joinDate=request.getParameter("joinDate");
+        String effectDate=request.getParameter("effectDate");
+        String description=request.getParameter("description");
+        String diaoChaProcess1=request.getParameter("diaoChaProcess1");
+        String diaoChaProcess2=request.getParameter("diaoChaProcess2");
+        String diaoChaProcess3=request.getParameter("diaoChaProcess3");
+        String diaoChaProcess4=request.getParameter("diaoChaProcess4");
 
+        String img1=request.getParameter("img1");
+        String img2=request.getParameter("img2");
+        String img3=request.getParameter("img3");
+        String img4=request.getParameter("img4");
+        String img5=request.getParameter("img5");
+        String img6=request.getParameter("img6");
+        String img7=request.getParameter("img7");
+        String img8=request.getParameter("img8");
 
-
-
+        Public pubhelped=new Public();
+        pubhelped.setPublicuuid(UUID.randomUUID().toString());
+        pubhelped.setUsername(name);
+        pubhelped.setUseridentity(userIdentity);
+        pubhelped.setCategorytype(helpType);
+        pubhelped.setDescription(description);
+        pubhelped.setDiaochaprocess1(diaoChaProcess1);
+        pubhelped.setDiaochaprocess2(diaoChaProcess2);
+        pubhelped.setDiaochaprocess3(diaoChaProcess3);
+        pubhelped.setDiaochaprocess4(diaoChaProcess4);
+        pubhelped.setImg1(img1);
+        pubhelped.setImg2(img2);
+        pubhelped.setImg3(img3);
+        pubhelped.setImg4(img4);
+        pubhelped.setImg5(img5);
+        pubhelped.setImg6(img6);
+        pubhelped.setImg7(img7);
+        pubhelped.setImg8(img8);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date joinDateDate=sdf.parse(joinDate);
+            pubhelped.setJoindate(joinDateDate);
+            Date effectDateDate=sdf.parse(effectDate);
+            pubhelped.setEffectdate(effectDateDate);
+        }catch (Exception e){
+           resp.failByException();
+           return  resp;
+        }
+        try{
+            int addtag=publicMapper.insertSelective(pubhelped); //
+            if (addtag!=1){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success("发布成功");
         return resp ;
+    }
+
+    //执行扣钱-路由
+    @RequestMapping(value="/goCostMoney.do",method = RequestMethod.GET)
+    public ModelAndView goCostMoney( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/costMoney");
+        return mav ;
+    }
+    //执行扣钱
+    @RequestMapping(value="/costMoney.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object costMoney( HttpServletRequest request) {
+        Response<String> resp = new Response<>();
+
+        String name=request.getParameter("name");
+        String account=request.getParameter("account");
+        String phone=request.getParameter("phone");
+        String helpType=request.getParameter("helpType");
+        String money=request.getParameter("money");
+
+        // 1.进行数据校验
+        // 2.取得参与该计划的总人数，求得每个人应该扣除的钱数
+        // 3. 循环遍历userAccount 执行扣钱，并在扣钱记录表中进行数据写入
+
+        return resp;
     }
 
 

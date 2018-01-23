@@ -16,4 +16,16 @@ public interface T_userDao {
     Set<String> findRoles(String username);
 
     Set<String> findPermissions(String username);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(T_user record);
+
+    int insertSelective(T_user record);
+
+    T_user selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(T_user record);
+
+    int updateByPrimaryKey(T_user record);
 }

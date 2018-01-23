@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.UserRole" >
+    <id column="userRoleid" property="userroleid" jdbcType="INTEGER" />
+    <result column="tuserid" property="tuserid" jdbcType="INTEGER" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userRoleid, tuserid, roleid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userRole
+    where userRoleid = #{userroleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userRole
+    where userRoleid = #{userroleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.UserRole" >
+    insert into userRole (userRoleid, tuserid, roleid
+      )
+    values (#{userroleid,jdbcType=INTEGER}, #{tuserid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.UserRole" >
+    insert into userRole
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userroleid != null" >
+        userRoleid,
+      </if>
+      <if test="tuserid != null" >
+        tuserid,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userroleid != null" >
+        #{userroleid,jdbcType=INTEGER},
+      </if>
+      <if test="tuserid != null" >
+        #{tuserid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.UserRole" >
+    update userRole
+    <set >
+      <if test="tuserid != null" >
+        tuserid = #{tuserid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where userRoleid = #{userroleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.UserRole" >
+    update userRole
+    set tuserid = #{tuserid,jdbcType=INTEGER},
+      roleid = #{roleid,jdbcType=INTEGER}
+    where userRoleid = #{userroleid,jdbcType=INTEGER}
+  </update>
+</mapper>

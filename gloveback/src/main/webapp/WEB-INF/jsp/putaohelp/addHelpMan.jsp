@@ -112,8 +112,16 @@
         </select>
     </div>
     <div class="item">
+        <div class="itemLeft">加入日期：</div>
+        <input  id="joinDate"  class="common"  type="date"  autocomplete="off"  min="0" max="200"placeholder="" />
+    </div>
+    <div class="item">
+        <div class="itemLeft">生效日期：</div>
+        <input  id="effectDate"  class="common"  type="date"  autocomplete="off"  min="0" max="200"placeholder="" />
+    </div>
+    <div class="item">
         <div class="itemLeft">所需钱数：</div>
-        <input  class="common" type="text"  autocomplete="off"  min="0" max="200" placeholder="" />
+        <input  id="needMoney"  class="common" type="text"  autocomplete="off"  min="0" max="200" placeholder="" />
     </div>
     <div class="itemBig">
         <div class="itemLeft">事件概况：</div>
@@ -154,28 +162,28 @@
     </div>
     <div class="itemBig">
         <div class="itemLeft">图片3：</div>
-        <textarea  id="imag3" class="eltextarea" rows="3"></textarea>
+        <textarea  id="img3" class="eltextarea" rows="3"></textarea>
     </div>
     <div class="itemBig">
         <div class="itemLeft">图片4：</div>
-        <textarea  id="imag4"  class="eltextarea" rows="3"></textarea>
+        <textarea  id="img4"  class="eltextarea" rows="3"></textarea>
     </div>
     <div class="itemBig">
         <div class="itemLeft">图片5：</div>
-        <textarea  id="imag5"  class="eltextarea" rows="3"></textarea>
+        <textarea  id="img5"  class="eltextarea" rows="3"></textarea>
     </div>
     <div class="itemBig">
         <div class="itemLeft">图片6：</div>
-        <textarea  id="imag6"  class="eltextarea" rows="3"></textarea>
+        <textarea  id="img6"  class="eltextarea" rows="3"></textarea>
     </div>
 
     <div class="itemBig">
         <div class="itemLeft">图片7：</div>
-        <textarea  id="imag7"  class="eltextarea" rows="3"></textarea>
+        <textarea  id="img7"  class="eltextarea" rows="3"></textarea>
     </div>
     <div class="itemBig">
         <div class="itemLeft">图片8：</div>
-        <textarea  id="imag8"  class="eltextarea" rows="3"></textarea>
+        <textarea  id="img8"  class="eltextarea" rows="3"></textarea>
     </div>
     <div class="submitCon">
         <div  v-on:click="addNews"  class="submit">提交</div>
@@ -199,7 +207,11 @@
                 //获得文章的信息
                 let name=document.getElementById("name").value;
                 let userIdentity=document.getElementById("userIdentity").value;
-                let categoryType=document.getElementById("categoryType").value;
+                let categoryType = document.getElementById("ide").value;
+                let joinDate=document.getElementById("joinDate").value;
+                let effectDate=document.getElementById("effectDate").value;
+                console.log(joinDate)
+                console.log(effectDate)
                 let needMoney=document.getElementById("needMoney").value;
                 let description=document.getElementById("description").value;
                 let diaoChaProcess1=document.getElementById("diaoChaProcess1").value;
@@ -208,34 +220,36 @@
                 let diaoChaProcess4=document.getElementById("diaoChaProcess4").value;
                 let helpDetailOne=document.getElementById("helpDetailOne").value;
                 let helpDetailTwo=document.getElementById("helpDetailTwo").value;
-                let imag1=document.getElementById("imag1").value;
-                let imag2=document.getElementById("imag2").value;
-                let imag3=document.getElementById("imag3").value;
-                let imag4=document.getElementById("imag4").value;
-                let imag5=document.getElementById("imag5").value;
-                let imag6=document.getElementById("imag6").value;
-                let imag7=document.getElementById("imag7").value;
-                let imag8=document.getElementById("imag8").value;
+                let img1=document.getElementById("img1").value;
+                let img2=document.getElementById("img2").value;
+                let img3=document.getElementById("img3").value;
+                let img4=document.getElementById("img4").value;
+                let img5=document.getElementById("img5").value;
+                let img6=document.getElementById("img6").value;
+                let img7=document.getElementById("img7").value;
+                let img8=document.getElementById("img8").value;
 
                 let param=new  FormData();
                 param.append("name",name);
                 param.append("userIdentity",userIdentity);
-                param.append("categoryType",categoryType);
+                param.append("helpType",categoryType);
+                param.append("joinDate",joinDate);
+                param.append("effectDate",effectDate);
                 param.append("description",description);
                 param.append("diaoChaProcess1",diaoChaProcess1);
                 param.append("diaoChaProcess2",diaoChaProcess2);
                 param.append("diaoChaProcess3",diaoChaProcess3);
                 param.append("diaoChaProcess4",diaoChaProcess4);
-                param.append("imag1",imag1);
-                param.append("imag2",imag2);
-                param.append("imag3",imag3);
-                param.append("imag4",imag4);
-                param.append("imag5",imag5);
-                param.append("imag6",imag6);
-                param.append("imag7",imag7);
-                param.append("imag8",imag8);
+                param.append("img1",img1);
+                param.append("img2",img2);
+                param.append("img3",img3);
+                param.append("img4",img4);
+                param.append("img5",img5);
+                param.append("img6",img6);
+                param.append("img7",img7);
+                param.append("img8",img8);
 
-                axios.post('/glove/grapeAdmin/doAddNews.do',param,{
+                axios.post('/glove/grapeAdmin/doAddHelpMan.do',param,{
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }}).then(response => {

@@ -65,7 +65,7 @@
                 <a href="#" style="font-weight: bolder">资金管理</a>
                 <ul>
                     <li><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do" style="font-size: smaller">资金统计</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do" style="font-size: smaller">对账</a></li>
+                    <li><a target="Conframe" href="/glove/grapeAdmin/goDuizhang.do" style="font-size: smaller">对账</a></li>
 
                 </ul>
             </li>
@@ -92,7 +92,7 @@
                 <a href="#" style="font-weight: bolder">互助管理</a>
                 <ul>
                     <li><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do" style="font-size: smaller">增加一个求助人</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/costMoney.do" style="font-size: smaller">执行扣钱</a></li>
+                    <li><a target="Conframe"  href="/glove/grapeAdmin/goCostMoney.do" style="font-size: smaller">执行扣钱</a></li>
                 </ul>
             </li>
         </ul>

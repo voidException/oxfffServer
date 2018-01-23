@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Resource" >
+    <id column="resourceid" property="resourceid" jdbcType="INTEGER" />
+    <result column="resourceNum" property="resourcenum" jdbcType="INTEGER" />
+    <result column="resourceName" property="resourcename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    resourceid, resourceNum, resourceName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where resourceid = #{resourceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from resource
+    where resourceid = #{resourceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Resource" >
+    insert into resource (resourceid, resourceNum, resourceName
+      )
+    values (#{resourceid,jdbcType=INTEGER}, #{resourcenum,jdbcType=INTEGER}, #{resourcename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Resource" >
+    insert into resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resourceid != null" >
+        resourceid,
+      </if>
+      <if test="resourcenum != null" >
+        resourceNum,
+      </if>
+      <if test="resourcename != null" >
+        resourceName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resourceid != null" >
+        #{resourceid,jdbcType=INTEGER},
+      </if>
+      <if test="resourcenum != null" >
+        #{resourcenum,jdbcType=INTEGER},
+      </if>
+      <if test="resourcename != null" >
+        #{resourcename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Resource" >
+    update resource
+    <set >
+      <if test="resourcenum != null" >
+        resourceNum = #{resourcenum,jdbcType=INTEGER},
+      </if>
+      <if test="resourcename != null" >
+        resourceName = #{resourcename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where resourceid = #{resourceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Resource" >
+    update resource
+    set resourceNum = #{resourcenum,jdbcType=INTEGER},
+      resourceName = #{resourcename,jdbcType=VARCHAR}
+    where resourceid = #{resourceid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.RoleResourceMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.RoleResource" >
+    <id column="roleResourceid" property="roleresourceid" jdbcType="INTEGER" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+    <result column="resourceid" property="resourceid" jdbcType="INTEGER" />
+    <result column="ok" property="ok" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    roleResourceid, roleid, resourceid, ok
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from roleResource
+    where roleResourceid = #{roleresourceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from roleResource
+    where roleResourceid = #{roleresourceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.RoleResource" >
+    insert into roleResource (roleResourceid, roleid, resourceid, 
+      ok)
+    values (#{roleresourceid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{resourceid,jdbcType=INTEGER}, 
+      #{ok,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.RoleResource" >
+    insert into roleResource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleresourceid != null" >
+        roleResourceid,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="resourceid != null" >
+        resourceid,
+      </if>
+      <if test="ok != null" >
+        ok,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleresourceid != null" >
+        #{roleresourceid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="resourceid != null" >
+        #{resourceid,jdbcType=INTEGER},
+      </if>
+      <if test="ok != null" >
+        #{ok,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.RoleResource" >
+    update roleResource
+    <set >
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="resourceid != null" >
+        resourceid = #{resourceid,jdbcType=INTEGER},
+      </if>
+      <if test="ok != null" >
+        ok = #{ok,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where roleResourceid = #{roleresourceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.RoleResource" >
+    update roleResource
+    set roleid = #{roleid,jdbcType=INTEGER},
+      resourceid = #{resourceid,jdbcType=INTEGER},
+      ok = #{ok,jdbcType=VARCHAR}
+    where roleResourceid = #{roleresourceid,jdbcType=INTEGER}
+  </update>
+</mapper>

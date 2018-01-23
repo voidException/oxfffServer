@@ -53,6 +53,7 @@
             line-height: 1;
             outline: 0;
             padding: 3px 10px;
+            font-size: 12px;
             transition: border-color .2s cubic-bezier(.645,.045,.355,1);
             width: 200px;
         }
