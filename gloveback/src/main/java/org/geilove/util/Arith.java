@@ -51,6 +51,8 @@ public class Arith{ //默认除法运算精度
     public static double div(double v1,double v2){
         return div(v1,v2,DEF_DIV_SCALE);
     }
+
+
     /**
      * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指
      * 定精度，以后的数字四舍五入。

@@ -3,7 +3,7 @@ package org.geilove.pojo;
 import java.util.Date;
 
 public class Deduction {
-    private Long deductionid;
+    private Integer deductionid;
 
     private String deductionuuid;
 
@@ -13,19 +13,23 @@ public class Deduction {
 
     private String userspendmoneyuuid;
 
-    private Long moneyspend;
+    private String moneyspend;
 
     private Date userspendmoneydate;
 
-    private Long theorymoneyspend;
+    private String theorymoneyspend;
 
     private String other;
 
-    public Long getDeductionid() {
+    private String userneedmoneyaccount;
+
+    private String userspendmoneyaccount;
+
+    public Integer getDeductionid() {
         return deductionid;
     }
 
-    public void setDeductionid(Long deductionid) {
+    public void setDeductionid(Integer deductionid) {
         this.deductionid = deductionid;
     }
 
@@ -61,12 +65,12 @@ public class Deduction {
         this.userspendmoneyuuid = userspendmoneyuuid == null ? null : userspendmoneyuuid.trim();
     }
 
-    public Long getMoneyspend() {
+    public String getMoneyspend() {
         return moneyspend;
     }
 
-    public void setMoneyspend(Long moneyspend) {
-        this.moneyspend = moneyspend;
+    public void setMoneyspend(String moneyspend) {
+        this.moneyspend = moneyspend == null ? null : moneyspend.trim();
     }
 
     public Date getUserspendmoneydate() {
@@ -77,12 +81,12 @@ public class Deduction {
         this.userspendmoneydate = userspendmoneydate;
     }
 
-    public Long getTheorymoneyspend() {
+    public String getTheorymoneyspend() {
         return theorymoneyspend;
     }
 
-    public void setTheorymoneyspend(Long theorymoneyspend) {
-        this.theorymoneyspend = theorymoneyspend;
+    public void setTheorymoneyspend(String theorymoneyspend) {
+        this.theorymoneyspend = theorymoneyspend == null ? null : theorymoneyspend.trim();
     }
 
     public String getOther() {
@@ -91,5 +95,21 @@ public class Deduction {
 
     public void setOther(String other) {
         this.other = other == null ? null : other.trim();
+    }
+
+    public String getUserneedmoneyaccount() {
+        return userneedmoneyaccount;
+    }
+
+    public void setUserneedmoneyaccount(String userneedmoneyaccount) {
+        this.userneedmoneyaccount = userneedmoneyaccount == null ? null : userneedmoneyaccount.trim();
+    }
+
+    public String getUserspendmoneyaccount() {
+        return userspendmoneyaccount;
+    }
+
+    public void setUserspendmoneyaccount(String userspendmoneyaccount) {
+        this.userspendmoneyaccount = userspendmoneyaccount == null ? null : userspendmoneyaccount.trim();
     }
 }

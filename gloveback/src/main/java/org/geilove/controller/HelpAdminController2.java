@@ -9,8 +9,10 @@ import org.apache.shiro.subject.Subject;
 import org.geilove.dao.*;
 import org.geilove.pojo.*;
 import org.geilove.service.T_userService;
+import org.geilove.util.Arith;
 import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
+import org.geilove.vo.CostMoney;
 import org.geilove.vo.RedBaoInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +47,8 @@ public class HelpAdminController2 {
     private  NewsMapper newsMapper;
     @Resource
     private PublicMapper publicMapper;
+    @Resource
+    private  DeductionMapper deductionMapper;
     // 1.获得用户提交的认证的资料列表
     @RequestMapping("/getPutaoauths.do")
     @ResponseBody
@@ -940,11 +944,12 @@ public class HelpAdminController2 {
         ModelAndView mav=new ModelAndView("putaohelp/costMoney");
         return mav ;
     }
-    //执行扣钱
+    //执行扣钱--适用于个人互助类型
     @RequestMapping(value="/costMoney.do",method = RequestMethod.POST)
     @ResponseBody
     public Object costMoney( HttpServletRequest request) {
-        Response<String> resp = new Response<>();
+        Response<CostMoney> resp = new Response<>();
+        CostMoney costMoney=new CostMoney();
 
         String name=request.getParameter("name");
         String account=request.getParameter("account");
@@ -952,14 +957,269 @@ public class HelpAdminController2 {
         String helpType=request.getParameter("helpType");
         String money=request.getParameter("money");
 
-        // 1.进行数据校验
-        // 2.取得参与该计划的总人数，求得每个人应该扣除的钱数
-        // 3. 循环遍历userAccount 执行扣钱，并在扣钱记录表中进行数据写入
+        String useruuid=""; //受助人从属的用户
+        Double kouqian=0.0;  //记录实际总的扣钱数量
 
+        // 1.进行数据校验
+        // 2.取得参与该计划的总人数，
+        int num=0;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("helpType",helpType);
+            num=userAccountMapper.getCountByhelpType(map);
+            if (num==0){
+                resp.failByNoInputData("计算该互助计划总人数出现错误");
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        // 3.求得每个人应该扣除的钱数
+        Double avager= Arith.div( Double.valueOf(money),Double.valueOf(num),new Integer(4));
+        //最高3.0元
+        if (Arith.sub(avager,Double.valueOf(3.0)) >0.0){
+            avager=3.0;
+        }
+        // 4. 循环遍历userAccount 执行扣钱，
+        List<UserAccount>  userAccounts=null;
+        try{
+            userAccounts=userAccountMapper.getSumInfo(helpType); //
+            if (userAccounts==null || userAccounts.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        for (UserAccount userAccount:userAccounts){
+            //循环执行扣钱
+            if ("stop".equals(userAccount.getNowstate()) || "nostart".equals(userAccount.getNowstate())){
+                continue;
+            }
+            // 正常状态下，执行扣钱
+            String  userMoney=userAccount.getPaytotalmoney(); //用户账户的余额
+            Double  userMoneyDouble=Double.parseDouble(userMoney);
+
+            if (Arith.sub(userMoneyDouble,Double.valueOf(avager))>0){ //账户余额大于本次应该扣除的钱数
+                //realCostMoney=avager; //
+                Double yuqian=Arith.sub(userMoneyDouble,Double.valueOf(avager));
+                userAccount.setPaytotalmoney(yuqian.toString()); //用户余额
+                try{
+                    //更新数据库
+                    int updateTag=userAccountMapper.updateByPrimaryKeySelective(userAccount);
+                    if (updateTag!=1){ //扣钱没有成功，应该跳出本次循环
+                        continue;
+                    }
+                }catch (Exception e){
+                    //记录日志
+                }
+                //本次扣钱成功，把钱进行累加
+                kouqian=Arith.add(kouqian,avager); //
+                // 写入扣钱记录表
+                try{
+                    Deduction deduction=new Deduction();
+                    deduction.setDeductionuuid(UUID.randomUUID().toString());
+                    deduction.setCategorytype(userAccount.getCategorytype());
+
+                    deduction.setUserneedmoneyuuid(useruuid); //受助人所属用户的useruuid
+                    deduction.setUserneedmoneyaccount(account); //受助人的身份证号
+
+                    deduction.setUserspendmoneyuuid(userAccount.getUseruuid());  //被扣钱人所属的用户的useruuid
+                    deduction.setUserspendmoneyaccount(userAccount.getUseraccountuuid()); //被扣钱人的身份证号
+
+                    deduction.setMoneyspend(avager.toString()); //实际扣除的钱数
+                    deduction.setTheorymoneyspend(avager.toString()); //理论应该被扣除的钱数
+                    deduction.setUserspendmoneydate(new Date());
+
+                    deduction.setOther("正常扣费");
+
+                    int insertTag=deductionMapper.insertSelective(deduction);
+                    //int insertTag=
+                }catch (Exception e){
+
+                }
+
+            }//if
+            else{  //账户余额不足
+                userAccount.setPaytotalmoney("0.0"); //用户的账户余额
+                try{
+                    //更新数据库
+                    int updateTag=userAccountMapper.updateByPrimaryKeySelective(userAccount);
+                    if (updateTag!=1){ //扣钱没有成功，应该跳出本次循环
+                        continue;
+                    }
+                }catch (Exception e){
+                    //记录日志
+                }
+                //本次扣钱成功，把钱进行累加
+                kouqian=Arith.add(kouqian,userMoneyDouble); //userMoneyDouble是用户的账户余额
+                try{
+                    Deduction deduction=new Deduction();
+                    deduction.setDeductionuuid(UUID.randomUUID().toString());
+                    deduction.setCategorytype(userAccount.getCategorytype());
+
+                    deduction.setUserneedmoneyuuid(useruuid); //受助人所属用户的useruuid
+                    deduction.setUserneedmoneyaccount(account); //受助人的身份证号
+
+                    deduction.setUserspendmoneyuuid(userAccount.getUseruuid());  //被扣钱人所属的用户的useruuid
+                    deduction.setUserspendmoneyaccount(userAccount.getUseraccountuuid()); //被扣钱人的身份证号
+
+                    deduction.setMoneyspend(avager.toString()); //实际扣除的钱数
+                    deduction.setTheorymoneyspend(avager.toString()); //理论应该被扣除的钱数
+                    deduction.setUserspendmoneydate(new Date());
+
+                    deduction.setOther("正常扣费");
+
+                    int insertTag=deductionMapper.insertSelective(deduction);
+                    //int insertTag=
+                }catch (Exception e){
+
+                }
+            }//else
+
+        } //for
+        costMoney.setRealMoney(kouqian.toString()); //实际口钱数
+        resp.success(costMoney);
         return resp;
     }
+    //执行扣钱--适用于公司互助类型
+    @RequestMapping(value="/costMoneyStaff.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object costMoneyStaff( HttpServletRequest request) {
+        Response<CostMoney> resp = new Response<>();
+        CostMoney costMoney = new CostMoney();
 
+        String name = request.getParameter("name");
+        String account = request.getParameter("account");
+        String phone = request.getParameter("phone");
+        String helpType = request.getParameter("helpType");
+        String money = request.getParameter("money");
 
+        String useruuid = ""; //受助人从属的用户
+        Double kouqian = 0.0;  //记录实际总的扣钱数量
+
+        // 1.进行数据校验
+
+        // 2.取得参与该计划的总人数，
+        int num=0;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("helpType",helpType);
+            map.put("affirm","yes"); //必须是确认了
+            num=userStaffMapper.getTotalByHelpType(map);
+            if (num==0){
+                resp.failByNoInputData("计算该互助计划总人数出现错误");
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        // 3.求得每个人应该扣除的钱数
+        Double avager= Arith.div( Double.valueOf(money),Double.valueOf(num),new Integer(4));
+        //最高3.0元
+        if (Arith.sub(avager,Double.valueOf(3.0)) >0.0){
+            avager=3.0;
+        }
+
+        // 4.  循环遍历 Companyputao 执行扣钱，
+        List<Companyputao>  companyputaos=null;
+        try{
+            companyputaos=companyputaoMapper.getSumInfo(helpType);
+            if (companyputaos==null || companyputaos.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        for (Companyputao companyputao:companyputaos){
+            //
+            int staffall=companyputao.getStaffall(); //员工总人数
+            //计算本次公司应该扣除的总钱数
+            Double shouldCostMoney=Arith.mul(avager,staffall); //
+            //计算公司的总金额，如若不够，则扣除全部，
+            String  totalmoneystr=companyputao.getTotalmoenystr(); //公司总金额Str
+            Double  totalmoneydou=Double.parseDouble(totalmoneystr); // 公司总金额Double
+            if (Arith.sub(totalmoneydou,shouldCostMoney)<0){ //余额不足，应该扣除全部，然后设置nowstate为stop
+                companyputao.setTotalmoenystr("0.0");
+                companyputao.setNeedtips("您的余额不足");
+                companyputao.setAverage("0"); //平均数为0
+                companyputao.setUpdatedate(new Date());
+                try{
+                    int updateTag=companyputaoMapper.updateByPrimaryKeySelective(companyputao);
+                    if (updateTag!=1){
+                        continue;
+                    }
+                }catch (Exception e){
+                    //记录日志，结束本次循环
+                    continue;
+                }
+                kouqian=Arith.add(kouqian,totalmoneydou);
+                try{
+                    Deduction deduction=new Deduction();
+                    deduction.setDeductionuuid(UUID.randomUUID().toString());
+                    deduction.setCategorytype(companyputao.getHelptype());
+
+                    deduction.setUserneedmoneyuuid(useruuid); //受助人所属用户的useruuid
+                    deduction.setUserneedmoneyaccount(account); //受助人的身份证号
+
+                    deduction.setUserspendmoneyuuid(companyputao.getUseruuid());  //被扣钱人所属的用户的useruuid
+                    deduction.setUserspendmoneyaccount(companyputao.getCompanyuuid()); //被扣钱人的身份证号
+
+                    deduction.setMoneyspend(totalmoneystr.toString()); //实际扣除的钱数
+                    deduction.setTheorymoneyspend(shouldCostMoney.toString()); //理论应该被扣除的钱数
+                    deduction.setUserspendmoneydate(new Date());
+                    //deduction.setOther("正常扣费");
+
+                    int insertTag=deductionMapper.insertSelective(deduction);
+                    //int insertTag=
+                }catch (Exception e){
+                    continue;
+                }
+            }//if
+            else{ //公司余额足够
+                Double yuqian=Arith.sub(totalmoneydou,Double.valueOf(shouldCostMoney));
+                companyputao.setTotalmoenystr(yuqian.toString());
+                companyputao.setUpdatedate(new Date());
+                try{
+                    int updateTag=companyputaoMapper.updateByPrimaryKeySelective(companyputao);
+                    if (updateTag!=1){
+                        continue;
+                    }
+                }catch (Exception e){
+                    continue;
+                }
+                kouqian=Arith.add(kouqian,shouldCostMoney); //上一步更新成功，本次扣钱应该累加
+                try{
+                    Deduction deduction=new Deduction();
+                    deduction.setDeductionuuid(UUID.randomUUID().toString());
+                    deduction.setCategorytype(companyputao.getHelptype());
+
+                    deduction.setUserneedmoneyuuid(useruuid); //受助人所属用户的useruuid
+                    deduction.setUserneedmoneyaccount(account); //受助人的身份证号
+
+                    deduction.setUserspendmoneyuuid(companyputao.getUseruuid());  //被扣钱人所属的用户的useruuid
+                    deduction.setUserspendmoneyaccount(companyputao.getCompanyuuid()); //被扣钱人的身份证号
+
+                    deduction.setMoneyspend(shouldCostMoney.toString()); //实际扣除的钱数
+                    deduction.setTheorymoneyspend(shouldCostMoney.toString()); //理论应该被扣除的钱数
+                    deduction.setUserspendmoneydate(new Date());
+                    //deduction.setOther("正常扣费");
+
+                    int insertTag=deductionMapper.insertSelective(deduction);
+                }catch (Exception e){
+                    continue;
+                }
+            }//else
+        }
+        costMoney.setRealMoney(kouqian.toString());
+        resp.success(costMoney);
+        return  resp;
+    }
 
 }
 

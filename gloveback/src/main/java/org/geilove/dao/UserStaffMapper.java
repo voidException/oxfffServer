@@ -44,4 +44,8 @@ public interface UserStaffMapper {
     List<UserStaff> selectTotalStaff2(Map<String,Object> map);
 
     int getTotalStaff();
+
+    int getTotalByHelpType(Map<String,Object> map ); //根据互助类型helpType和affirm 是否确认来统计是总人数
+
+
 }

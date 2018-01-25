@@ -25,11 +25,17 @@
     select count(*) from userstaff
   </select>
 
-  <!--getTotalInfo-->
+  <!--getTotalInfo 统计不同互助类型的用户数量 -->
   <select id="getTotalInfo" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
     select count(*) from userstaff
     WHERE  helptype=#{helpType}
   </select>
+  <!--getTotalInfo 统计不同互助类型的用户数量 -->
+  <select id="getTotalByHelpType" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from userstaff
+    WHERE  helptype=#{helpType} AND affirm=#{affirm}
+  </select>
+
 
   <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select

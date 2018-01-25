@@ -119,7 +119,7 @@
         },
         methods: {
 
-            addNews:function () {
+            costMoney:function () {
                 //获得文章的信息
                 let name=document.getElementById("name").value;
                 let account=document.getElementById("account").value;
@@ -134,25 +134,39 @@
                 param.append("helpType",helpType);
                 param.append("money",money);
 
-                axios.post('/glove/grapeAdmin/costMoney.do',param,{
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }}).then(response => {
+                if (helpType=="staff" || helpType=="employee"){ //企业互助扣钱
+                    axios.post('/glove/grapeAdmin/costMoneyStaff.do',param,{
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }}).then(response => {
 
-                    //存储或者改变相应的值
-                    if (response.data.retcode==2000){
+                        //存储或者改变相应的值
+                        if (response.data.retcode==2000){
+                            alert("扣钱成功")
+                        }else {
 
-                    }else {
+                        }
+                    }, err => {
 
-                    }
-                }, err => {
+                    });
+                }else {
+                    axios.post('/glove/grapeAdmin/costMoney.do',param,{
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }}).then(response => {
 
-                });
+                        //存储或者改变相应的值
+                        if (response.data.retcode==2000){
+                            alert("扣钱成功")
+                        }else {
 
-            },
+                        }
+                    }, err => {
 
-
-        },
+                    });
+                } //else
+            }, //costMoney
+        }, //method
 
     });
 </script>
