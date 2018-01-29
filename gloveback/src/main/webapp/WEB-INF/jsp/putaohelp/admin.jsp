@@ -16,95 +16,100 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
-    <%--<link rel="stylesheet" href="<%=contextPath%>/resources/putaohelp/css/index.css">--%>
 </head>
-<body style="height: 2600px">
-<div class="header" style="height:50px;padding-left: 30px;padding-right: 30px">
-    <div class="headertxt">葡萄互助</div>
-    <%--<div class="headertxt">葡萄众筹</div>--%>
-    <div id="userToken"  style="display: none">${userToken}</div>
-    <div id="userName" class="headertxt">欢迎您！${userName } </div>
+<body style="height: 100%">
+<div class="header" style="height:20px;background-color: #ffffff">
 </div>
 <!---这个是中间部分-->
 <div class="middle">
     <div class="sidebar">
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">资料审核</a>
-                <ul>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=unhandle" style="font-size: smaller">待审核</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=refused"  style="font-size: smaller">已拒绝</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass"  style="font-size: smaller">审核通过</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/shenheSearch.do"  style="font-size: smaller">检索</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">家庭用户</a>
-                <ul>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userInfoTongji.do" style="font-size: smaller">用户统计</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/gouserlist.do" style="font-size: smaller">用户列表</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/userSearch.do" style="font-size: smaller">检索</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">公司用户</a>
-                <ul>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/companyInfoTongji.do" style="font-size: smaller">公司统计</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/companylist.do" style="font-size: smaller">公司列表</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/companySearch.do" style="font-size: smaller">检索</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div class="wrapper"  style="display: flex;flex-direction: column;align-items: center;height: 150px;width: 200px;background-color: #1F3647;">
+            <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
+            <div  class="wrapDiv" style="color: #ffffff;font-size: larger;font-weight: bolder;font-family:tahoma,arial,宋体;">
+                管理员
+            </div>
+        </div>
+        <!---模块1-->
+        <div class="ItemWrapper" >
+            <div  class="ItemWrapperIn">
+                 <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/smallAdmin.png" >
+            </div>
+            <div  class="ItemWrapperInDiv">
+                会员管理
+            </div>
+        </div>
+        <div  class="ItemBodyWrapper">
+            <div style="width: 80px"></div>
+            <div   class="ItemBodyInner" >
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/companylist.do"  >企业列表</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass">实名认证</a></div>
+            </div>
+        </div>
+        <!---模块2-->
+        <div class="ItemWrapper" >
+            <div  class="ItemWrapperIn">
+                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/money.png" >
+            </div>
+            <div  class="ItemWrapperInDiv">
+                资金管理
+            </div>
+        </div>
+        <div  class="ItemBodyWrapper">
+            <div style="width: 80px"></div>
+            <div   class="ItemBodyInner" >
+                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金走势</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do">资金统计</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do">红包统计</a></div>
+            </div>
+        </div>
+        <!---模块3-->
+        <div class="ItemWrapper" >
+            <div  class="ItemWrapperIn">
+                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/zixun.png" >
+            </div>
+            <div  class="ItemWrapperInDiv">
+                资讯管理
+            </div>
+        </div>
+        <div  class="ItemBodyWrapper">
+            <div style="width: 80px"></div>
+            <div   class="ItemBodyInner" >
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/newsList.do">资讯列表</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/addNews.do" >增加资讯</a></div>
+            </div>
+        </div>
+        <!---一个模块-->
+        <div class="ItemWrapper" >
+            <div  class="ItemWrapperIn">
+                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+            </div>
+            <div  class="ItemWrapperInDiv">
+                互助管理
+            </div>
+        </div>
+        <div  class="ItemBodyWrapper">
+            <div style="width: 80px"></div>
+            <div   class="ItemBodyInner" >
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do">增加一个求助人</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/goCostMoney.do"  >执行扣钱</a></div>
+            </div>
+        </div>
+        <!---一个模块-->
 
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">资金管理</a>
-                <ul>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do" style="font-size: smaller">资金统计</a></li>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/goDuizhang.do" style="font-size: smaller">对账</a></li>
-
-                </ul>
-            </li>
-        </ul>
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">红包管理</a>
-                <ul>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do" style="font-size: smaller">红包金额统计</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">资讯管理</a>
-                <ul>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/newsList.do" style="font-size: smaller">资讯列表</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/addNews.do"  style="font-size: smaller">增加资讯</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="">
-            <li>
-                <a href="#" style="font-weight: bolder">互助管理</a>
-                <ul>
-                    <li><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do" style="font-size: smaller">增加一个求助人</a></li>
-                    <li><a target="Conframe"  href="/glove/grapeAdmin/goCostMoney.do" style="font-size: smaller">执行扣钱</a></li>
-                </ul>
-            </li>
-        </ul>
     </div>
     <div class="content">
-        <iframe name="Conframe" id="Conframe" src="<%=basePath%>resources/putaohelp/html/test.html"
+        <iframe name="Conframe" id="Conframe" href="https://www.baidu.com/index.php?tn=baiduhome_pg"
                 class="page-ifream"
                 frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                width="100%" height="3900">
+                width="100%" height="3000px">
+            <p>Your browser does not support iframes.</p>
         </iframe>
     </div>
 </div>
+<script>
+
+</script>
 <%--<shiro:hasRole name="admin">--%>
     <%--这是admin角色登录：<shiro:principal></shiro:principal>--%>
 <%--</shiro:hasRole>--%>
@@ -115,8 +120,29 @@
 <%--<div>登录成功</div>--%>
 
 <style>
+
+    .ItemWrapper{
+        display: flex;flex-direction: row;justify-content: center;width: 200px;height: 30px;margin-bottom: 10px;margin-top: 15px;
+    }
+    .ItemWrapperIn{
+        width: 80px;display: flex;flex-direction: row;justify-content: flex-end;
+    }
+    .ItemWrapperInImg{
+        height: 25px;padding-right: 10px;height: 25px;
+    }
+    .ItemWrapperInDiv{
+        font-family:tahoma,arial,宋体;width: 120px;display: flex;flex-direction: row;justify-content: flex-start;align-items: center;height: 30px
+    }
+    .ItemBodyWrapper{
+        display: flex;flex-direction: row;align-items: center;width: 200px
+    }
+    .ItemBodyInner{
+        width: 120px;display: flex;flex-direction: column;align-items: flex-start;justify-content: flex-start;font-family:tahoma,arial,宋体;
+    }
+
     a{
         text-decoration: none;
+        font-size: smaller;color: #ffffff;
     }
     ul{
         list-style:none
@@ -129,9 +155,6 @@
         height: 50px;
         background-color: #4EB160;
     }
-    .headertxt{
-        color: #FFFFFF;
-    }
 
     .middle{
         display: flex;
@@ -139,9 +162,11 @@
 
     }
     .sidebar{
-        width: 20%;
+        width: 200px;
         height: 700px;
         border-right: rgba(42,255,48,0.82) 1px dashed;
+        background-color: #2A3C4D;
+        color: #ffffff;
     }
     .content{
         width: 80%;

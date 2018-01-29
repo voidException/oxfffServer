@@ -40,8 +40,8 @@
         select
         <include refid="Base_Column_List" />
         from userAccount
-        where userUUID= #{usruuid}
-        limit 0,10
+        where userUUID= #{useruuid}
+        limit #{page, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
     <select id="getSumInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >

@@ -123,16 +123,25 @@ public class HelpAdminController2 {
     }
 
     // 这个是点击审核列表的详情
-    @RequestMapping(value="/detail.do",method = RequestMethod.GET)
-    public ModelAndView shenheDetail( HttpServletRequest request){
+    @RequestMapping(value="/detail.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object shenheDetail( HttpServletRequest request){
+        Response<Putaoauth> resp = new Response<>();
+
         String useruuid=request.getParameter("useruuid");
         Putaoauth putaoauth=null;
         try {
              putaoauth=putaoauthMapper.selectByUserUUID(useruuid);
+             if (putaoauth==null){
+                 resp.failByNoData();
+                 return  resp;
+             }
         }catch (Exception e){
+            resp.failByException();
+            return  resp;
         }
-        ModelAndView mav=new ModelAndView("putaohelp/shenheDetail","data",putaoauth);
-        return mav;
+        resp.success(putaoauth);
+        return resp;
     }
 
     // 1.对用户提交的资料进行认证，pass  refused
@@ -283,7 +292,7 @@ public class HelpAdminController2 {
         ModelAndView mav=new ModelAndView("putaohelp/userlist");
         return mav;
     }
-    //*******用户列表-获得数据
+    //*******用户列表-获得数据（已废弃）
     @RequestMapping(value="/getUseList.do",method = RequestMethod.POST)
     @ResponseBody
     public Object getUserList( HttpServletRequest request) {
@@ -328,7 +337,7 @@ public class HelpAdminController2 {
         page=(page-1)*pageSize; //必须这么做
 
         Map<String,Object> map=new HashMap<>();
-        map.put("usruuid",useruuid);
+        map.put("useruuid",useruuid);
         map.put("page",page);
         map.put("pageSize",pageSize);
         List<UserAccount> accountList=null;
@@ -545,12 +554,12 @@ public class HelpAdminController2 {
         List<User> userList=null;
         try{
             int page=Integer.valueOf(pageStr);
-            page=(page-1)*20;
+            page=(page-1)*10;
 
             Map<String,Object> map=new HashMap<>();
             map.put("userType",(byte)2);
             map.put("page",page);
-            map.put("pageSize",20);
+            map.put("pageSize",10);
 
             userList=userMapper.getCompanyList(map);
             if (userList==null){
@@ -681,14 +690,14 @@ public class HelpAdminController2 {
         List<UserStaff> userStaffs=null;
         try{
             int page=Integer.valueOf(pageStr);
-            page=(page-1)*20;
+            page=(page-1)*10;
             Map<String,Object> map=new HashMap<>();
             // 暂不区分互助的种类
             map.put("uuid",useruuid);
             map.put("helptype",helptype);
             map.put("affirm","yes");
             map.put("page",page);
-            map.put("pageSize",20);
+            map.put("pageSize",10);
 
             userStaffs=userStaffMapper.selectTotalStaff2(map);
             if (userStaffs==null || userStaffs.isEmpty()){
