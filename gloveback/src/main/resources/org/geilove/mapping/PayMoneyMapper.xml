@@ -48,6 +48,15 @@
         from payMoney
         where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
     </select>
+
+
+    <select id="selectByhelpType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from payMoney
+        where categoryType = #{helpType}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
       delete from payMoney
       where payMoneyID = #{paymoneyid,jdbcType=BIGINT}

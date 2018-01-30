@@ -23,6 +23,14 @@
     imgtwo, imgthree, authtype, legalperson, useruuid
   </sql>
 
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from putaoauth
+    where 1=1
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
   <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

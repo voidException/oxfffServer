@@ -298,10 +298,6 @@
                 </div>
         </div>
     </div>
-    <label>input单选3组：</label>
-    radio单选项1<input  type="radio" name="radio3" value="radio单选项1" onclick="alert('aaa')"/>
-    radio单选项2<input  type="radio" name="radio3" value="radio单选项2"/>
-    radio单选项3<input  type="radio" name="radio3" value="radio单选项3"/>
 
 </div>
 <script src="<%=contextPath%>/resources/putaohelp/js/shenhelist.js"></script>

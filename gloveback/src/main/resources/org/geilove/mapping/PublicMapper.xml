@@ -45,6 +45,12 @@
         limit
         #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
     </select>
+  <select id="getNumByhelpType" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from putaoauth
+    where categoryType = #{helpType}
+  </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

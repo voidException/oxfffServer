@@ -93,25 +93,30 @@ public class HelpAdminController2 {
 
         Response< List<Putaoauth>> resp = new Response<>();
         String confirmIf=request.getParameter("confirmIf");
-        String page=request.getParameter("page");
-        int pageInt=0;
+        String pageStr=request.getParameter("page");
+        String  pageSizeStr=request.getParameter("pageSize");
+        int page=0,pageSize=0;
         try {
-            pageInt = Integer.valueOf(page).intValue();
+            page = Integer.valueOf(pageStr).intValue();
+            pageSize=Integer.valueOf(pageSizeStr).intValue();
         } catch (NumberFormatException e) {
-            e.printStackTrace();
             resp.failByException();
             return resp;
         }
-        pageInt=(pageInt-1)*30;
+        page=(page-1)*pageSize;
 
         Map<String,Object>  map =new HashMap<String,Object>();
         map.put("confirmIf",confirmIf);
-        map.put("page",pageInt);
-        map.put("pageSize",30);
+        map.put("page",page);
+        map.put("pageSize",pageSize);
         List<Putaoauth> putaoauths=null;
 
         try{
-            putaoauths=putaoauthMapper.getPutaoauths(map); //获得公司的列表
+            if (confirmIf.equals("all")){
+                putaoauths=putaoauthMapper.selectAll(map);
+            }else {
+                putaoauths=putaoauthMapper.getPutaoauths(map); //获得公司的列表
+            }
             if (putaoauths==null){
                 resp.failByNoInputData("数据为空");
             }

@@ -42,6 +42,7 @@
             <div style="width: 80px"></div>
             <div   class="ItemBodyInner" >
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表分类</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/companylist.do"  >企业列表</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass">实名认证</a></div>
             </div>
@@ -57,9 +58,10 @@
         </div>
         <div  class="ItemBodyWrapper">
             <div style="width: 80px"></div>
-            <div   class="ItemBodyInner" >
-                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金走势</a></div>
+            <div   class="ItemBodyInner">
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do">资金统计</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金明细</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金走势</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do">红包统计</a></div>
             </div>
         </div>

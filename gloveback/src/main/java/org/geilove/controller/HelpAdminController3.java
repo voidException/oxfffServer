@@ -13,10 +13,7 @@ import org.geilove.service.T_userService;
 import org.geilove.util.Arith;
 import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
-import org.geilove.vo.CostMoney;
-import org.geilove.vo.PersonAccounts;
-import org.geilove.vo.RedBaoInfo;
-import org.geilove.vo.UserCompanyputao;
+import org.geilove.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -223,6 +220,18 @@ public class HelpAdminController3 {
         } //for
         resp.success(userCompanyputaoList);
         return  resp;
+    }
+    //获得公司列表
+    @RequestMapping(value="/getSumInfo2.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getSumInfo2( HttpServletRequest request) {
+        Response<List<SumInfo>> resp = new Response<>();
+        String token = request.getParameter("token");
+
+        List<UserAccount> userAccounts=null;
+
+
+        return resp;
     }
 
 }

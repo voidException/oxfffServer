@@ -98,7 +98,7 @@ public class AShipController {
                    sumMoney=Arith.add(sumMoney,Double.valueOf(singleMoney));//总金额
                }
                    Integer sumRen=userStaffs.size(); //员工总数
-                  Double avaMoney=Arith.div(sumMoney,Double.valueOf(sumRen),3);
+                   Double avaMoney=Arith.div(sumMoney,Double.valueOf(sumRen),3);
                    SumInfo sumInfo=new SumInfo();
                    sumInfo.setSumMoney(String.valueOf(sumMoney));
                    sumInfo.setSumMan(String.valueOf(sumRen));

@@ -19,4 +19,7 @@ public interface PublicMapper {
     int updateByPrimaryKey(Public record);
 
     List<Public> getPublicList(Map<String,Object> map);
+
+    //根据互助类型选择出互助的次数
+    List<Public> getNumByhelpType(Map<String,Object> map);
 }

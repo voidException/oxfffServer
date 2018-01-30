@@ -21,13 +21,15 @@ new Vue({
         this.confirmIf="all";
         let param = new FormData();
         param.append('confirmIf',this.confirmIf);
-        param.append('page',this.pageAll);
+        param.append('page',this.page);
+        param.append('pageSize',10);
+
         this.getShenheListWait(param);
     },
     methods: {
         selectByType:function (event) {
             let confirmIf=event.target.getAttribute("data-type");
-            this.confirmIf=confirmIf;
+            this.confirmIf=confirmIf; //这个很重要，当点击分页按钮时，通过此知道当前处于什么状态下
             if (this.confirmIf=="all"){
                 this.page=this.pageAll;
             }
@@ -38,8 +40,14 @@ new Vue({
                 this.page=this.pagePass;
             }
             if (this.confirmIf =="refused"){
-
+                this.page=this.pageRefused;
             }
+            let param = new FormData();
+            param.append('confirmIf',this.confirmIf);
+            param.append('page',this.page);
+            param.append('pageSize',10);
+
+            this.getShenheListWait(param);
             /** 这个方法也可以
                 let chkObjs=null;
                 let obj=document.getElementsByName("radio3")
