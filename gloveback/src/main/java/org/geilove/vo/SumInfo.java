@@ -6,10 +6,19 @@ package org.geilove.vo;
 public class SumInfo {
 
     private  String sumMan;   //参与该计划的人数
-    private  String sumMoney;  //参与该计划的 历史总金额
+    private  String sumMoney;  //参与该计划的 历史总金额,后产品要求改为最低互助金额，0或者150
     private  String average;   //当前人均
     private  String sumMoneyRemain ;  //余额
     private  String  helpTimes ;  //互助次数
+    private  String  helpType; //互助类型
+
+    public String getHelpType() {
+        return helpType;
+    }
+
+    public void setHelpType(String helpType) {
+        this.helpType = helpType;
+    }
 
     public String getSumMan() {
         return sumMan;

@@ -195,7 +195,58 @@
         width: 100px;
         height: 40px;
     }
-
+    .puding{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        background-color: #F3F2F5;
+        margin-top: 1px;
+        border-bottom: solid 1px #ffffff;
+    }
+    .companyName{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 20px;
+        width: 100px;
+    }
+    .passrefused{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        margin-top: 20px;
+    }
+    .imagelist{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .text-area{
+        width: 98%;
+        height: 100px;
+    }
+    .dopassRefused{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+    .pass{
+        display: flex;
+        width: 40%;
+        height: 50px;
+        background-color: #1ab394;
+        color: white;
+        margin: 10px;
+        justify-content:center ;
+        align-items: center;
+        border-radius: 3px;
+    }
 </style>
 <body style="background-color: #F2F2F2">
 <div id="shenhelist" style="display: flex;flex-direction: column">
@@ -253,8 +304,14 @@
         </template>
     </div>
     <div id="detail" style="display: none">
-        <div id="useruuid" style="display: none">{{detail.useruuid}}</div>
 
+        <div style="display: flex;align-items:center;justify-content:center; width: 100%;height: 60px;">
+            <div style="display: flex;justify-content:center;align-items:center;width: 400px;height: 50px;
+            color: #ffffff;font-weight: bolder;font-size: 20px; background-color: #00B997;border-radius: 4px">
+                企业信息
+            </div>
+        </div>
+        <div id="useruuid" style="display: none">{{detail.useruuid}}</div>
         <div class="puding">
             <div class="companyName">状态：</div>
             <div  id="confirmif">{{detail.confirmif}}</div>
@@ -302,55 +359,6 @@
 </div>
 <script src="<%=contextPath%>/resources/putaohelp/js/shenhelist.js"></script>
 <style>
-    .puding{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        height: 50px;
-        background-color: #F3F2F5;
-        margin-top: 1px;
-    }
-    .companyName{
-        display: flex;
-        flex-direction: row;
-        padding-left: 20px;
-    }
-    .passrefused{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items:center;
-        margin-top: 20px;
-    }
-    .imagelist{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-    .text-area{
-        width: 98%;
-        height: 100px;
-    }
-    .dopassRefused{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-    }
-    .pass{
-        display: flex;
-        width: 40%;
-        height: 50px;
-        background-color: #1ab394;
-        color: white;
-        margin: 10px;
-        justify-content:center ;
-        align-items: center;
-        border-radius: 10px;
-    }
 
 </style>
 </body>

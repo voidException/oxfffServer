@@ -42,7 +42,6 @@
     <include refid="Base_Column_List" />
     from userstaff
     where  helptype=#{helptype} AND affirm=#{affirm}
-
   </select>
 <!--getUserStaffByUserUUID-->
   <select id="getUserStaffByUserUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap" >

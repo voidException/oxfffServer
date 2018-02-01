@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <html>
 <head>
     <title>用户列表</title>
@@ -173,6 +174,12 @@
         .detailTab{
             display: none;
             flex-direction: column;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 30px;
+
         }
         .detailItem{
             display: flex;
@@ -211,6 +218,46 @@
             text-align: center;
             background-color: #ffffff;
             cursor: pointer;
+        }
+        .detailHeader{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            height: 44px;
+            background-color: #00B997;
+            border-radius: 4px;
+            color: #ffffff;
+        }
+        .detailBody{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 500px;
+            height: 660px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .detailBodyTop{
+            display: flex;
+            flex-direction: row;
+            width: 500px;
+            height: 200px;
+            justify-content: center;
+            background-color: #00B997;
+            align-items: center;
+        }
+        .profileItem{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 500px;
+            border-bottom: #6f7a7e dashed 1px;
         }
     </style>
 </head>
@@ -270,6 +317,46 @@
     </div>
     <!--以下是详情-->
     <div id="detail" class="detailTab">
+
+        <div class="detailHeader">中青年大病互助计划</div>
+        <div class="detailBody">
+            <div class="detailBodyTop">
+                <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;height: 100px; width: 246px">
+                    <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
+                    <div style="display: flex;width: 100px;flex-direction: column;justify-content: center;align-items: center;color: #ffffff">
+                        <div>张三</div>
+                        <div>个人账户</div>
+                    </div>
+                </div>
+                <div style="height: 100px;width: 2px;background-color: #ffffff"></div>
+                <div   style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 100px; width: 246px;color: #ffffff">
+                    <div>100元</div>
+                    <div>账户余额</div>
+                </div>
+            </div>
+            <div class="profileItem">
+                <div>手机号：</div>
+                <div>17827478</div>
+            </div>
+            <div class="profileItem">
+                <div>身份证号：</div>
+                <div>2782w4787384878723478</div>
+            </div>
+            <div class="profileItem">
+                <div>加入时间：</div>
+                <div>2782w4787384878723478</div>
+            </div>
+            <div class="profileItem">
+                <div>互助次数：</div>
+                <div>1</div>
+            </div>
+
+        </div>
+
+
+
+        <!---
+
         <div class="detailItem">
             <div>身份证号：</div>
             <div>{{detail.accountuuid}}</div>
@@ -298,6 +385,8 @@
             <div>互助次数：</div>
             <div>{{detail.remainfee}}</div>
         </div>
+        -->
+
     </div>
     <!--分页组件-->
     <div id="app">

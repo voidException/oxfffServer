@@ -14,20 +14,7 @@ new Vue({
     },
     methods: {
 
-        goNextPage:function () {
-            this.page++;
-            var param = new FormData();
-            param.append('page',this.page);
-            this.getNewsList(param);
-        },
-        goUpPage:function () {
-            if (this.page >1){
-                this.page--;
-            }
-            var param = new FormData();
-            param.append('page',this.page);
-            this.getNewsList(param);
-        },
+
 
         getNewsList:function (param) {
             axios.post('/glove/grapeAdmin/getNewsList.do',param,{
@@ -45,8 +32,17 @@ new Vue({
             }, err => {
 
             });
+        },
+        showDefault:function () {
+            document.getElementById("detail").style.display='none'; //隐藏详情
+            document.getElementById("default").style.display='block'; //显示默认的
 
         },
+        showDetailTab:function () {
+            document.getElementById("default").style.display='none'; //隐藏默认的
+            document.getElementById("detail").style.display='block'; //显示详情
+        },
+
         deleteNews:function (event) {
             //删除掉一篇news
             let  datauuid=event.target.getAttribute("data-uuid"); //

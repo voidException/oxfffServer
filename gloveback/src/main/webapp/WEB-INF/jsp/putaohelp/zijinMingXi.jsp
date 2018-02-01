@@ -1,19 +1,15 @@
 <%  String contextPath = request.getContextPath(); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <html>
 <head>
+    <title>资金明细</title>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
-    <title>新闻列表</title>
     <style>
-        #companylist{
-            display: flex;
-            flex-direction: row;
-        }
+
         .header{
             display: flex;
             flex-direction: row;
@@ -35,7 +31,6 @@
             color: #000000;
             font-family:tahoma,arial,宋体;
             margin-left: 10px;
-            cursor: pointer;
         }
         .headerItemRight{
             display: flex;
@@ -47,7 +42,6 @@
             background-color: #2C3E51;
             color: #ffffff;
             font-family:tahoma,arial,宋体;
-            cursor: pointer;
         }
         .inputWrap{
             display: flex;
@@ -123,7 +117,7 @@
             align-items: center;
             /*height: 60px;*/
             width: 100%;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid #ffffff;
         }
         .mainBodyContainRight{
 
@@ -188,46 +182,97 @@
         }
     </style>
 </head>
-<body>
-<div id="newsList" class="newsList" style="background-color: #F2F2F2">
+<body style="background-color: #F2F2F2">
+
+<div  id="chongzhilist"  style="display: flex;flex-direction: column">
     <div class="header">
-        <div class="headerItemLeft"  @click="showDefault">首页</div>
-        <div class="headerItemRight" @click="showDetailTab">详情</div>
+        <div class="headerItemLeft"  @click="showDefault">充值</div>
+        <div class="headerItemRight" @click="showDetailTab">扣费</div>
     </div>
+    <!---充值--->
     <div id="default" style="display: block">
         <div class="header">
             <div class="inputWrap">
-                <input  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
+                <input   class="common"  @keyup="dosearch($event)"
+                        type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />
             </div>
         </div>
         <div class="headerBody">
-            <div class="headerBodyBigItem">标题</div>
-            <div class="headerSmallItem">副标题</div>
-            <div class="headerSmallItem">作者</div>
-            <div  class="headerSmallItem">来源</div>
-            <div  class="headerSmallItem">类型</div>
-            <div  class="headerSmallItem">发布时间</div>
-            <div  class="headerSmallItem">操作</div>
+            <div  class="headerMidItem">userUUID</div>
+            <div class="headerSmallItem">身份证号</div>
+            <div class="headerBodyBigItem">互助类型</div>
+            <div  class="headerSmallItem">交易订单号</div>
+            <div  class="headerSmallItem">充值金额</div>
+            <div  class="headerSmallItem">交易状态</div>
+            <div class="headerSmallItem">时间</div>
         </div>
-        <template v-for="item in newsList">
+
+        <template v-for="item in data">
             <div class="mainBodyContain">
-                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.title}}</div>
-                <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.vicetitle}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.author}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.source }}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.newstype}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.publishdate}}</div>
-                <div  class="headerSmallItem">
-                    <div class="detail"   v-on:click="deleteNews"  v-bind:data-uuid="item.newsuuid"  class="delete">
-                        删除
-                    </div>
-                </div>
+                <div class="headerMidItem" style="color: #000;font-size: smaller">{{item.useruuid}}</div>
+                <div class="headerSmallItem" style="color: #000; font-size: smaller">{{item.accountuuid}}</div>
+                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.categorytype |formHelpType}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.outTradeNo}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.totalAmount}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.tradeStatus}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.notifyTime |formatDate}}</div>
             </div>
         </template>
     </div>
+    <!---扣费--->
+    <div id="detail" style="display: none">
+        <div class="header">
+            <div class="inputWrap">
+                <input   class="common"  @keyup="dosearch($event)"
+                         type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />
+            </div>
+        </div>
+        <div class="headerBody">
+            <div  class="headerMidItem">互助类别</div>
+            <div class="headerSmallItem">扣钱时间</div>
+            <div class="headerSmallItem">被扣钱人</div>
+            <div  class="headerSmallItem">受助人</div>
+            <div  class="headerSmallItem">理论口钱数</div>
+            <div  class="headerSmallItem">实际扣钱数</div>
+            <div class="headerSmallItem">说明</div>
+        </div>
 
+        <template v-for="item in dataDeduction">
+            <div class="mainBodyContain">
+                <div class="headerMidItem" style="color: #000;font-size: smaller">{{item.categorytype |formHelpType}}</div>
+                <div class="headerSmallItem" style="color: #000; font-size: smaller">{{item.userspendmoneydate |formatDate}}</div>
+                <div class="headerSmallItem" style="color: #000;font-size: smaller">{{item.userspendmoneyuuid }}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.userneedmoneyuuid}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.theorymoneyspend}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.moneyspend}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.other}}</div>
+            </div>
+        </template>
+
+    </div>
 
 </div>
+<script src="<%=contextPath%>/resources/putaohelp/js/zijinMingXi.js"></script>
 </body>
-<script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/newsList.js"></script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

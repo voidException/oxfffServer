@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.TongjiMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.Tongji" >
+    <id column="tongjiid" property="tongjiid" jdbcType="INTEGER" />
+    <result column="tongjiuuid" property="tongjiuuid" jdbcType="VARCHAR" />
+    <result column="allMoney" property="allmoney" jdbcType="VARCHAR" />
+    <result column="moneyType" property="moneytype" jdbcType="VARCHAR" />
+    <result column="tongjiDate" property="tongjidate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tongjiid, tongjiuuid, allMoney, moneyType, tongjiDate
+  </sql>
+
+  <!--selectByType-->
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tongji
+    where moneyType = #{helpType}
+    order by
+    tongjiDate ASC
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tongji
+    where tongjiid = #{tongjiid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tongji
+    where tongjiid = #{tongjiid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.Tongji" >
+    insert into tongji (tongjiid, tongjiuuid, allMoney, 
+      moneyType, tongjiDate)
+    values (#{tongjiid,jdbcType=INTEGER}, #{tongjiuuid,jdbcType=VARCHAR}, #{allmoney,jdbcType=VARCHAR}, 
+      #{moneytype,jdbcType=VARCHAR}, #{tongjidate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.Tongji" >
+    insert into tongji
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tongjiid != null" >
+        tongjiid,
+      </if>
+      <if test="tongjiuuid != null" >
+        tongjiuuid,
+      </if>
+      <if test="allmoney != null" >
+        allMoney,
+      </if>
+      <if test="moneytype != null" >
+        moneyType,
+      </if>
+      <if test="tongjidate != null" >
+        tongjiDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tongjiid != null" >
+        #{tongjiid,jdbcType=INTEGER},
+      </if>
+      <if test="tongjiuuid != null" >
+        #{tongjiuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="allmoney != null" >
+        #{allmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="moneytype != null" >
+        #{moneytype,jdbcType=VARCHAR},
+      </if>
+      <if test="tongjidate != null" >
+        #{tongjidate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Tongji" >
+    update tongji
+    <set >
+      <if test="tongjiuuid != null" >
+        tongjiuuid = #{tongjiuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="allmoney != null" >
+        allMoney = #{allmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="moneytype != null" >
+        moneyType = #{moneytype,jdbcType=VARCHAR},
+      </if>
+      <if test="tongjidate != null" >
+        tongjiDate = #{tongjidate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tongjiid = #{tongjiid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Tongji" >
+    update tongji
+    set tongjiuuid = #{tongjiuuid,jdbcType=VARCHAR},
+      allMoney = #{allmoney,jdbcType=VARCHAR},
+      moneyType = #{moneytype,jdbcType=VARCHAR},
+      tongjiDate = #{tongjidate,jdbcType=TIMESTAMP}
+    where tongjiid = #{tongjiid,jdbcType=INTEGER}
+  </update>
+</mapper>

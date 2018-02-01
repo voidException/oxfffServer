@@ -24,6 +24,16 @@
      app_id, sign_type, trade_no, out_trade_no, buyer_id, seller_id, total_amount, trade_status,
      passback_params
     </sql>
+
+
+    <select id="selectPayMoney" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from payMoney
+        where 1=1
+        limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+
     <!--selectByMapKeys-->
     <select id="selectByMapKeys" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select

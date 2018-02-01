@@ -717,13 +717,33 @@ public class HelpAdminController2 {
         resp.success(userStaffs);
         return resp;
     }
-    // 路由，跳转资金统计
-    @RequestMapping(value="/zijinTongji.do",method = RequestMethod.GET)
-    public ModelAndView zijinTongji( HttpServletRequest request){
-        ModelAndView mav=new ModelAndView("putaohelp/zijinTongji");
+    // 路由，跳转到被救助人列表，
+    @RequestMapping(value="/beHelpedlist.do",method = RequestMethod.GET)
+    public ModelAndView beHelpedlist( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/beHelpedlist");
         return mav ;
     }
-    // 路由，跳转到对账
+
+    // 路由，跳转到资金明细，
+    @RequestMapping(value="/zijinMingXi.do",method = RequestMethod.GET)
+    public ModelAndView zijinMingXi( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/zijinMingXi");
+        return mav ;
+    }
+    // 路由，跳转到资金走势，
+    @RequestMapping(value="/zijinZouShi.do",method = RequestMethod.GET)
+    public ModelAndView zijinZouShi( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/zijinZouShi");
+        return mav ;
+    }
+
+    // 路由，跳转项目详情，
+    @RequestMapping(value="/xiangMuXiangQing.do",method = RequestMethod.GET)
+    public ModelAndView zijinTongji( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/xiangMuXiangQing");
+        return mav ;
+    }
+    // 路由，跳转到对账--废弃
     @RequestMapping(value="/goDuizhang.do",method = RequestMethod.GET)
     public ModelAndView goDuizhang( HttpServletRequest request){
         ModelAndView mav=new ModelAndView("putaohelp/duizhang");
@@ -734,7 +754,6 @@ public class HelpAdminController2 {
     @ResponseBody
     public Object duizhuang( HttpServletRequest request) {
         Response<String> resp = new Response<>();
-
         return resp;
     }
 

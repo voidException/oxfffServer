@@ -48,7 +48,7 @@
   <select id="getNumByhelpType" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
     <include refid="Base_Column_List" />
-    from putaoauth
+    from public
     where categoryType = #{helpType}
   </select>
 

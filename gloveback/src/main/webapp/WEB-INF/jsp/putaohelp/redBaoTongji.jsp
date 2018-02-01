@@ -9,43 +9,30 @@
     <title>红包金额统计</title>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.0.2/echarts.min.js"></script>
     <style>
         .contain{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-
-        }
-        .item{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 160px;
-            width: 160px;
-            background-color:#F8742E;
-            color: #ffffff;
-        }
-        .kongxi{
-            margin-bottom: 20px;
+            height: 700px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 <div id="redBaoTongji">
-<div class="contain">
-    <div class="item">
-        <div class="kongxi">未激活红包金额</div>
-        <div>{{redBaoTongji.unactive}}（元）</div>
-    </div>
-    <div class="item">
-        <div class="kongxi">已激活红包金额</div>
-        <div>{{redBaoTongji.active}}（元）</div>
-    </div>
-    <div class="item">
-        <div class="kongxi">已使用红包金额</div>
-        <div>{{redBaoTongji.used}}（元）</div>
-    </div>
+<div class="contain" id="contain">
+
+    <%--<div class="item">--%>
+        <%--<div class="kongxi">未激活红包金额</div>--%>
+        <%--<div>{{redBaoTongji.unactive}}（元）</div>--%>
+    <%--</div>--%>
+    <%--<div class="item">--%>
+        <%--<div class="kongxi">已激活红包金额</div>--%>
+        <%--<div>{{redBaoTongji.active}}（元）</div>--%>
+    <%--</div>--%>
+    <%--<div class="item">--%>
+        <%--<div class="kongxi">已使用红包金额</div>--%>
+        <%--<div>{{redBaoTongji.used}}（元）</div>--%>
+    <%--</div>--%>
 </div>
 </div>
 <script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/redBaoTongji.js"></script>

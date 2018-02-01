@@ -6,14 +6,10 @@
 
 <html>
 <head>
+    <title>资金统计</title>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
-    <title>新闻列表</title>
     <style>
-        #companylist{
-            display: flex;
-            flex-direction: row;
-        }
         .header{
             display: flex;
             flex-direction: row;
@@ -35,7 +31,6 @@
             color: #000000;
             font-family:tahoma,arial,宋体;
             margin-left: 10px;
-            cursor: pointer;
         }
         .headerItemRight{
             display: flex;
@@ -47,7 +42,6 @@
             background-color: #2C3E51;
             color: #ffffff;
             font-family:tahoma,arial,宋体;
-            cursor: pointer;
         }
         .inputWrap{
             display: flex;
@@ -86,6 +80,17 @@
             width: 100%;
             background-color: #00BA97;
         }
+        .bodyItem{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+            color: #000;
+            background-color: #F2F2F2;
+            border-bottom: 1px solid #fff;
+        }
         .headerBodyBigItem{
             display: flex;
             flex-direction: row;
@@ -123,7 +128,7 @@
             align-items: center;
             /*height: 60px;*/
             width: 100%;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid #4a4a4a;
         }
         .mainBodyContainRight{
 
@@ -189,45 +194,33 @@
     </style>
 </head>
 <body>
-<div id="newsList" class="newsList" style="background-color: #F2F2F2">
+<div id="zijinTongji">
     <div class="header">
-        <div class="headerItemLeft"  @click="showDefault">首页</div>
-        <div class="headerItemRight" @click="showDetailTab">详情</div>
+        <div class="headerItemLeft" >首页</div>
+        <div class="headerItemRight" >详情</div>
     </div>
     <div id="default" style="display: block">
-        <div class="header">
-            <div class="inputWrap">
-                <input  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
-            </div>
-        </div>
         <div class="headerBody">
-            <div class="headerBodyBigItem">标题</div>
-            <div class="headerSmallItem">副标题</div>
-            <div class="headerSmallItem">作者</div>
-            <div  class="headerSmallItem">来源</div>
-            <div  class="headerSmallItem">类型</div>
-            <div  class="headerSmallItem">发布时间</div>
-            <div  class="headerSmallItem">操作</div>
+            <div class="headerMidItem">计划类型</div>
+            <div class="headerSmallItem">最低金额</div>
+            <div class="headerBodyBigItem">余额</div>
+            <div  class="headerSmallItem">加入人数</div>
+            <div  class="headerSmallItem">人均</div>
+            <div  class="headerSmallItem">互助次数</div>
         </div>
-        <template v-for="item in newsList">
-            <div class="mainBodyContain">
-                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.title}}</div>
-                <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.vicetitle}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.author}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.source }}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.newstype}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.publishdate}}</div>
-                <div  class="headerSmallItem">
-                    <div class="detail"   v-on:click="deleteNews"  v-bind:data-uuid="item.newsuuid"  class="delete">
-                        删除
-                    </div>
-                </div>
+        <template v-for="item in xiangMuList">
+            <div class="bodyItem">
+                <div class="headerMidItem" style="color: #00BB3B">{{item.helpType}}</div>
+                <div class="headerSmallItem" style="color: #000">{{item.sumMoney}}</div>
+                <div class="headerBodyBigItem" style="color: #000">{{item.sumMoneyRemain}}</div>
+                <div  class="headerSmallItem" style="color: #000">{{item.sumMan}}</div>
+                <div  class="headerSmallItem" style="color: #000">{{item.average}}</div>
+                <div  class="headerSmallItem" style="color: #000">{{item.helpTimes}}</div>
             </div>
         </template>
     </div>
 
-
 </div>
 </body>
-<script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/newsList.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/xiangMuXiangQing.js"></script>
 </html>

@@ -42,7 +42,6 @@
             <div style="width: 80px"></div>
             <div   class="ItemBodyInner" >
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表分类</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/companylist.do"  >企业列表</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass">实名认证</a></div>
             </div>
@@ -59,12 +58,28 @@
         <div  class="ItemBodyWrapper">
             <div style="width: 80px"></div>
             <div   class="ItemBodyInner">
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinTongji.do">资金统计</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金明细</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="#">资金走势</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinMingXi.do">资金明细</a></div>
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinZouShi.do">资金走势</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do">红包统计</a></div>
             </div>
         </div>
+
+        <!---一个模块-->
+        <div class="ItemWrapper" >
+            <div  class="ItemWrapperIn">
+                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+            </div>
+            <div  class="ItemWrapperInDiv">
+                项目管理
+            </div>
+        </div>
+        <div  class="ItemBodyWrapper">
+            <div style="width: 80px"></div>
+            <div   class="ItemBodyInner" >
+                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/xiangMuXiangQing.do">项目列表</a></div>
+            </div>
+        </div>
+
         <!---模块3-->
         <div class="ItemWrapper" >
             <div  class="ItemWrapperIn">
@@ -93,6 +108,7 @@
         <div  class="ItemBodyWrapper">
             <div style="width: 80px"></div>
             <div   class="ItemBodyInner" >
+                <%--<div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/beHelpedlist.do">被救助人列表</a></div>--%>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do">增加一个求助人</a></div>
                 <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/goCostMoney.do"  >执行扣钱</a></div>
             </div>
@@ -101,7 +117,7 @@
 
     </div>
     <div class="content">
-        <iframe name="Conframe" id="Conframe" href="https://www.baidu.com/index.php?tn=baiduhome_pg"
+        <iframe name="Conframe" id="Conframe" src="/glove/grapeAdmin/goDefaultMain.do"
                 class="page-ifream"
                 frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                 width="100%" height="3000px">
@@ -165,7 +181,7 @@
     }
     .sidebar{
         width: 200px;
-        height: 700px;
+        height: 800px;
         border-right: rgba(42,255,48,0.82) 1px dashed;
         background-color: #2A3C4D;
         color: #ffffff;

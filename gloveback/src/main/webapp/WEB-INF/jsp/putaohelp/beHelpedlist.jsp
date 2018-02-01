@@ -6,10 +6,14 @@
 
 <html>
 <head>
-    <title>资金统计</title>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
+    <title>新闻列表</title>
     <style>
+        #companylist{
+            display: flex;
+            flex-direction: row;
+        }
         .header{
             display: flex;
             flex-direction: row;
@@ -31,6 +35,7 @@
             color: #000000;
             font-family:tahoma,arial,宋体;
             margin-left: 10px;
+            cursor: pointer;
         }
         .headerItemRight{
             display: flex;
@@ -42,6 +47,7 @@
             background-color: #2C3E51;
             color: #ffffff;
             font-family:tahoma,arial,宋体;
+            cursor: pointer;
         }
         .inputWrap{
             display: flex;
@@ -117,7 +123,7 @@
             align-items: center;
             /*height: 60px;*/
             width: 100%;
-            border-bottom: 1px solid #4a4a4a;
+            border-bottom: 1px solid #fff;
         }
         .mainBodyContainRight{
 
@@ -183,121 +189,45 @@
     </style>
 </head>
 <body>
-<div id="zijinTongji">
+<div id="behelped" class="newsList" style="background-color: #F2F2F2">
     <div class="header">
         <div class="headerItemLeft"  @click="showDefault">首页</div>
         <div class="headerItemRight" @click="showDetailTab">详情</div>
     </div>
     <div id="default" style="display: block">
-
+        <div class="header">
+            <div class="inputWrap">
+                <input  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
+            </div>
+        </div>
         <div class="headerBody">
-            <div class="headerMidItem">计划类型</div>
-            <div class="headerSmallItem">总金额</div>
-            <div class="headerBodyBigItem">余额</div>
-            <div  class="headerSmallItem">加入人数</div>
-            <div  class="headerSmallItem">人均</div>
-            <div  class="headerSmallItem">互助次数</div>
+            <div class="headerBodyBigItem">姓名</div>
+            <div class="headerSmallItem">身份证</div>
+            <div class="headerSmallItem">互助计划</div>
+            <div  class="headerSmallItem">金额</div>
+            <div  class="headerSmallItem">加入日期</div>
+            <div  class="headerSmallItem">生效日期</div>
             <div  class="headerSmallItem">操作</div>
         </div>
+        <template v-for="item in publicData">
+            <div class="mainBodyContain">
+                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.username}}</div>
+                <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.useridentity}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.categorytype}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.needmoney }}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.joindate}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.effectdate}}</div>
+                <div  class="headerSmallItem">
+                    <div class="detail"   class="delete">
+                        详情
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
-        <!---
-        <div class="contain">
-            <div>
-                <div>企业员工大病互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{staffDabing.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{staffDabing.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{staffDabing.average}}</div>
-                </div>
-            </div>
-            <div>
-                <div>企业员工综合意外互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{staffYiwai.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{staffYiwai.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{staffYiwai.average}}</div>
-                </div>
-            </div>
-            <div>
-                <div>少儿大病互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{littleDabing.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{littleDabing.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{littleDabing.average}}</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="contain">
-            <div>
-                <div>中青年抗癌互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{young.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{young.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{young.average}}</div>
-                </div>
-            </div>
-            <div>
-                <div>中老年抗癌互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{old.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{old.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{old.average}}</div>
-                </div>
-            </div>
-            <div>
-                <div>综合意外互助</div>
-                <div class="item">
-                    <div>总金额（元）</div>
-                    <div>{{zongheYiwai.sumMoney}}</div>
-                </div>
-                <div class="item">
-                    <div>加入人数</div>
-                    <div>{{zongheYiwai.sumMan}}</div>
-                </div>
-                <div class="item">
-                    <div>救助均摊金额（元）</div>
-                    <div>{{zongheYiwai.average}}</div>
-                </div>
-            </div>
-        </div>
-        --->
+
 </div>
 </body>
-<script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/zijinTongji.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/beHelpedlist.js"></script>
 </html>

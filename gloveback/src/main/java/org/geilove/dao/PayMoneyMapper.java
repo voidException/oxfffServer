@@ -24,4 +24,6 @@ public interface PayMoneyMapper {
 
     List<PayMoney> getPaymoneys(Map<String,Object> map);//根据useruuid helptype选择出
 
+    List<PayMoney> selectPayMoney(Map<String,Object> map);
+
 }

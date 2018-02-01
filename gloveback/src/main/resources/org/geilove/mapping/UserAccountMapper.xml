@@ -27,13 +27,11 @@
         payTotalMoney, userName, categoryType, joinDate, effectiveDate, stopDate, nowState,
         remainFee
     </sql>
-
     <!--getCountByhelpType-->
     <select id="getCountByhelpType" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
         select count(*) from userAccount
         WHERE  categoryType=#{helpType}
     </select>
-
 
     <!--自定义getAccountsByuserUUID，-->
     <select id="getAccountsByuserUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap" >

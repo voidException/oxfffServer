@@ -4,11 +4,15 @@ package org.geilove.controller;
  *
  */
 import freemarker.ext.beans.HashAdapter;
+import net.sf.ehcache.search.aggregator.Sum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.geilove.dao.*;
 import org.geilove.pojo.*;
+import org.geilove.response.PublicListRsp;
+import org.geilove.service.AshipService;
+import org.geilove.service.SumInfoService;
 import org.geilove.service.T_userService;
 import org.geilove.util.Arith;
 import org.geilove.util.Md5Util;
@@ -48,6 +52,21 @@ public class HelpAdminController3 {
     private PublicMapper publicMapper;
     @Resource
     private  DeductionMapper deductionMapper;
+    @Resource
+    private SumInfoService sumInfoService;
+    @Resource
+    private  PayMoneyMapper payMoneyMapper;
+    @Resource
+    private  TongjiMapper tongjiMapper;
+    @Resource
+    private AshipService ashipService;
+
+    // 路由，跳转到对账--废弃
+    @RequestMapping(value="/goDefaultMain.do",method = RequestMethod.GET)
+    public ModelAndView goDefaultMain( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/defaultMain");
+        return mav ;
+    }
 
     //*******获得用户列表及其对应的userAccounts
     @RequestMapping(value="/getUseList2.do",method = RequestMethod.POST)
@@ -221,16 +240,320 @@ public class HelpAdminController3 {
         resp.success(userCompanyputaoList);
         return  resp;
     }
-    //获得公司列表
+    //项目列表
     @RequestMapping(value="/getSumInfo2.do",method = RequestMethod.POST)
     @ResponseBody
     public Object getSumInfo2( HttpServletRequest request) {
         Response<List<SumInfo>> resp = new Response<>();
         String token = request.getParameter("token");
+        List<SumInfo> sumInfoList=new ArrayList<>();
 
-        List<UserAccount> userAccounts=null;
+        SumInfo sumInfolittle=new SumInfo();
+        try{
+            sumInfolittle=sumInfoService.getSumInfo("little");
+            sumInfoList.add(sumInfolittle);
+        }catch (Exception e){
+           resp.failByException();
+           return resp;
+        }
+        SumInfo sumInfoyoung=new SumInfo();
+        try{
+            sumInfoyoung=sumInfoService.getSumInfo("young");
+            sumInfoList.add(sumInfoyoung);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        SumInfo sumInfoold=new SumInfo();
+        try{
+            sumInfoold=sumInfoService.getSumInfo("old");
+            sumInfoList.add(sumInfoold);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        SumInfo sumInfozonghe=new SumInfo();
+        try{
+            sumInfozonghe=sumInfoService.getSumInfo("zonghe");
+            sumInfoList.add(sumInfozonghe);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        SumInfo sumInfostaff=new SumInfo();
+        try{
+            sumInfostaff=sumInfoService.getSumInfo("staff");
+            sumInfoList.add(sumInfostaff);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        SumInfo sumInfoemployee=new SumInfo();
+        try{
+            sumInfoemployee=sumInfoService.getSumInfo("employee");
+            sumInfoList.add(sumInfoemployee);
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(sumInfoList);
+        return resp;
+    }
 
+    // 资金明细--充值记录表
+    @RequestMapping(value="/chongzhiList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object chongzhiList( HttpServletRequest request) {
+        Response<List<PayMoney>> resp = new Response<>();
+        String token = request.getParameter("token");
+        String pageStr = request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
 
+        int page,pageSize;
+        page=Integer.valueOf(pageStr);
+        pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize;
+
+        List<PayMoney> payMoneyList;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("page",page);
+            map.put("pageSize",pageSize);
+            payMoneyList=payMoneyMapper.selectPayMoney(map);
+            if (payMoneyList==null || payMoneyList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+
+        resp.success(payMoneyList);
+        return  resp;
+    }
+    // 资金明细--充值记录表
+    @RequestMapping(value="/koufeiList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object koufeiList( HttpServletRequest request) {
+        Response<List<Deduction>> resp = new Response<>();
+        String token = request.getParameter("token");
+        String pageStr = request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
+
+        int page,pageSize;
+        page=Integer.valueOf(pageStr);
+        pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize;
+
+        List<Deduction> deductionList;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("page",page);
+            map.put("pageSize",pageSize);
+            deductionList=deductionMapper.getDeductionList(map);
+
+            if (deductionList==null || deductionList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+
+        resp.success(deductionList);
+
+        return  resp;
+    }
+    // 资金走势--最近10天的资金余额变化
+    @RequestMapping(value="/zijinzoushi.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object zijinzoushi( HttpServletRequest request) {
+        Response<List<Tongji>> resp=new Response<>();
+
+        String  pageStr=request.getParameter("page");
+        String  pageSizeStr=request.getParameter("pageSize");
+        String  helpType=request.getParameter("helpType");
+
+        int page,pageSize;
+        page=Integer.valueOf(pageStr);
+        pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize;
+        List<Tongji> tongjiList=null;
+        try {
+            Map<String,Object> map=new HashMap<>();
+            map.put("helpType",helpType);
+            map.put("page",page);
+            map.put("pageSize",pageSize);
+            tongjiList=tongjiMapper.selectByType(map);
+            if (tongjiList==null ||tongjiList.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(tongjiList);
+        return  resp;
+    } //zijintongji
+    @RequestMapping(value="/bingTu.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object bingTu( HttpServletRequest request) {
+        Response<List<BingTu>> resp=new Response<>();
+        List<BingTu> bingTuList=new ArrayList<>();
+
+        BingTu bingTuLittle=new BingTu();
+        BingTu bingTuYoung=new BingTu();
+        BingTu bingTuOld=new BingTu();
+        BingTu bingTuZonghe=new BingTu();
+        BingTu bingTuStaff=new BingTu();
+        BingTu bingTuEmployee=new BingTu();
+
+        Double totalMoneyLittle=0.0;
+        Double totalMoneyYoung=0.0;
+        Double totalMoneyOld=0.0;
+        Double totalMoneyZonghe=0.0;
+        Double totalMoneyStaff=0.0;
+        Double totalMoneyEmployee=0.0;
+
+        List<UserAccount> userAccountList=new ArrayList<>();
+        try{
+            userAccountList=userAccountMapper.getSumInfo("little");
+            if (userAccountList==null || userAccountList.isEmpty()){
+                bingTuLittle.setHelpName("少儿互助计划");
+                bingTuLittle.setMoney("0.0");
+                bingTuList.add(bingTuLittle);
+            }else{
+                for (UserAccount userAccount:userAccountList){
+                    totalMoneyLittle=Arith.add(totalMoneyLittle, Double.valueOf(userAccount.getPaytotalmoney()));
+                }
+                bingTuLittle.setHelpName("少儿大病互助");
+                bingTuLittle.setMoney(totalMoneyLittle.toString());
+                bingTuList.add(bingTuLittle);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        try{
+            userAccountList=userAccountMapper.getSumInfo("young");
+            if (userAccountList==null || userAccountList.isEmpty()){
+                bingTuYoung.setHelpName("中青年抗癌互助");
+                bingTuYoung.setMoney("0.0");
+                bingTuList.add(bingTuYoung);
+            }else{
+                for (UserAccount userAccount:userAccountList){
+                    totalMoneyYoung=Arith.add(totalMoneyYoung, Double.valueOf(userAccount.getPaytotalmoney()));
+                }
+                bingTuYoung.setHelpName("中青年抗癌互助");
+                bingTuYoung.setMoney(totalMoneyYoung.toString());
+                bingTuList.add(bingTuYoung);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        try{
+            userAccountList=userAccountMapper.getSumInfo("old");
+            if (userAccountList==null || userAccountList.isEmpty()){
+                bingTuOld.setHelpName("中老年抗癌互助");
+                bingTuOld.setMoney("0.0");
+                bingTuList.add(bingTuOld);
+            }else{
+                for (UserAccount userAccount:userAccountList){
+                    totalMoneyOld=Arith.add(totalMoneyOld, Double.valueOf(userAccount.getPaytotalmoney()));
+                }
+                bingTuOld.setHelpName("中老年抗癌互助");
+                bingTuOld.setMoney(totalMoneyOld.toString());
+                bingTuList.add(bingTuOld);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        try{
+            userAccountList=userAccountMapper.getSumInfo("zonghe");
+            if (userAccountList==null || userAccountList.isEmpty()){
+                bingTuZonghe.setHelpName("综合意外互助");
+                bingTuZonghe.setMoney("0.0");
+                bingTuList.add(bingTuZonghe);
+            }else{
+                for (UserAccount userAccount:userAccountList){
+                    totalMoneyZonghe=Arith.add(totalMoneyZonghe, Double.valueOf(userAccount.getPaytotalmoney()));
+                }
+                bingTuZonghe.setHelpName("综合意外互助");
+                bingTuZonghe.setMoney(totalMoneyZonghe.toString());
+                bingTuList.add(bingTuZonghe);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        // 从companyPutao中选择
+        List<Companyputao> companyputaoList;
+        try{
+            companyputaoList=companyputaoMapper.getSumInfo("staff");
+            if (companyputaoList==null || companyputaoList.isEmpty()){
+                bingTuStaff.setHelpName("企业员工大病互助");
+                bingTuStaff.setMoney("0.0");
+                bingTuList.add(bingTuStaff);
+            }else {
+                for (Companyputao companyputao:companyputaoList){
+                    totalMoneyStaff=Arith.add(totalMoneyStaff,companyputao.getTotalmoney());
+                }
+                bingTuStaff.setHelpName("企业员工大病互助");
+                bingTuStaff.setMoney(totalMoneyStaff.toString());
+                bingTuList.add(bingTuStaff);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        try{
+            companyputaoList=companyputaoMapper.getSumInfo("employee");
+            if (companyputaoList==null || companyputaoList.isEmpty()){
+                bingTuEmployee.setHelpName("企业员工综合意外互助");
+                bingTuEmployee.setMoney("0.0");
+                bingTuList.add(bingTuEmployee);
+            }else {
+                for (Companyputao companyputao:companyputaoList){
+                    totalMoneyEmployee=Arith.add(totalMoneyStaff,companyputao.getTotalmoney());
+                }
+                bingTuEmployee.setHelpName("企业员工综合意外互助");
+                bingTuEmployee.setMoney(totalMoneyEmployee.toString());
+                bingTuList.add(bingTuEmployee);
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+
+        }
+        resp.success(bingTuList);
+        return  resp;
+    }
+
+    //获取公示列表
+    @RequestMapping(value="/getPublicList.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getPublicList(){
+        Response<List<Public>> resp=new Response<>();
+        List<Public> publicList=null;
+        Map<String,Object> map=new HashMap<>();
+        map.put("page",0);
+        map.put("pageSize",30);
+        try{
+            publicList=ashipService.getPublicList(map);
+            if (publicList==null ||publicList.isEmpty()){
+                resp.failByNoData();
+                return  resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(publicList);
         return resp;
     }
 

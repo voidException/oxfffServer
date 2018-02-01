@@ -108,7 +108,7 @@ new Vue({
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }}).then(response => {
                     //存储或者改变相应的值
-                    console.log(response.data)
+                    //console.log(response.data)
                     if (response.data.retcode==2000){
                         this.data=response.data.result;
                     }
@@ -126,7 +126,7 @@ new Vue({
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }}).then(response => {
                 //存储或者改变相应的值
-                 console.log(response.data)
+                // console.log(response.data)
                 if (response.data.retcode==2000){
                     this.data=response.data.result;
                 }

@@ -35,6 +35,7 @@ public class SumInfoServiceImpl implements SumInfoService {
 
     public SumInfo getSumInfo(String  helpType){
         SumInfo  sumInfo=new SumInfo();
+        sumInfo.setHelpType(helpType);
 
         if ("staff".equals(helpType) || "employee".equals(helpType)){
             ///  余额  人数  平均- 适用于企业companyputao表
@@ -53,11 +54,11 @@ public class SumInfoServiceImpl implements SumInfoService {
                         String totalMoney=companyputao.getTotalmoenystr();
                         sumMoneyRemain=Arith.add(sumMoneyRemain,Double.valueOf(totalMoney));
                     }
-                    //
                     Double avaMoney=Arith.div(sumMoneyRemain,Double.valueOf(sumRen),3);
                     sumInfo.setSumMoneyRemain(String.valueOf(sumMoneyRemain)); //当前余额
                     sumInfo.setSumMan(String.valueOf(sumRen));  //参与该互助计划的人数
                     sumInfo.setAverage(String.valueOf(avaMoney));  //人均钱数
+                    sumInfo.setSumMoney("150"); //最低互助金额
 
                 }
             }catch (Exception e){
@@ -65,6 +66,7 @@ public class SumInfoServiceImpl implements SumInfoService {
             }
 
         }else {
+            sumInfo.setSumMoney("0");
             //  余额  人数  平均--适用于个人
             List<UserAccount> userAccounts;
             try {
@@ -92,41 +94,23 @@ public class SumInfoServiceImpl implements SumInfoService {
                 throw e;
             }
 
-        }
+        }//else
+
         //互助次数  从Public 表中计算
         List<Public> publicList;
         try{
             Map<String,Object> map=new HashMap<>();
             map.put("helpType",helpType);
             publicList=publicMapper.getNumByhelpType(map);
-            if (publicList==null){
-                sumInfo.setSumMan("0");
+            if (publicList==null || publicList.isEmpty()){
+                sumInfo.setHelpTimes("0");
             }else{
-                sumInfo.setSumMan(String.valueOf( publicList.size()));
+                sumInfo.setHelpTimes(String.valueOf( publicList.size()));
             }
         }catch (Exception e){
             throw  e;
         }
-        //总金额，从充值记录表中计算
-        List<PayMoney> payMoneyList;
-        try{
-            Map<String,Object> map=new HashMap<>();
-            map.put("helpType",helpType);
-            payMoneyList=payMoneyMapper.getPaymoneys(map);
-            if (payMoneyList==null || payMoneyList.size()==0){
-                sumInfo.setSumMoney("0");
-            }else {//循环计算钱数
-                Double sumMoney=0.0; //当前余额
-                for (PayMoney payMoney:payMoneyList){
-                    String money=payMoney.getTotalAmount().toString(); //该账户的金额
-                    sumMoney= Arith.add(sumMoney,Double.valueOf(money));
-                }
-            }
-        }catch (Exception e){
-            throw e;
-        }
+
         return  sumInfo;
     }
-
-    ///
 }
