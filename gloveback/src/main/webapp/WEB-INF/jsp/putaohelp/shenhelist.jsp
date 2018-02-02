@@ -257,7 +257,7 @@
     <div id="default" style="display: block">
         <div class="header">
             <div class="inputWrap">
-                <input  id="joinDate"  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
+                <input  id="shenheSearch"  class="common"  @keyup="getPutaoauthSearch()"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入企业名字搜索" />
             </div>
             <div class="select">
                 <input  @click="selectByType" data-type="all"  type="radio" name="radio3" value="all"/>
@@ -302,6 +302,20 @@
                 </div>
             </div>
         </template>
+
+        <div id="app">
+            <ul class="pagination" >
+                <li v-show="current != 1" @click="current-- && goto(current)" >
+                    <div style="cursor: pointer">上一页</div>
+                </li>
+                <li v-for="index in pages" @click="goto(index)" :class="{'active':current == index}" :key="index">
+                    <div  @click="getPageIndex"  v-bind:data-index="index" class="index">{{index}}</div>
+                </li>
+                <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">
+                    <div style="cursor: pointer">下一页</div>
+                </li>
+            </ul>
+        </div>
     </div>
     <div id="detail" style="display: none">
 

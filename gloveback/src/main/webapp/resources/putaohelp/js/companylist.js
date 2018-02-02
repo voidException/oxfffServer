@@ -179,8 +179,8 @@ new Vue({
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }}).then(response => {
-                console.log(response.data);
-                //存储或者改变相应的值
+                //  console.log(response.data);
+                //  存储或者改变相应的值
                 if (response.data.retcode==2000){
                     this.staffList=response.data.result;
                 }

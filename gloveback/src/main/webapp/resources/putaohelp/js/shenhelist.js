@@ -15,7 +15,12 @@ new Vue({
         pagePass:1,
         pageRefused:1,
         page:1,
-        confirmIf:"all"
+        confirmIf:"all",
+
+        current:1,
+        showItem:5,
+        allpage:5 ,//默认页数是5页
+        count:0,// 总记录条数
     },
     mounted: function () {
         this.confirmIf="all";
@@ -26,7 +31,65 @@ new Vue({
 
         this.getShenheListWait(param);
     },
+    computed:{
+        pages:function(){
+            var pag = [];
+            if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItem,this.allpage);
+                while(i){
+                    pag.unshift(i--);
+                }
+            }else{ //当前页数大于显示页数了
+                var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
+                    i = this.showItem;
+                if( middle >  (this.allpage - this.showItem)  ){
+                    middle = (this.allpage - this.showItem) + 1
+                }
+                while(i--){
+                    pag.push( middle++ );
+                }
+            }
+            return pag
+        }
+    },
     methods: {
+
+        goto:function(index){
+            if(index == this.current)
+                return;
+            this.current = index;
+            //这里可以发送ajax请求
+        },
+        getPageIndex:function (event) { //分页实现
+
+            let  index=event.target.getAttribute("data-index");
+            let param=new FormData();
+            param.append("page",index);
+            param.append("pageSize",10); //统一20条
+            this.getUserList(param); //
+        },
+
+        getPutaoauthSearch:function () {
+            let name=document.getElementById("shenheSearch").value
+            var param = new FormData();
+            param.append('name',name);
+
+            //发送请求前先，隐藏弹出框，避免多次点击
+            //发送网络请求
+            axios.post('/glove/grapeAdmin/doshenheSearch.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    this.data=response.data.result;
+                }
+            }, err => {
+
+            });
+        }, //
+
         selectByType:function (event) {
             let confirmIf=event.target.getAttribute("data-type");
             this.confirmIf=confirmIf; //这个很重要，当点击分页按钮时，通过此知道当前处于什么状态下
