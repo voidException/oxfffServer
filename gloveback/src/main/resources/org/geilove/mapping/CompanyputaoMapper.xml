@@ -21,6 +21,10 @@
     needtips, tipstimes, tipsdate, updatedate, createdate
   </sql>
 
+  <select id="getCompanyputaoCount" resultType="java.lang.Integer" >
+    select count(*) from companyputao
+  </select>
+
   <select id="getCompanyList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select
     <include refid="Base_Column_List"/>

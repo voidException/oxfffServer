@@ -18,6 +18,8 @@ public interface UserStaffMapper {
 
     UserStaff selectByPrimaryKey(Long staffid);
 
+    List<UserStaff> selectByPhone(String phone);
+
     int updateByPrimaryKeySelective(UserStaff record);
 
     int updateByPrimaryKey(UserStaff record);
@@ -47,5 +49,5 @@ public interface UserStaffMapper {
 
     int getTotalByHelpType(Map<String,Object> map ); //根据互助类型helpType和affirm 是否确认来统计是总人数
 
-
+    int getTotalByHelpTypeAndUserUUID(Map<String,Object> map ); //统计某个公司下的某种互助计划的总人数
 }

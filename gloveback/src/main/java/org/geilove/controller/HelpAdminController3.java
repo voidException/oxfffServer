@@ -124,10 +124,18 @@ public class HelpAdminController3 {
         //统计总共有多少条
         //结果放在resp的
         //resp.setMsg("1000");
-
         resp.success(personAccountsList);
+        try{
+            int num=userMapper.getPersonCount();
+            resp.setMsg(String.valueOf(num));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return  resp;
     }
+
+
+
     //******* 通过用户的手机号检索出用户和其家人加入的互助计划
     @RequestMapping(value="/searchUserAndUserAccountsbyPhone.do",method = RequestMethod.POST)
     @ResponseBody
@@ -238,6 +246,32 @@ public class HelpAdminController3 {
             userCompanyputaoList.add(userCompanyputao2); //
         } //for
         resp.success(userCompanyputaoList);
+        try{
+            int count=companyputaoMapper.getCompanyputaoCount();
+            resp.setMsg(String.valueOf(count)); //总条数
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
+        return  resp;
+    }
+
+    @RequestMapping(value="/searchUserStaffByPhone.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object searchUserStaffByPhone( HttpServletRequest request) {
+        Response< List<UserStaff> > resp=new Response<>();
+        String phone=request.getParameter("phone");
+        List<UserStaff> userStaffs;
+        try {
+            userStaffs=userStaffMapper.selectByPhone(phone);
+            if (userStaffs==null ||userStaffs.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(userStaffs);
         return  resp;
     }
     //项目列表

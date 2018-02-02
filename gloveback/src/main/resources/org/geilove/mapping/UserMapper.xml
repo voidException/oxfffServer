@@ -61,6 +61,10 @@
         <result column="unionid" property="unionid" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--统计有多少个个人用户-->
+    <select id="getPersonCount" resultType="java.lang.Integer" >
+        select count(*) from user
+    </select>
     <!--获取公司列表-->
     <select id="getCompanyList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select

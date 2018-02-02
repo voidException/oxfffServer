@@ -9,13 +9,68 @@ new Vue({
         staffList:[], //公司某一互助计划下的所有员工
         page:1,
         pageStaff:1,
-        nowuseruuid:""
+        nowuseruuid:"",
+        nowhelpType:"",
+
+        current:1,
+        showItem:5,
+        allpage:5 ,//默认页数是5页
+        count:0,// 总记录条数
+
+        currentDetail:1,
+        showItemDetail:5,
+        allpageDetail:5 ,//默认页数是5页
+        countDetail:0,// 总记录条数
     },
     mounted: function () {
-
         var param = new FormData();
         param.append('page',1);
         this.getCompanyList(param);
+    },
+    computed:{
+        pages:function(){
+            var pag = [];
+            if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItem,this.allpage);
+                while(i){
+                    pag.unshift(i--);
+                }
+            }else{ //当前页数大于显示页数了
+                var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
+                    i = this.showItem;
+                if( middle >  (this.allpage - this.showItem)  ){
+                    middle = (this.allpage - this.showItem) + 1
+                }
+                while(i--){
+                    pag.push( middle++ );
+                }
+            }
+            return pag
+        },
+        pagesDetail:function(){
+            var pag = [];
+            if( this.currentDetail < this.showItemDetail ){ //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItemDetail,this.allpageDetail);
+                while(i){
+                    pag.unshift(i--);
+                }
+            }else{ //当前页数大于显示页数了
+                var middle = this.currentDetail - Math.floor(this.showItemDetail / 2 ),//从哪里开始
+                    i = this.showItemDetail;
+                if( middle >  (this.allpageDetail - this.showItemDetail)  ){
+                    middle = (this.allpageDetail - this.showItemDetail) + 1
+                }
+                while(i--){
+                    pag.push( middle++ );
+                }
+            }
+            return pag
+        },
+
+
+
     },
     filters:{
         formatDate(time){
@@ -68,8 +123,6 @@ new Vue({
                 return "企业员工意外伤害互助计划"
             }
         }
-
-
     },
     methods: {
 
@@ -86,26 +139,43 @@ new Vue({
                 //存储或者改变相应的值
                 if (response.data.retcode==2000){
                     this.data=response.data.result;
+                    this.count=response.data.msg; //总记录数
+                    this.allpage=Math.ceil(this.count/10);
+                    //console.log(this.count);
+                    //console.log(this.allpage)
+                }
+            }, err => {
+
+            });
+        }, //
+        searchCompanyByPhone:function () { //根据手机号搜索公司的2个互助计划
+            //发送请求前先，隐藏弹出框，避免多次点击
+            //发送网络请求
+            let phone=document.getElementById("searchInput").value;
+            let param=new FormData();
+            param.append("phone",phone); //根据手机号进行搜索
+
+            axios.post('/glove/grapeAdmin/doCompanySearch2.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //console.log(response.data);
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    this.data=[];
+                    this.data=(response.data.result)
+                    //console.log(this.data)
                 }
 
             }, err => {
 
             });
         }, //
-
-        getStafflist:function(event){
-
-            document.getElementById('default').style.display='none';
-            document.getElementById('detail').style.display='block';
-            let  datauuid=event.target.getAttribute("data-useruuid");
-            let  helptype=event.target.getAttribute("data-helptype");
-            var param=new FormData();
-            param.append("useruuid",datauuid) ;
-            param.append("helptype",helptype);
-            param.append("page",this.pageStaff); //页码
-            param.append("pageSize",10);
-
-            axios.post('/glove/grapeAdmin/getUserStaffListHelpType.do',param,{
+        searchUserStaffByPhone:function () {
+            let phone=document.getElementById("staffPhone").value;
+            let param=new FormData();
+            param.append("phone",phone); //根据手机号进行搜索searchUserStaffByPhone
+            axios.post('/glove/grapeAdmin/searchUserStaffByPhone.do',param,{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }}).then(response => {
@@ -115,6 +185,39 @@ new Vue({
                     this.staffList=response.data.result;
                 }
 
+            }, err => {
+
+            });
+        },
+        getStafflist:function(event){
+
+            document.getElementById('default').style.display='none';
+            document.getElementById('detail').style.display='block';
+            let  useruuid=event.target.getAttribute("data-useruuid");
+            let  helptype=event.target.getAttribute("data-helptype");
+
+            this.nowuseruuid=useruuid;
+            this.nowhelpType=helptype;
+
+            var param=new FormData();
+            param.append("useruuid",useruuid) ;
+            param.append("helptype",helptype);
+            param.append("page",this.pageStaff); //页码
+            param.append("pageSize",10);
+
+            axios.post('/glove/grapeAdmin/getUserStaffListHelpType.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //console.log(response.data);
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    this.staffList=response.data.result;
+                    this.countDetail=response.data.msg; //总记录数
+                    this.allpageDetail=Math.ceil(this.countDetail/10);
+                }else{ //当没有数据的时候就隐藏这个
+                    document.getElementById('detail').style.display='none';
+                }
             }, err => {
 
             });
@@ -129,70 +232,47 @@ new Vue({
             document.getElementById("detail").style.display='block'; //显示详情
         },
 
-        goNextPage:function () {
-            if(this.data.length<20){
-                return
-            }
-            this.page++;
-            var param = new FormData();
-            param.append('page',this.page);
-            this.getCompanyList(param);
-        },
-        goUpPage:function () {
-            if (this.page >1){
-                this.page--;
-            }
-            var param = new FormData();
-            param.append('page',this.page);
-            this.getCompanyList(param);
-        },
-
-        goStaffNextPage:function () {
-            //console.log(this.staffList)
-
-            if (this.staffList.length<20){
-                alert("没有更多数据了")
+        goto:function(index){
+            if(index == this.current)
                 return;
-            }
-            this.pageStaff++;
+            this.current = index;
+            //这里可以发送ajax请求
+        },
+        getPageIndex:function (event) {
+            let  index=event.target.getAttribute("data-index");
             var param = new FormData();
-            param.append('page',this.pageStaff);
-            param.append('useruuid',this.nowuseruuid);
-
-            axios.post('/glove/grapeAdmin/getUserStaffList.do',param,{
+            param.append("page",index);
+            this.getCompanyList(param);
+        },
+        gotoDetail:function(index){
+            if(index == this.currentDetail)
+                return;
+            this.currentDetail = index;
+            //这里可以发送ajax请求
+        },
+        getPageIndexDetail:function (event) {
+            let  index=event.target.getAttribute("data-index");
+            let param = new FormData();
+            param.append("useruuid",this.nowuseruuid) ;
+            param.append("helptype",this.nowhelpType);
+            param.append("page",index);
+            param.append("pageSize",10);
+            axios.post('/glove/grapeAdmin/getUserStaffListHelpType.do',param,{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }}).then(response => {
-                //console.log(response.data);
+               // console.log(response.data);
                 //存储或者改变相应的值
                 if (response.data.retcode==2000){
                     this.staffList=response.data.result;
                 }
+
             }, err => {
 
             });
-        },
-        goStaffUpPage:function () {
-            if (this.pageStaff >1){
-                this.pageStaff--;
-            }
-            var param = new FormData();
-            param.append('page',this.pageStaff);
-            param.append('useruuid',this.nowuseruuid);
 
-            axios.post('/glove/grapeAdmin/getUserStaffList.do',param,{
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }}).then(response => {
-                //console.log(response.data);
-                //存储或者改变相应的值
-                if (response.data.retcode==2000){
-                    this.staffList=response.data.result;
-                }
-            }, err => {
-
-            });
         },
+
         getStaffList:function (event) {
             document.getElementById('detail').style.display='none';
             document.getElementById('stafflist').style.display='block';
@@ -223,7 +303,7 @@ new Vue({
 
             });
 
-        }
+        },
 
     },
 

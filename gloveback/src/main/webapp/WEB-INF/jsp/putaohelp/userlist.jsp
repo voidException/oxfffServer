@@ -75,6 +75,7 @@
             background-color: #2C3E51;
             color: #ffffff;
             font-family:tahoma,arial,宋体;
+            cursor: pointer;
         }
         .inputWrap{
             display: flex;
@@ -264,8 +265,8 @@
 <body style="background-color: #F2F2F2">
 <div id="userlist" style="display: flex;flex-direction: column">
     <div class="header">
-        <div class="headerItemLeft"  @click="showDefault">首页</div>
-        <div class="headerItemRight" @click="showDetailTab">详情</div>
+        <div class="headerItemLeft"  @click="showDefault" style="cursor: pointer">首页</div>
+        <div class="headerItemRight"  id="xiangqing" @click="showDetailTab" >详情</div>
     </div>
     <!---默认板块--->
     <div id="default" style="display: block">
@@ -284,12 +285,12 @@
             <div  class="headerSmallItem">操作</div>
         </div>
 
-        <template v-for="item in data">
-            <div class="mainBodyContain">
+        <template v-for="item in data" >
+            <div class="mainBodyContain" :key="item.userphone">
                 <div class="headerMidItem" style="color: #000;font-size: smaller">{{item.userphone}}</div>
                 <div class="mainBodyContainRight">
-                    <template v-for="userAccount in item.userAccountList">
-                    <div class="mainBodyContainRightItem">
+                    <template v-for="userAccount in item.userAccountList" >
+                    <div class="mainBodyContainRightItem"  :key="userAccount.useraccountid">
                         <div class="headerSmallItem" style="color: #000; font-size: smaller">{{userAccount.username}}</div>
                         <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{userAccount.categorytype |formHelpType}}</div>
                         <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{userAccount.joindate | formatDate}}</div>
@@ -318,74 +319,40 @@
     <!--以下是详情-->
     <div id="detail" class="detailTab">
 
-        <div class="detailHeader">中青年大病互助计划</div>
+        <div class="detailHeader">{{detail.categorytype | formHelpType}}</div>
         <div class="detailBody">
             <div class="detailBodyTop">
                 <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;height: 100px; width: 246px">
                     <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
                     <div style="display: flex;width: 100px;flex-direction: column;justify-content: center;align-items: center;color: #ffffff">
-                        <div>张三</div>
+                        <div>{{detail.username}}</div>
                         <div>个人账户</div>
                     </div>
                 </div>
                 <div style="height: 100px;width: 2px;background-color: #ffffff"></div>
                 <div   style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 100px; width: 246px;color: #ffffff">
-                    <div>100元</div>
+                    <div>{{detail.paytotalmoney}}</div>
                     <div>账户余额</div>
                 </div>
             </div>
-            <div class="profileItem">
-                <div>手机号：</div>
-                <div>17827478</div>
-            </div>
+            <%--<div class="profileItem">--%>
+                <%--<div>手机号：</div>--%>
+                <%--<div>17827478</div>--%>
+            <%--</div>--%>
             <div class="profileItem">
                 <div>身份证号：</div>
-                <div>2782w4787384878723478</div>
+                <div>{{detail.accountuuid}}</div>
             </div>
             <div class="profileItem">
                 <div>加入时间：</div>
-                <div>2782w4787384878723478</div>
+                <div>{{detail.joindate | formatDate}}</div>
             </div>
             <div class="profileItem">
                 <div>互助次数：</div>
-                <div>1</div>
+                <div>{{detail.remainfee}}</div>
             </div>
 
         </div>
-
-
-
-        <!---
-
-        <div class="detailItem">
-            <div>身份证号：</div>
-            <div>{{detail.accountuuid}}</div>
-        </div>
-
-        <div class="detailItem">
-            <div>姓名：</div>
-            <div>{{detail.username}}</div>
-        </div>
-
-        <div class="detailItem">
-            <div>互助类型：</div>
-            <div>{{detail.categorytype}}</div>
-        </div>
-        <div class="detailItem">
-            <div>加入时间：</div>
-            <div>{{detail.joindate}}</div>
-        </div>
-
-        <div class="detailItem">
-            <div>余额：</div>
-            <div>{{detail.paytotalmoney}}</div>
-        </div>
-
-        <div class="detailItem">
-            <div>互助次数：</div>
-            <div>{{detail.remainfee}}</div>
-        </div>
-        -->
 
     </div>
     <!--分页组件-->

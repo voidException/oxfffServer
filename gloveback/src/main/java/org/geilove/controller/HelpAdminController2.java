@@ -14,6 +14,7 @@ import org.geilove.util.Md5Util;
 import org.geilove.util.Response;
 import org.geilove.vo.CostMoney;
 import org.geilove.vo.RedBaoInfo;
+import org.geilove.vo.UserCompanyputao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -549,34 +550,77 @@ public class HelpAdminController2 {
         return mav ;
     }
     //获得公司列表
-    @RequestMapping(value="/getCompanyList.do",method = RequestMethod.POST)
+    @RequestMapping(value="/doCompanySearch2.do",method = RequestMethod.POST)
     @ResponseBody
-    public Object getCompanyList( HttpServletRequest request) {
-        Response<List<User>> resp = new Response<>();
+    public Object doCompanySearch2( HttpServletRequest request) {
+        Response<List<UserCompanyputao>> resp = new Response<>();
 
-        String pageStr=request.getParameter("page");
-        //获得公司的
-        List<User> userList=null;
+        String token=request.getParameter("token");
+        String phone=request.getParameter("phone");
+        User  user=new User();
         try{
-            int page=Integer.valueOf(pageStr);
-            page=(page-1)*10;
-
-            Map<String,Object> map=new HashMap<>();
-            map.put("userType",(byte)2);
-            map.put("page",page);
-            map.put("pageSize",10);
-
-            userList=userMapper.getCompanyList(map);
-            if (userList==null){
+            user=userMapper.getUserByPhone(phone);
+            if (user==null ){
                 resp.failByNoData();
-                return resp;
+                return  resp;
             }
         }catch (Exception e){
             resp.failByException();
             return  resp;
         }
+        List<UserCompanyputao>  userCompanyputaoList=new ArrayList<>();
 
-        resp.success(userList);
+        Map<String,Object> map=new HashMap<>();
+        map.put("uuid",user.getUseruuid());
+        map.put("page",0);
+        map.put("pageSize",2);
+
+        List<Companyputao> companyputaoList=null;
+        try{
+            companyputaoList=companyputaoMapper.getCompanyputao(map);
+            if (companyputaoList==null || companyputaoList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+          resp.failByException();
+          return  resp;
+        }
+        UserCompanyputao userCompanyputao1=new UserCompanyputao();
+        userCompanyputao1.setUsername(user.getUsernickname());
+        userCompanyputao1.setUseruuid(user.getUseruuid());
+        userCompanyputao1.setUserphone(user.getUserphone());
+        userCompanyputao1.setRegister(user.getRegisterdate());
+        userCompanyputao1.setStaffall(companyputaoList.get(0).getStaffall());
+        userCompanyputao1.setAverage(companyputaoList.get(0).getAverage());
+        userCompanyputao1.setCompanyuuid(companyputaoList.get(0).getCompanyuuid());
+        userCompanyputao1.setHelptype(companyputaoList.get(0).getHelptype());
+        userCompanyputao1.setTotalmoenystr(companyputaoList.get(0).getTotalmoenystr());
+        userCompanyputao1.setTipstimes(companyputaoList.get(0).getTipstimes()); //
+        //加入到列表中
+        userCompanyputaoList.add(userCompanyputao1) ;
+
+        UserCompanyputao userCompanyputao2=new UserCompanyputao();
+        userCompanyputao2.setUsername(user.getUsernickname());
+        userCompanyputao2.setUseruuid(user.getUseruuid());
+        userCompanyputao2.setUserphone(user.getUserphone());
+        userCompanyputao2.setRegister(user.getRegisterdate());
+        userCompanyputao2.setStaffall(companyputaoList.get(1).getStaffall());
+        userCompanyputao2.setAverage(companyputaoList.get(1).getAverage());
+        userCompanyputao2.setCompanyuuid(companyputaoList.get(1).getCompanyuuid());
+        userCompanyputao2.setHelptype(companyputaoList.get(1).getHelptype());
+        userCompanyputao2.setTotalmoenystr(companyputaoList.get(1).getTotalmoenystr());
+        userCompanyputao2.setTipstimes(companyputaoList.get(1).getTipstimes()); //
+        //加入到列表中
+        userCompanyputaoList.add(userCompanyputao2);
+
+        resp.success(userCompanyputaoList);
+        try{
+            int count=companyputaoMapper.getCompanyputaoCount();
+            resp.setMsg(String.valueOf(count)); //总条数
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return resp;
     }
 
@@ -715,6 +759,17 @@ public class HelpAdminController2 {
             return resp;
         }
         resp.success(userStaffs);
+        // 根据useruuid  helptype 获得参与该计划的总员工数
+        try{
+             Map<String,Object> map2=new HashMap<>();
+             map2.put("helpType",helptype);
+             map2.put("useruuid",useruuid);
+             map2.put("affirm","yes");
+             int count=userStaffMapper.getTotalByHelpTypeAndUserUUID(map2);
+             resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return resp;
     }
     // 路由，跳转到被救助人列表，

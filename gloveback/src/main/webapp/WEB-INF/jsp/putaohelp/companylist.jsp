@@ -198,7 +198,7 @@
     <div id="default" style="display: block">
         <div class="header">
             <div class="inputWrap">
-                <input  id="joinDate"  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
+                <input  id="searchInput"  class="common"  @keyup="searchCompanyByPhone($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
             </div>
         </div>
         <div class="headerBody">
@@ -227,12 +227,28 @@
                 </div>
             </div>
         </template>
+
+        <div id="appdefault">
+            <ul class="pagination" >
+                <li v-show="current != 1" @click="current-- && goto(current)" >
+                    <div style="cursor: pointer">上一页</div>
+                </li>
+                <li v-for="index in pages" @click="goto(index)" :class="{'active':current == index}" :key="index">
+                    <div  @click="getPageIndex"  v-bind:data-index="index" class="index">{{index}}</div>
+                </li>
+                <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">
+                    <div style="cursor: pointer">下一页</div>
+                </li>
+            </ul>
+        </div>
     </div>
+
+
     <!--以下是详情-->
     <div id="detail" style="display: none">
         <div class="header">
             <div class="inputWrap">
-                <input  id="staffPhone"  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
+                <input  id="staffPhone"  class="common"  @keyup="searchUserStaffByPhone($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
             </div>
         </div>
         <div class="headerBody">
@@ -253,7 +269,22 @@
                 <div  class="headerSmallItem"  style="color: #000;font-size: smaller">{{item.nowstate}}</div>
             </div>
         </template>
+        <div id="appdetail">
+            <ul class="pagination" >
+                <li v-show="currentDetail != 1" @click="currentDetail-- && gotoDetail(currentDetail)" >
+                    <div style="cursor: pointer">上一页</div>
+                </li>
+                <li v-for="index in pagesDetail" @click="gotoDetail(index)" :class="{'active':current == index}" :key="index">
+                    <div  @click="getPageIndexDetail"  v-bind:data-index="index" class="index">{{index}}</div>
+                </li>
+                <li v-show="allpageDetail != currentDetail && allpageDetail != 0 " @click="currentDetail++ && gotoDetail(currentDetail++)">
+                    <div style="cursor: pointer">下一页</div>
+                </li>
+            </ul>
+        </div>
+
     </div>
+
 </div>
 <script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/companylist.js"></script>
 </body>

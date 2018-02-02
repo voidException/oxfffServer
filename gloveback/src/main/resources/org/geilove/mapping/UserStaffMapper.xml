@@ -21,6 +21,20 @@
     effectiveDate, stopDate, nowState, applyhelptimes
   </sql>
 
+  <!--getTotalByHelpTypeAndUserUUID-->
+  <select id="getTotalByHelpTypeAndUserUUID" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from userstaff
+    WHERE  helptype=#{helpType} AND useruuid= #{useruuid} AND affirm= #{affirm}
+  </select>
+<!--selectByAccount 根据身份证号查找用户-->
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from userstaff
+    WHERE  staffphone=#{phone}
+  </select>
+
+
   <select id="getTotalStaff" resultType="java.lang.Integer" >
     select count(*) from userstaff
   </select>

@@ -61,6 +61,8 @@ public interface UserMapper {
     //getCompanyList
     List<User> getCompanyList(Map<String,Object> map);
 
+    Integer getPersonCount();
+
 }
 
 

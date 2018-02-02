@@ -34,4 +34,6 @@ public interface CompanyputaoMapper {
 
     List<Companyputao> getCompanyList(Map<String,Object> map);
 
+    int getCompanyputaoCount();
+
 }
