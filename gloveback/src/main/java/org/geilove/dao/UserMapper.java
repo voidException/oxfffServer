@@ -63,6 +63,8 @@ public interface UserMapper {
 
     Integer getPersonCount();
 
+    Integer countLimitType(Byte userType);
+
 }
 
 

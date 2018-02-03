@@ -21,7 +21,7 @@
 <div class="header" style="height:20px;background-color: #ffffff">
 </div>
 <!---这个是中间部分-->
-<div class="middle">
+<div id="middle"  class="middle">
     <div class="sidebar">
         <div class="wrapper"  style="display: flex;flex-direction: column;align-items: center;height: 150px;width: 200px;background-color: #1F3647;">
             <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
@@ -30,89 +30,152 @@
             </div>
         </div>
         <!---模块1-->
-        <div class="ItemWrapper" >
-            <div  class="ItemWrapperIn">
-                 <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/smallAdmin.png" >
+         <details>
+            <summary>
+                <div class="ItemWrapper" >
+                        <div  class="ItemWrapperIn">
+                             <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/smallAdmin.png" >
+                        </div>
+                        <div  class="ItemWrapperInDiv">
+                            会员管理
+                        </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner" >
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">
+                            <div  id="1"  @click="changeColor" data-index="1">个人列表</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/companylist.do"  >
+                            <div  id="2"  @click="changeColor" data-index="2">企业列表</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass">
+                            <div  id="3"  @click="changeColor" data-index="3"> 实名认证</div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div  class="ItemWrapperInDiv">
-                会员管理
-            </div>
-        </div>
-        <div  class="ItemBodyWrapper">
-            <div style="width: 80px"></div>
-            <div   class="ItemBodyInner" >
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/gouserlist.do">个人列表</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/companylist.do"  >企业列表</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/shenhelist.do?confirmIf=pass">实名认证</a></div>
-            </div>
-        </div>
+         </details>
         <!---模块2-->
-        <div class="ItemWrapper" >
-            <div  class="ItemWrapperIn">
-                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/money.png" >
+        <details>
+            <summary>
+                <div class="ItemWrapper" >
+                    <div  class="ItemWrapperIn">
+                        <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/money.png" >
+                    </div>
+                    <div  class="ItemWrapperInDiv">
+                        资金管理
+                    </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner">
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/zijinMingXi.do">
+                            <div  id="4"  @click="changeColor" data-index="4"> 资金明细</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/zijinZouShi.do">
+                            <div  id="5"  @click="changeColor" data-index="5"> 资金走势</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do">
+                            <div  id="6"  @click="changeColor" data-index="6">
+                                红包统计
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div  class="ItemWrapperInDiv">
-                资金管理
-            </div>
-        </div>
-        <div  class="ItemBodyWrapper">
-            <div style="width: 80px"></div>
-            <div   class="ItemBodyInner">
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinMingXi.do">资金明细</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/zijinZouShi.do">资金走势</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/redBaoTongji.do">红包统计</a></div>
-            </div>
-        </div>
+        </details>
 
         <!---一个模块-->
-        <div class="ItemWrapper" >
-            <div  class="ItemWrapperIn">
-                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+        <details>
+            <summary>
+                <div class="ItemWrapper" >
+                    <div  class="ItemWrapperIn">
+                        <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+                    </div>
+                    <div  class="ItemWrapperInDiv">
+                        项目管理
+                    </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner" >
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/xiangMuXiangQing.do">
+                            <div  id="7"  @click="changeColor" data-index="7"> 项目列表</div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div  class="ItemWrapperInDiv">
-                项目管理
-            </div>
-        </div>
-        <div  class="ItemBodyWrapper">
-            <div style="width: 80px"></div>
-            <div   class="ItemBodyInner" >
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/xiangMuXiangQing.do">项目列表</a></div>
-            </div>
-        </div>
-
+        </details>
         <!---模块3-->
-        <div class="ItemWrapper" >
-            <div  class="ItemWrapperIn">
-                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/zixun.png" >
+        <details>
+            <summary>
+                <div class="ItemWrapper" >
+                    <div  class="ItemWrapperIn">
+                        <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/zixun.png" >
+                    </div>
+                    <div  class="ItemWrapperInDiv">
+                        资讯管理
+                    </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner" >
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/newsList.do">
+                            <div  id="8"  @click="changeColor" data-index="8">资讯列表</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/addNews.do" >
+                            <div  id="9"  @click="changeColor" data-index="9">增加资讯</div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div  class="ItemWrapperInDiv">
-                资讯管理
-            </div>
-        </div>
-        <div  class="ItemBodyWrapper">
-            <div style="width: 80px"></div>
-            <div   class="ItemBodyInner" >
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/newsList.do">资讯列表</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/addNews.do" >增加资讯</a></div>
-            </div>
-        </div>
+        </details>
         <!---一个模块-->
-        <div class="ItemWrapper" >
-            <div  class="ItemWrapperIn">
-                <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+        <details>
+            <summary>
+                <div class="ItemWrapper" >
+                    <div  class="ItemWrapperIn">
+                        <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+                    </div>
+                    <div  class="ItemWrapperInDiv">
+                        互助管理
+                    </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner" >
+                    <%--<div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/beHelpedlist.do">被救助人列表</a></div>--%>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do">
+                            <div  id="10"  @click="changeColor" data-index="10"> 增加一个求助人</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/goCostMoney.do"  >
+                        <div  id="11"  @click="changeColor" data-index="11">执行扣钱</div>
+                    </a></div>
+                </div>
             </div>
-            <div  class="ItemWrapperInDiv">
-                互助管理
-            </div>
-        </div>
-        <div  class="ItemBodyWrapper">
-            <div style="width: 80px"></div>
-            <div   class="ItemBodyInner" >
-                <%--<div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/beHelpedlist.do">被救助人列表</a></div>--%>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/addHelpMan.do">增加一个求助人</a></div>
-                <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/goCostMoney.do"  >执行扣钱</a></div>
-            </div>
-        </div>
+        </details>
         <!---一个模块-->
 
     </div>
@@ -126,7 +189,35 @@
     </div>
 </div>
 <script>
+    new Vue({
+        el: '#middle',
+        data: {
+            nowid:''
+        },
+        mounted: function () {
 
+        },
+        methods: {
+            changeColor:function (event) {
+                let index =event.target.getAttribute("data-index");
+               this.switchColor(index)
+            },
+
+            switchColor:function (id) {
+                if (this.nowid==''){
+                    this.nowid=id;
+                    document.getElementById(id).style.color="#237ea7";
+                    return
+                }else {
+                    document.getElementById(id).style.color="#237ea7";
+                    //console.log(this.nowid)
+                    document.getElementById(this.nowid).style.color="white";
+                    this.nowid=id;
+                }
+            }
+        },
+
+    });
 </script>
 <%--<shiro:hasRole name="admin">--%>
     <%--这是admin角色登录：<shiro:principal></shiro:principal>--%>
@@ -149,7 +240,9 @@
         height: 25px;padding-right: 10px;height: 25px;
     }
     .ItemWrapperInDiv{
-        font-family:tahoma,arial,宋体;width: 120px;display: flex;flex-direction: row;justify-content: flex-start;align-items: center;height: 30px
+        font-family:tahoma,arial,宋体;width: 120px;display: flex;flex-direction: row;
+        justify-content: flex-start;align-items: center;height: 30px;
+        cursor: pointer;
     }
     .ItemBodyWrapper{
         display: flex;flex-direction: row;align-items: center;width: 200px
@@ -189,6 +282,12 @@
     .content{
         width: 80%;
         height: 90%;
+    }
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    summary{
+        outline: none;
     }
 </style>
 

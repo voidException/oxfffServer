@@ -65,6 +65,12 @@
     <select id="getPersonCount" resultType="java.lang.Integer" >
         select count(*) from user
     </select>
+
+    <select id="countLimitType" resultType="java.lang.Integer"  parameterType="java.lang.Byte">
+        select count(*) from user
+        WHERE userType= #{userType}
+    </select>
+
     <!--获取公司列表-->
     <select id="getCompanyList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select

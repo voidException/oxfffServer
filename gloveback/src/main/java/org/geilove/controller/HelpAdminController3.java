@@ -684,6 +684,33 @@ public class HelpAdminController3 {
         return resp;
     }
 
+    @RequestMapping(value="/getDefaultMain.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getDefaultMain(){
+        Response<DefaultMain> resp=new Response<>();
+        DefaultMain defaultMain=new DefaultMain();
+
+        List<Tongji>  tongjis;
+        try{
+            int sumUser=userMapper.getPersonCount();
+            defaultMain.setSumUser(String.valueOf(sumUser));
+            int sumCompany=userMapper.countLimitType((byte)2); //公司总数
+
+            defaultMain.setSumCompany(String.valueOf(sumCompany));
+            tongjis=tongjiMapper.selectNewest();
+            if (tongjis==null ||tongjis.isEmpty()){
+                defaultMain.setRemainMoney("0");
+            }else {
+                defaultMain.setRemainMoney(tongjis.get(0).getAllmoney());
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return resp;
+        }
+        resp.success(defaultMain);
+        return  resp;
+    }
+
 }
 
 

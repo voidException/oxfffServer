@@ -19,4 +19,7 @@ public interface TongjiMapper {
     int updateByPrimaryKey(Tongji record);
 
     List<Tongji> selectByType(Map<String,Object> map); //选择出最近10天的统计
+
+    List<Tongji>  selectNewest();
+
 }

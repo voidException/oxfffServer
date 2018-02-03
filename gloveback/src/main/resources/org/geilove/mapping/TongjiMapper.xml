@@ -12,6 +12,16 @@
     tongjiid, tongjiuuid, allMoney, moneyType, tongjiDate
   </sql>
 
+  <select id="selectNewest" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List"/>
+    from tongji
+    where 1=1
+    order by
+    tongjiDate DESC
+    limit 0,1
+  </select>
+
   <!--selectByType-->
   <select id="selectByType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select
