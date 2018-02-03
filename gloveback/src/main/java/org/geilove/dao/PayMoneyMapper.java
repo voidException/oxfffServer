@@ -26,4 +26,10 @@ public interface PayMoneyMapper {
 
     List<PayMoney> selectPayMoney(Map<String,Object> map);
 
+    List<PayMoney> searchByAccount(Map<String,Object> map);
+
+    int countAll();
+
+    int countAllLimitAcount(String account);
+
 }

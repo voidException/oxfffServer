@@ -19,4 +19,11 @@ public interface DeductionMapper {
     int updateByPrimaryKey(Deduction record);
 
     List<Deduction> getDeductionList(Map<String,Object> map);
+
+    int countAll();
+
+    int  countAllLimitAccount(String account);
+
+    List<Deduction> searchKoufeiList(Map<String,Object> map);
+
 }

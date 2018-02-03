@@ -103,8 +103,6 @@ new Vue({
         formCishu(cishu){
             console.log(cishu)
         }
-
-
     },
     methods: {
 

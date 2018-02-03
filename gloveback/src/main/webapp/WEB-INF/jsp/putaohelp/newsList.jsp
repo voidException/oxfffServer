@@ -188,18 +188,18 @@
         }
     </style>
 </head>
-<body>
-<div id="newsList" class="newsList" style="background-color: #F2F2F2">
+<body style="background-color: #F2F2F2">
+<div id="newsList" class="newsList" >
     <div class="header">
         <div class="headerItemLeft"  @click="showDefault">首页</div>
         <div class="headerItemRight" @click="showDetailTab">详情</div>
     </div>
     <div id="default" style="display: block">
-        <div class="header">
-            <div class="inputWrap">
-                <input  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />
-            </div>
-        </div>
+        <%--<div class="header">--%>
+            <%--<div class="inputWrap">--%>
+                <%--<input  class="common"  @keyup="dosearch($event)"     type="text"  autocomplete="off"  min="0" max="200"placeholder="输入手机号搜索" />--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="headerBody">
             <div class="headerBodyBigItem">标题</div>
             <div class="headerSmallItem">副标题</div>
@@ -209,24 +209,38 @@
             <div  class="headerSmallItem">发布时间</div>
             <div  class="headerSmallItem">操作</div>
         </div>
-        <template v-for="item in newsList">
-            <div class="mainBodyContain">
-                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.title}}</div>
-                <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.vicetitle}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.author}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.source }}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.newstype}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.publishdate}}</div>
-                <div  class="headerSmallItem">
-                    <div class="detail"   v-on:click="deleteNews"  v-bind:data-uuid="item.newsuuid"  class="delete">
-                        删除
+        <div style="background-color: #F2F2F2">
+            <template v-for="item in newsList">
+                <div class="mainBodyContain">
+                    <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.title}}</div>
+                    <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.vicetitle}}</div>
+                    <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.author}}</div>
+                    <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.source }}</div>
+                    <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.newstype}}</div>
+                    <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.publishdate}}</div>
+                    <div  class="headerSmallItem">
+                        <div class="detail"   v-on:click="deleteNews"  v-bind:data-uuid="item.newsuuid"  class="delete">
+                            删除
+                        </div>
                     </div>
                 </div>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
-
-
+    <!--分页组件-->
+    <div id="app">
+        <ul class="pagination" >
+            <li v-show="current != 1" @click="current-- && goto(current)" >
+                <div style="cursor: pointer">上一页</div>
+            </li>
+            <li v-for="index in pages" @click="goto(index)" :class="{'active':current == index}" :key="index">
+                <div  @click="getPageIndex"  v-bind:data-index="index" class="index">{{index}}</div>
+            </li>
+            <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">
+                <div style="cursor: pointer">下一页</div>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/resources/putaohelp/js/newsList.js"></script>

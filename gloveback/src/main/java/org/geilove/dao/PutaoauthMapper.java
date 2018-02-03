@@ -31,4 +31,7 @@ public interface PutaoauthMapper {
     List<Putaoauth>  getPutaoauthSearch(Map<String,Object> map); //根据企业的名字获得企业的认证信息
 
     List<Putaoauth> selectAll(Map<String,Object> map); //管理后台
+
+    int countByShenheType(String confirmif);
+    int countAll();
 }

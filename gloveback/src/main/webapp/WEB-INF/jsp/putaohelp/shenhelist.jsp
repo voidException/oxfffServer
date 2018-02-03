@@ -325,7 +325,7 @@
                 企业信息
             </div>
         </div>
-        <div id="useruuid" style="display: none">{{detail.useruuid}}</div>
+        <div id="useruuid"   v-bind:data-useruuid="detail.useruuid"   style="display: none">{{detail.useruuid}}</div>
         <div class="puding">
             <div class="companyName">状态：</div>
             <div  id="confirmif">{{detail.confirmif}}</div>
@@ -364,8 +364,8 @@
         <div id="passrefused"  class="passrefused">
                 <textarea  id="comment" class="text-area" rows="10" cols="60" placeholder="请输入通过或拒绝的理由"></textarea>
                 <div class="dopassRefused" >
-                    <div  v-on:click="pass"  class="pass" >通过</div>
-                    <div  v-on:click="refused"  class="pass" >拒绝</div>
+                    <div  v-on:click="shenhe('pass')"  class="pass" >通过</div>
+                    <div  v-on:click="shenhe('refused')"  class="pass" >拒绝</div>
                 </div>
         </div>
     </div>

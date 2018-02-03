@@ -25,6 +25,13 @@
      passback_params
     </sql>
 
+    <select id="searchByAccount" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
+        from payMoney
+        where accountUUID= #{account}
+        limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
 
     <select id="selectPayMoney" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
@@ -32,6 +39,16 @@
         from payMoney
         where 1=1
         limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+    <!--countAllLimitAcount-->
+    <select id="countAllLimitAcount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from payMoney
+        WHERE
+        accountUUID=#{account}
+    </select>
+    <!--countAll-->
+    <select id="countAll" resultType="java.lang.Integer" >
+        select count(*) from payMoney
     </select>
 
     <!--selectByMapKeys-->

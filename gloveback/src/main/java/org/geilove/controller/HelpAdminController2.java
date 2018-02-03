@@ -125,6 +125,18 @@ public class HelpAdminController2 {
             resp.failByException(); //抛出异常
         }
         resp.success(putaoauths);
+        //取得当前类型下的页数
+        try{
+            int count=0;
+            if (confirmIf.equals("all")){
+                count=putaoauthMapper.countAll();
+            }else {
+                 count=putaoauthMapper.countByShenheType(confirmIf);//获得公司的列表
+            }
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return resp ;
     }
 
@@ -872,8 +884,12 @@ public class HelpAdminController2 {
 
         String pageStr=request.getParameter("page"); //时间
         int page=Integer.valueOf(pageStr);
-        int pageSize=200;
+
+        String pageSizeStr=request.getParameter("pageSize");
+        int pageSize=Integer.valueOf(pageSizeStr);
+
         page=pageSize*(page-1);
+
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("page",page);
         map.put("pageSize",pageSize);
@@ -889,6 +905,12 @@ public class HelpAdminController2 {
             return  resp;
         }
         resp.success(newss);
+        try {
+            int count=newsMapper.countAll();
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return  resp;
     }
     //增加资讯-路由

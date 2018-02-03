@@ -31,6 +31,7 @@
             color: #000000;
             font-family:tahoma,arial,宋体;
             margin-left: 10px;
+            cursor: pointer;
         }
         .headerItemRight{
             display: flex;
@@ -42,6 +43,7 @@
             background-color: #2C3E51;
             color: #ffffff;
             font-family:tahoma,arial,宋体;
+            cursor: pointer;
         }
         .inputWrap{
             display: flex;
@@ -193,8 +195,8 @@
     <div id="default" style="display: block">
         <div class="header">
             <div class="inputWrap">
-                <input   class="common"  @keyup="dosearch($event)"
-                        type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />
+                <input id="accountInput" class="common" @keyup="doSearch($event)"
+                       type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />
             </div>
         </div>
         <div class="headerBody">
@@ -218,15 +220,29 @@
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.notifyTime |formatDate}}</div>
             </div>
         </template>
+
+        <div id="appdefault">
+            <ul class="pagination" >
+                <li v-show="current != 1" @click="current-- && goto(current)" >
+                    <div style="cursor: pointer">上一页</div>
+                </li>
+                <li v-for="index in pages" @click="goto(index)" :class="{'active':current == index}" :key="index">
+                    <div  @click="getPageIndex"  v-bind:data-index="index" class="index">{{index}}</div>
+                </li>
+                <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">
+                    <div style="cursor: pointer">下一页</div>
+                </li>
+            </ul>
+        </div>
     </div>
     <!---扣费--->
     <div id="detail" style="display: none">
-        <div class="header">
-            <div class="inputWrap">
-                <input   class="common"  @keyup="dosearch($event)"
-                         type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />
-            </div>
-        </div>
+        <%--<div class="header">--%>
+            <%--<div class="inputWrap">--%>
+                <%--<input   id="koufeiInput"  class="common"  @keyup="doKoufeiSearch()"--%>
+                         <%--type="text"  autocomplete="off"  min="0" max="200"placeholder="输入身份证号搜索" />--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="headerBody">
             <div  class="headerMidItem">互助类别</div>
             <div class="headerSmallItem">扣钱时间</div>
@@ -248,6 +264,20 @@
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.other}}</div>
             </div>
         </template>
+
+        <div id="appdetail">
+            <ul class="pagination" >
+                <li v-show="currentDetail != 1" @click="currentDetail-- && gotoDetail(currentDetail)" >
+                    <div style="cursor: pointer">上一页</div>
+                </li>
+                <li v-for="index in pagesDetail" @click="gotoDetail(index)" :class="{'active':current == index}" :key="index">
+                    <div  @click="getPageIndexDetail"  v-bind:data-index="index" class="index">{{index}}</div>
+                </li>
+                <li v-show="allpageDetail != currentDetail && allpageDetail != 0 " @click="currentDetail++ && gotoDetail(currentDetail++)">
+                    <div style="cursor: pointer">下一页</div>
+                </li>
+            </ul>
+        </div>
 
     </div>
 

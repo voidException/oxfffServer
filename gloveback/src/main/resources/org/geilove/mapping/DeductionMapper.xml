@@ -19,6 +19,28 @@
     moneySpend, userSpendMoneyDate, theoryMoneySpend, other, userNeedMoneyAccount, userSpendMoneyAccount
   </sql>
 
+  <!--countAllLimitAccount-->
+
+  <select id="countAllLimitAccount" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*) from deduction
+    WHERE  userSpendMoneyAccount= #{account}
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer" >
+    select count(*) from deduction
+  </select>
+
+  <!--searchKoufeiList-->
+  <select id="searchKoufeiList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from deduction
+    where userSpendMoneyAccount= #{account}
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+
   <!--getDeductionList-->
   <select id="getDeductionList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select

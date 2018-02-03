@@ -22,6 +22,11 @@
     imagetwo, imagethree, newsurl, newstype, lable
   </sql>
 <!--自定义，获取新闻列表-->
+
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  news
+  </select>
+
   <!--查看自己发布的要救助的tweet,-->
   <select id="getNewss" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
@@ -30,8 +35,6 @@
     order by publishdate  desc
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
-
-
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

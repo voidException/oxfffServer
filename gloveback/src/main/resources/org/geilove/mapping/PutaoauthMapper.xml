@@ -22,6 +22,19 @@
     id, renzhenguuid, name, numberid, phone, address, email, confirmif, comment, imgone, 
     imgtwo, imgthree, authtype, legalperson, useruuid
   </sql>
+  <!--countByShenheType-->
+  <select id="countByShenheType" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(*)
+    from putaoauth
+    where confirmif =#{confirmif}
+  </select>
+  <!--<select id="getTotalUserAccount" resultType="java.lang.Integer" >-->
+    <!--select count(*) from userAccount-->
+  <!--</select>-->
+  <!--countAll-->
+  <select id="countAll" resultType="java.lang.Integer"  >
+    select count(*) from putaoauth
+  </select>
 
   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select

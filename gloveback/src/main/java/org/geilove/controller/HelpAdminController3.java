@@ -362,11 +362,56 @@ public class HelpAdminController3 {
             resp.failByException();
             return  resp;
         }
-
         resp.success(payMoneyList);
+        try{
+            int count=payMoneyMapper.countAll();
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return  resp;
     }
-    // 资金明细--充值记录表
+    // 资金明细--搜索
+    @RequestMapping(value="/searchChongzhiList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object searchChongzhiList( HttpServletRequest request) {
+        Response<List<PayMoney>> resp = new Response<>();
+        String token = request.getParameter("token");
+        String account=request.getParameter("account");
+        String pageStr = request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
+
+        int page,pageSize;
+        page=Integer.valueOf(pageStr);
+        pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize;
+
+        List<PayMoney> payMoneyList;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("page",page);
+            map.put("pageSize",pageSize);
+            map.put("account",account);
+            payMoneyList=payMoneyMapper.searchByAccount(map);
+            if (payMoneyList==null || payMoneyList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(payMoneyList);
+        try{
+            int count=payMoneyMapper.countAllLimitAcount(account);
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
+        return  resp;
+    }
+
+    // 资金明细--扣费记录表
     @RequestMapping(value="/koufeiList.do",method = RequestMethod.POST)
     @ResponseBody
     public Object koufeiList( HttpServletRequest request) {
@@ -395,11 +440,59 @@ public class HelpAdminController3 {
             resp.failByException();
             return  resp;
         }
-
         resp.success(deductionList);
-
+        try{
+            int count=deductionMapper.countAll();
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
         return  resp;
     }
+
+    // 资金明细--扣费搜索
+    @RequestMapping(value="/searchKoufeiList.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Object searchKoufeiList( HttpServletRequest request) {
+        Response<List<Deduction>> resp = new Response<>();
+        String token = request.getParameter("token");
+
+        String account=request.getParameter("account");
+        String pageStr = request.getParameter("page");
+        String pageSizeStr=request.getParameter("pageSize");
+
+        int page,pageSize;
+        page=Integer.valueOf(pageStr);
+        pageSize=Integer.valueOf(pageSizeStr);
+        page=(page-1)*pageSize;
+
+        List<Deduction> deductionList;
+        try{
+            Map<String,Object> map=new HashMap<>();
+            map.put("account",account);
+            map.put("page",page);
+            map.put("pageSize",pageSize);
+            deductionList=deductionMapper.searchKoufeiList(map);
+
+            if (deductionList==null || deductionList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(deductionList);
+        try{
+            int count=deductionMapper.countAllLimitAccount(account);
+            resp.setMsg(String.valueOf(count));
+        }catch (Exception e){
+            resp.setMsg("0");
+        }
+        return  resp;
+    }
+
+
     // 资金走势--最近10天的资金余额变化
     @RequestMapping(value="/zijinzoushi.do",method = RequestMethod.POST)
     @ResponseBody

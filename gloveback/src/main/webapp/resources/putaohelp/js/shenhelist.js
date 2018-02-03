@@ -65,9 +65,10 @@ new Vue({
 
             let  index=event.target.getAttribute("data-index");
             let param=new FormData();
+            param.append('confirmIf', this.confirmIf);
             param.append("page",index);
             param.append("pageSize",10); //统一20条
-            this.getUserList(param); //
+            this.getShenheListWait(param); //
         },
 
         getPutaoauthSearch:function () {
@@ -105,6 +106,8 @@ new Vue({
             if (this.confirmIf =="refused"){
                 this.page=this.pageRefused;
             }
+
+
             let param = new FormData();
             param.append('confirmIf',this.confirmIf);
             param.append('page',this.page);
@@ -132,6 +135,8 @@ new Vue({
                 //存储或者改变相应的值
                 if (response.data.retcode==2000){
                     this.data=response.data.result;
+                    this.count=response.data.msg; //总记录数
+                    this.allpage=Math.ceil(this.count/10);
                 }
             }, err => {
 
@@ -150,7 +155,7 @@ new Vue({
                 }}).then(response => {
                 //存储或者改变相应的值
                 if (response.data.retcode==2000){
-                    console.log(response.data);
+                   // console.log(response.data);
                     this.detail=response.data.result;
                 }
             }, err => {
@@ -168,7 +173,26 @@ new Vue({
             document.getElementById("detail").style.display='block'; //显示详情
         },
 
-        pass:function () {
+        shenhe:function (passRefused) {
+            let param=new FormData();
+            let comment=document.getElementById("comment").value;
+            let useruuid=document.getElementById("useruuid").innerText;
+            console.log(useruuid)
+            param.append("comment",comment);
+            param.append("confirmif",passRefused);
+            param.append('useruuid',useruuid);
+
+            axios.post('/glove/grapeAdmin/shenhe.do',param,{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }}).then(response => {
+                //存储或者改变相应的值
+                if (response.data.retcode==2000){
+                    alert("提交成功")
+                }
+            }, err => {
+                alert("提交失败")
+            });
 
         },
         refused:function(){

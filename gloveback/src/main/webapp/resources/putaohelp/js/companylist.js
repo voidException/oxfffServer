@@ -68,9 +68,6 @@ new Vue({
             }
             return pag
         },
-
-
-
     },
     filters:{
         formatDate(time){
