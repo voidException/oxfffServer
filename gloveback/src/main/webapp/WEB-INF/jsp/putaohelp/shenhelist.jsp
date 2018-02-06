@@ -280,7 +280,7 @@
             <div class="headerMidItem">公司名</div>
             <div class="headerBodyBigItem">征信代码</div>
             <div class="headerBodyBigItem">手机号</div>
-            <div  class="headerSmallItem">地址</div>
+            <%--<div  class="headerSmallItem">地址</div>--%>
             <div  class="headerSmallItem">邮箱</div>
             <div  class="headerSmallItem">是否确认</div>
             <div  class="headerSmallItem">操作</div>
@@ -292,7 +292,7 @@
                 <div  class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.phone}}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.address }}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.email}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.confirmif}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.confirmif |formCheckType }}</div>
                 <div  class="headerSmallItem">
                     <div class="detail"   @click="getDetail"
                          v-bind:data-helptype="item.helptype"
@@ -328,7 +328,7 @@
         <div id="useruuid"   v-bind:data-useruuid="detail.useruuid"   style="display: none">{{detail.useruuid}}</div>
         <div class="puding">
             <div class="companyName">状态：</div>
-            <div  id="confirmif">{{detail.confirmif}}</div>
+            <div  id="confirmif">{{detail.confirmif |formCheckType}}</div>
         </div>
 
         <div class="puding">
@@ -340,10 +340,10 @@
             <div class="companyName">手机号：</div>
             <div>{{detail.phone}}</div>
         </div>
-        <div class="puding">
-            <div class="companyName">地址：</div>
-            <div>{{detail.address}}</div>
-        </div>
+        <%--<div class="puding">--%>
+            <%--<div class="companyName">地址：</div>--%>
+            <%--<div>{{detail.address}}</div>--%>
+        <%--</div>--%>
         <div class="puding">
             <div class="companyName">邮箱：</div>
             <div>{{detail.email}}</div>

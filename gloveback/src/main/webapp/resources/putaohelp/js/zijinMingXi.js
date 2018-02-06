@@ -106,26 +106,24 @@ new Vue({
         },
         formHelpType(str){
             if (str=="little"){
-                return "少儿互助大病互助计划"
+                return "少儿大病互助计划"
             }
             if(str=="young"){
-                return "中青年大病互助计划"
+                return "中青年抗癌互助"
             }
             if (str=="old"){
-                return "中老年抗癌互助计划"
+                return "中老年抗癌互助"
             }
             if (str=="zonghe"){
-                return "综合意外互助计划"
+                return "综合意外互助"
             }
             if (str=="staff"){
-                return "企业员工大病互助计划"
+                return "企业员工大病互助"
             }
             if (str=="employee"){
-                return "企业员工意外伤害互助计划"
+                return "企业员工综合意外互助"
             }
         }
-
-
     },
     methods: {
         chongzhiList:function (param) {

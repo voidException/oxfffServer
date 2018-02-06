@@ -4,6 +4,7 @@ package org.geilove.dao;
 
 import org.geilove.pojo.T_user;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,4 +29,6 @@ public interface T_userDao {
     int updateByPrimaryKeySelective(T_user record);
 
     int updateByPrimaryKey(T_user record);
+
+    List<T_user> getuserList();
 }

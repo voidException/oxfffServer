@@ -3,15 +3,13 @@ package org.geilove.pojo;
 import java.io.Serializable;
 
 /**
- * Created with IDEA
- * Created by ${jie.chen} on 2016/7/14.
- * 后台登录User
+ * 在Shiro下与本表对应的t_role t_permission 没有 mapper和dao
  */
 public class T_user implements Serializable {
     private Integer id;
     private String userName;
     private String password;
-    private Integer roleId ;
+    private Integer roleId ; //这个roleId 被t_role 所约束，与其他无关
 
     public Integer getId() {
         return id;

@@ -210,7 +210,7 @@
         </div>
         <template v-for="item in xiangMuList">
             <div class="bodyItem">
-                <div class="headerMidItem" style="color: #00BB3B">{{item.helpType}}</div>
+                <div class="headerMidItem" style="color: #00BB3B">{{item.helpType | formHelpType}}</div>
                 <div class="headerSmallItem" style="color: #000">{{item.sumMoney}}</div>
                 <div class="headerBodyBigItem" style="color: #000">{{item.sumMoneyRemain}}</div>
                 <div  class="headerSmallItem" style="color: #000">{{item.sumMan}}</div>

@@ -177,6 +177,32 @@
             </div>
         </details>
         <!---一个模块-->
+        <details>
+            <summary>
+                <div class="ItemWrapper" >
+                    <div  class="ItemWrapperIn">
+                        <img  class="ItemWrapperInImg"  src="<%=contextPath%>/resources/image/lovelove.png" >
+                    </div>
+                    <div  class="ItemWrapperInDiv">
+                        权限管理
+                    </div>
+                </div>
+            </summary>
+            <div  class="ItemBodyWrapper">
+                <div style="width: 80px"></div>
+                <div   class="ItemBodyInner" >
+                    <%--<div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/beHelpedlist.do">被救助人列表</a></div>--%>
+                    <div style="margin-bottom: 10px">
+                        <a target="Conframe" href="/glove/grapeAdmin/goPermissionUser.do">
+                            <div  id="12"  @click="changeColor" data-index="10">用户</div>
+                        </a>
+                    </div>
+                    <div style="margin-bottom: 10px"><a target="Conframe" href="/glove/grapeAdmin/goPermissionRoler.do"  >
+                        <div  id="13"  @click="changeColor" data-index="11">角色</div>
+                    </a></div>
+                </div>
+            </div>
+        </details>
 
     </div>
     <div class="content">

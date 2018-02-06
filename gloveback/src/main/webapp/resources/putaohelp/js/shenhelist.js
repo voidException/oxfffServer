@@ -53,6 +53,20 @@ new Vue({
             return pag
         }
     },
+    filters:{
+        formCheckType(str){
+            if (str=="pass"){
+                return "审核通过"
+            }
+            if(str=="refused"){
+                return "被拒绝"
+            }
+            if (str=="unhandle"){
+                return "待审核"
+            }
+        },
+    },
+
     methods: {
 
         goto:function(index){

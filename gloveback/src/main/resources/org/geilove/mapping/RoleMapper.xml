@@ -5,6 +5,30 @@
     <result column="roleid" property="roleid" jdbcType="INTEGER" />
     <result column="roleName" property="rolename" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List">
+    roleid, roleName
+  </sql>
+  <!--getRoles-->
+  <select id="getRoles" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
+
   <insert id="insert" parameterType="org.geilove.pojo.Role" >
     insert into role (roleid, roleName)
     values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR})
@@ -28,4 +52,19 @@
       </if>
     </trim>
   </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.Role">
+    update role
+    <set>
+      <if test="rolename != null">
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.Role">
+    update role
+    set roleName = #{rolename,jdbcType=VARCHAR}
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
 </mapper>

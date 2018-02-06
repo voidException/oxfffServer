@@ -9,6 +9,15 @@
   <sql id="Base_Column_List" >
     userRoleid, tuserid, roleid
   </sql>
+
+  <select id="getUserRolesByid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from userRole
+    where tuserid = #{tuserid,jdbcType=INTEGER}
+  </select>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

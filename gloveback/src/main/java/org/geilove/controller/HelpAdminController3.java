@@ -60,6 +60,12 @@ public class HelpAdminController3 {
     private  TongjiMapper tongjiMapper;
     @Resource
     private AshipService ashipService;
+    @Resource
+    private T_userDao tUserDao;
+    @Resource
+    private RoleMapper roleMapper;
+    @Resource
+    private  UserRoleMapper userRoleMapper;
 
     // 路由，跳转到对账--废弃
     @RequestMapping(value="/goDefaultMain.do",method = RequestMethod.GET)
@@ -710,6 +716,86 @@ public class HelpAdminController3 {
         resp.success(defaultMain);
         return  resp;
     }
+
+    // 路由，跳转到权限管理的用户
+    @RequestMapping(value="/goPermissionUser.do",method = RequestMethod.GET)
+    public ModelAndView goPermissionUser( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/permissionUser");
+        return mav ;
+    }
+    // 路由，跳转到权限管理的角色
+    @RequestMapping(value="/goPermissionRoler.do",method = RequestMethod.GET)
+    public ModelAndView goPermissionRole( HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("putaohelp/permissionRole");
+        return mav ;
+    }
+
+    // 获得权限用户列表
+    @RequestMapping(value="/getPermissionUsers.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getPermissionUsers(HttpServletRequest request){
+        String token=request.getParameter("token");
+        Response<List<T_user>> resp=new Response<>();
+        List<T_user> userList;
+        try{
+            userList=tUserDao.getuserList();
+            if (userList==null | userList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(userList);
+        return  resp;
+    }
+
+    // 获得权限用户列表
+    @RequestMapping(value="/getPermissionRoles.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getPermissionRoles(HttpServletRequest request){
+        String token=request.getParameter("token");
+        String  tuseridStr=request.getParameter("tuserid");
+        int tuserid=Integer.valueOf(tuseridStr);
+
+        Response<List<Role>> resp=new Response<>(); //要返回的是 Role 角色表
+        List<Role> roleList;
+        try{
+            roleList=roleMapper.getRoles();
+            if (roleList==null | roleList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        // 到UserRole表 查找该
+        List<UserRole> userRoleList;
+        try{
+            userRoleList=userRoleMapper.getUserRolesByid(tuserid);
+        }catch (Exception e){
+           resp.failByException();
+           return  resp;
+        }
+
+        for (UserRole userRole:userRoleList){
+           if (userRole.getTuserid()==tuserid){ //如果用户角色表，里的用户等于本次查找的用户
+               int roleid=userRole.getRoleid(); // 那么就获得本次角色的id
+               for (int i=0; i<roleList.size();i++){
+                    if (roleid==roleList.get(i).getRoleid()){
+                        roleList.get(i).setT_userID(tuserid);
+                    }
+                    continue;
+               } //for
+           }
+        }// for1
+        resp.success(roleList);
+        return  resp;
+    }
+
+
 
 }
 

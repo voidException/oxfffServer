@@ -2,6 +2,8 @@ package org.geilove.dao;
 
 import org.geilove.pojo.UserRole;
 
+import java.util.List;
+
 public interface UserRoleMapper {
     int deleteByPrimaryKey(Integer userroleid);
 
@@ -14,4 +16,6 @@ public interface UserRoleMapper {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    List<UserRole> getUserRolesByid(Integer tuserid);
 }

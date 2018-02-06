@@ -10,6 +10,11 @@
     <sql id="Base_Column_List" >
         id, userName, password,roleId
     </sql>
+    <!--getuserList-->
+    <select id="getuserList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_user
+    </select>
 
     <select id="findUserByUsername" parameterType="String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>

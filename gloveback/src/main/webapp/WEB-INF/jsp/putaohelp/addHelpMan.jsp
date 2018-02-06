@@ -75,10 +75,11 @@
             justify-content: center;
             align-items: center;
             width: 400px;
-            height: 30px;
-            background-color: #00BB3B;
+            height: 46px;
+            background-color: #00C29A;
             color: #ffffff;
             font-size: 18px;
+            margin-top: 10px;
         }
         .submitCon{
             display: flex;
