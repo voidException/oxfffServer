@@ -2,6 +2,8 @@ package org.geilove.dao;
 
 import org.geilove.pojo.Resource;
 
+import java.util.List;
+
 public interface ResourceMapper {
     int deleteByPrimaryKey(Integer resourceid);
 
@@ -14,4 +16,7 @@ public interface ResourceMapper {
     int updateByPrimaryKeySelective(Resource record);
 
     int updateByPrimaryKey(Resource record);
+
+    // 获得资源
+    List<Resource> getResources();
 }

@@ -24,7 +24,8 @@
 <div id="middle"  class="middle">
     <div class="sidebar">
         <div class="wrapper"  style="display: flex;flex-direction: column;align-items: center;height: 150px;width: 200px;background-color: #1F3647;">
-            <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
+            <img  class="wrapImg"  src="<%=contextPath%>/resources/image/admin.png"
+                  style="width: 90px;height: 90px;margin-bottom: 10px;margin-top: 10px" />
             <div  class="wrapDiv" style="color: #ffffff;font-size: larger;font-weight: bolder;font-family:tahoma,arial,宋体;">
                 管理员
             </div>
@@ -206,11 +207,9 @@
 
     </div>
     <div class="content">
-        <iframe name="Conframe" id="Conframe" src="/glove/grapeAdmin/goDefaultMain.do"
-                class="page-ifream"
-                frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                width="100%" height="3000px">
-            <p>Your browser does not support iframes.</p>
+        <iframe class="page-ifream"  name="Conframe" id="Conframe" src="/glove/grapeAdmin/goDefaultMain.do"
+                style="display: block;height: 100%; width: 100%; overflow-y:hidden;"
+                frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="yes">
         </iframe>
     </div>
 </div>
@@ -300,10 +299,11 @@
     }
     .sidebar{
         width: 200px;
-        height: 800px;
+        height: 100%;
         border-right: rgba(42,255,48,0.82) 1px dashed;
         background-color: #2A3C4D;
         color: #ffffff;
+        overflow:auto
     }
     .content{
         width: 80%;
@@ -314,6 +314,9 @@
     }
     summary{
         outline: none;
+    }
+    body{
+        overflow-y:hidden;
     }
 </style>
 

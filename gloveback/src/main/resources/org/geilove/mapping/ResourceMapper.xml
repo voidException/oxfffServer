@@ -9,6 +9,14 @@
   <sql id="Base_Column_List" >
     resourceid, resourceNum, resourceName
   </sql>
+
+  <!--getResources-->
+  <select id="getResources" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from resource
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -20,10 +28,8 @@
     where resourceid = #{resourceid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.geilove.pojo.Resource" >
-    insert into resource (resourceid, resourceNum, resourceName
-      )
-    values (#{resourceid,jdbcType=INTEGER}, #{resourcenum,jdbcType=INTEGER}, #{resourcename,jdbcType=VARCHAR}
-      )
+    insert into resource (resourceid, resourceNum, resourceName)
+    values (#{resourceid,jdbcType=INTEGER}, #{resourcenum,jdbcType=INTEGER}, #{resourcename,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Resource" >
     insert into resource

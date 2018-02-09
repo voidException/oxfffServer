@@ -51,6 +51,7 @@
             justify-content: center;
             width: 100%;
             height: 700px;
+            margin-top: 20px;
         }
         .main{
             margin-top: 30px;

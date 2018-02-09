@@ -211,12 +211,12 @@
 
         <template v-for="item in data">
             <div class="mainBodyContain">
-                <div class="headerMidItem" style="color: #000;font-size: smaller">{{item.useruuid}}</div>
-                <div class="headerSmallItem" style="color: #000; font-size: smaller">{{item.accountuuid}}</div>
-                <div class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.categorytype |formHelpType}}</div>
+                <div  class="headerMidItem" style="color: #000;font-size: smaller">{{item.useruuid}}</div>
+                <div  class="headerSmallItem" style="color: #000; font-size: smaller">{{item.accountuuid}}</div>
+                <div  class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.categorytype |formHelpType}}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.outTradeNo}}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.totalAmount}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.tradeStatus}}</div>
+                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.tradeStatus |formTradeStatus}}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.notifyTime |formatDate}}</div>
             </div>
         </template>

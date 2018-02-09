@@ -15,34 +15,7 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/axios.min.js"></script>
     <style>
-        .page{
-            display: flex;
-            flex-direction: row;
-            width: 260px;
-            justify-content: space-around;
-        }
-        .pageUp{
-            cursor: pointer;
-            color: #0070FF;
-        }
-        .item{
-            display: flex;
-            flex-direction: row;
-            width: 260px;
-            justify-content: flex-start;
-        }
-        .itemWrapper{
-            display: flex;
-            flex-direction: row;
-            border-bottom: #00BB3B  1px solid;
-            border-right: #00BB3B  1px solid;
-            width: 300px;
-            padding: 10px;
-        }
-        #userlist{
-            display: flex;
-            flex-direction: column;
-        }
+
         .header{
             display: flex;
             flex-direction: row;
@@ -77,34 +50,6 @@
             font-family:tahoma,arial,宋体;
             cursor: pointer;
         }
-        .inputWrap{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            width: 90%;
-        }
-        .common{
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-color: #fff;
-            border-radius: 4px;
-            border: 0px solid #bfcbd9;
-            box-sizing: border-box;
-            color: #1f2d3d;
-            display: block;
-            font-size: inherit;
-            height: 46px;
-            line-height: 1;
-            outline: 0;
-            padding: 3px 10px;
-            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-            width: 80%;
-            text-align: center;
-            margin-left: 20px;
-        }
         .headerBody{
             display: flex;
             flex-direction: row;
@@ -124,26 +69,6 @@
             color: #ffffff;
             font-family:tahoma,arial,宋体;
         }
-        .headerMidItem{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            width: 200px;
-            color: #ffffff;
-            font-family:tahoma,arial,宋体;
-        }
-        .headerSmallItem{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            width: 150px;
-            color: #ffffff;
-            font-family:tahoma,arial,宋体;
-        }
         .mainBodyContain{
             display: flex;
             flex-direction: row;
@@ -153,46 +78,9 @@
             width: 100%;
             border-bottom: 1px solid #ffffff;
         }
-        .mainBodyContainRight{
-
-        }
-        .mainBodyContainRightItem{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 60px;
-            width: 950px;
-        }
-        .detail{
-            width: 100px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            background-color: #00BA97;
-            cursor: pointer;
-        }
-        .detailTab{
-            display: none;
-            flex-direction: column;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: flex-start;
-            margin-top: 30px;
-
-        }
-        .detailItem{
-            display: flex;
-            flex-direction: row;
-        }
 
         li{
             list-style:none;
-        }
-        .pagination {
-            position: relative;
-
         }
         .pagination li{
             display: inline-block;
@@ -211,54 +99,6 @@
         .pagination li.active a{
             background:#0E90D2;
             color:#fff;
-        }
-        .index{
-            width: 80px;
-            height: 60px;
-            line-height: 60px;
-            text-align: center;
-            background-color: #ffffff;
-            cursor: pointer;
-        }
-        .detailHeader{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 500px;
-            height: 44px;
-            background-color: #00B997;
-            border-radius: 4px;
-            color: #ffffff;
-        }
-        .detailBody{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            width: 500px;
-            height: 660px;
-            background-color: #ffffff;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .detailBodyTop{
-            display: flex;
-            flex-direction: row;
-            width: 500px;
-            height: 200px;
-            justify-content: center;
-            background-color: #00B997;
-            align-items: center;
-        }
-        .profileItem{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-            width: 500px;
-            border-bottom: #6f7a7e dashed 1px;
         }
     </style>
 </head>

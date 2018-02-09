@@ -44,7 +44,7 @@ new Vue({
                     // 指定图表的配置项和数据
                     let option = {
                         title: {
-                            text: '葡萄互助账户余额统计'
+                            text: '葡萄互助账户余额统计(元)'
                         },
                         tooltip: {},
                         legend: {

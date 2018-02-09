@@ -10,12 +10,22 @@
   <sql id="Base_Column_List" >
     roleResourceid, roleid, resourceid, ok
   </sql>
+
+  <!--getRoleResourceList-->
+  <select id="getRoleResourceList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from roleResource
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from roleResource
     where roleResourceid = #{roleresourceid,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from roleResource
     where roleResourceid = #{roleresourceid,jdbcType=INTEGER}

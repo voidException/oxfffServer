@@ -2,6 +2,8 @@ package org.geilove.dao;
 
 import org.geilove.pojo.RoleResource;
 
+import java.util.List;
+
 public interface RoleResourceMapper {
     int deleteByPrimaryKey(Integer roleresourceid);
 
@@ -14,4 +16,6 @@ public interface RoleResourceMapper {
     int updateByPrimaryKeySelective(RoleResource record);
 
     int updateByPrimaryKey(RoleResource record);
+
+    List<RoleResource> getRoleResourceList(Integer roleid); //
 }

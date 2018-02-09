@@ -66,6 +66,10 @@ public class HelpAdminController3 {
     private RoleMapper roleMapper;
     @Resource
     private  UserRoleMapper userRoleMapper;
+    @Resource
+    private  ResourceMapper resourceMapper;
+    @Resource
+    private  RoleResourceMapper roleResourceMapper;
 
     // 路由，跳转到对账--废弃
     @RequestMapping(value="/goDefaultMain.do",method = RequestMethod.GET)
@@ -751,15 +755,15 @@ public class HelpAdminController3 {
         return  resp;
     }
 
-    // 获得权限用户列表
+    // 获得角色列表，角色会被标记是否属于该用户
     @RequestMapping(value="/getPermissionRoles.do",method=RequestMethod.POST)
     @ResponseBody
     public Object  getPermissionRoles(HttpServletRequest request){
+        Response<List<Role>> resp=new Response<>(); //要返回的是 Role 角色表
+
         String token=request.getParameter("token");
         String  tuseridStr=request.getParameter("tuserid");
         int tuserid=Integer.valueOf(tuseridStr);
-
-        Response<List<Role>> resp=new Response<>(); //要返回的是 Role 角色表
         List<Role> roleList;
         try{
             roleList=roleMapper.getRoles();
@@ -795,7 +799,68 @@ public class HelpAdminController3 {
         return  resp;
     }
 
+    // 获得纯粹角色列表
+    @RequestMapping(value="/getRoles.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getRoles(HttpServletRequest request){
+        Response<List<Role>> resp=new Response<>(); //要返回的是 Role 角色表
+        String token=request.getParameter("token");
+        List<Role> roleList;
+        try{
+            roleList=roleMapper.getRoles();
+            if (roleList==null | roleList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        resp.success(roleList);
+        return  resp;
+    }
 
+
+    // 获得资源列表，资源会被标记是否属于该角色
+    @RequestMapping(value="/getResource.do",method=RequestMethod.POST)
+    @ResponseBody
+    public Object  getResource(HttpServletRequest request) {
+        Response<List<org.geilove.pojo.Resource>> resp = new Response<>();
+        String token=request.getParameter("token");
+
+        String  roleidStr=request.getParameter("roleid");
+        int roleid=Integer.valueOf(roleidStr);
+        List<org.geilove.pojo.Resource> resourceList;
+        try{
+            resourceList=resourceMapper.getResources();
+            if (resourceList==null | resourceList.isEmpty()){
+                resp.failByNoData();
+                return resp;
+            }
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        //
+        List<RoleResource> roleResourceList;
+        try{
+            roleResourceList=roleResourceMapper.getRoleResourceList(roleid);
+        }catch (Exception e){
+            resp.failByException();
+            return  resp;
+        }
+        for (int i=0;i<roleResourceList.size(); i++){ //角色资源映射
+
+                for (int j=0; j<resourceList.size();j++){
+                    if (roleResourceList.get(i).getResourceid()==resourceList.get(j).getResourceid()){
+                        resourceList.get(j).setRoleID(roleid);
+                    }
+                    continue;
+                } //for
+        }// for
+        resp.success(resourceList); //返回资源列表
+        return  resp;
+    }
 
 }
 

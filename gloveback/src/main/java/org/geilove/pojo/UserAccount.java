@@ -39,6 +39,8 @@ public class UserAccount {
 
     private Long remainfee;
 
+    private Integer helptimes;
+
     public Long getUseraccountid() {
         return useraccountid;
     }
@@ -181,5 +183,13 @@ public class UserAccount {
 
     public void setRemainfee(Long remainfee) {
         this.remainfee = remainfee;
+    }
+
+    public Integer getHelptimes() {
+        return helptimes;
+    }
+
+    public void setHelptimes(Integer helptimes) {
+        this.helptimes = helptimes;
     }
 }

@@ -290,7 +290,6 @@
                 <div class="headerMidItem" style="color: #000;font-size: smaller">{{item.name}}</div>
                 <div  class="headerBodyBigItem" style="color: #000; font-size: smaller">{{item.numberid}}</div>
                 <div  class="headerBodyBigItem" style="color: #000;font-size: smaller">{{item.phone}}</div>
-                <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.address }}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.email}}</div>
                 <div  class="headerSmallItem" style="color: #000;font-size: smaller">{{item.confirmif |formCheckType }}</div>
                 <div  class="headerSmallItem">

@@ -123,7 +123,18 @@ new Vue({
             if (str=="employee"){
                 return "企业员工综合意外互助"
             }
+        },
+
+        formTradeStatus(str){
+            if (str=='TRADE_SUCCESS'){
+                return '交易成功'
+            }
+            if(str=='WAIT_BUYER_PAY'){
+                return '待付款'
+            }
         }
+
+
     },
     methods: {
         chongzhiList:function (param) {
