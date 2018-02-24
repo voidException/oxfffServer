@@ -128,10 +128,13 @@
 			<value>
 				<!--anon 表示匿名访问，不需要认证以及授权-->
 				/glove*=anon
+				<!--发起/admin/login.do 是不需要认证的-->
 				/admin/login.do=anon
-				<!--authc表示需要认证 没有进行身份认证是不能进行访问的-->
+				<!--authc表示需要认证 没有进行身份认证是不能进行访问的，认证失败会跳转到login.jsp-->
 				/admin*=authc
+				<!--/student=roles[teacher]表示访问/student请求的用户必须是teacher角色，不然是不能进行访问的-->
 				/student.do=roles[teacher]
+				<!--/teacher=perms["user:create"]表示访问/teacher请求是需要当前用户具有user:create权限才能进行访问的-->
 				/teacher.do=perms["user:create"]
 			</value>
 		</property>

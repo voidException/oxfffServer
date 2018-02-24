@@ -55,7 +55,7 @@ public class AlipaySetController {
     @RequestMapping(value = "/getOrderSet.do",method=RequestMethod.POST)
     @ResponseBody
     public Object  getOrderSet(@RequestBody AlipayOrderSetParam alipayOrderSetParam )throws AlipayApiException, IOException{
-        System.out.print("aaa");
+        //System.out.print("aaa");
 
         AlipayOrderRsp alipayOrderRsp =new AlipayOrderRsp();
         if (alipayOrderSetParam==null){
@@ -138,7 +138,7 @@ public class AlipaySetController {
             alipayOrderRsp.setOderStr(orderStr);
             alipayOrderRsp.setRetcode(2000);
             alipayOrderRsp.setMsg("下单成功");
-            System.out.println(orderStr);//就是orderString 可以直接给客户端请求，无需再做处理。
+           // System.out.println(orderStr);//就是orderString 可以直接给客户端请求，无需再做处理。
         } catch (AlipayApiException e) {
             e.printStackTrace();
             alipayOrderRsp.setRetcode(2001);
